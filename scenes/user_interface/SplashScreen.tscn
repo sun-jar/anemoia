@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyiro4wjj15m0"]
+
+[ext_resource type="Script" path="res://scripts/user_interface/SplashScreen.gd" id="1_s4mtu"]
+[ext_resource type="Texture2D" uid="uid://d05cqdwmbk7qh" path="res://assets/splash_sunjar.png" id="2_hl0fs"]
+[ext_resource type="PackedScene" uid="uid://cjvytuot3wumt" path="res://scenes/user_interface/MainMenu.tscn" id="2_w0sgv"]
+
+[node name="SplashScreenManager" type="Control" node_paths=PackedStringArray("splash_screen")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s4mtu")
+load_scene = ExtResource("2_w0sgv")
+in_time = 0.5
+fade_in_time = 1.5
+pause_time = 3.0
+fade_out_time = 1.5
+out_time = 0.5
+splash_screen = NodePath("SunJarSplashScreen")
+
+[node name="SunJarSplashScreen" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hl0fs")
