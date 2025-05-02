@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjvytuot3wumt"]
+[gd_scene load_steps=4 format=3 uid="uid://cjvytuot3wumt"]
 
 [ext_resource type="Script" path="res://scripts/user_interface/MainMenu.gd" id="1_4xphw"]
+[ext_resource type="Theme" uid="uid://ckj3o7pvq8kca" path="res://scenes/user_interface/ui_theme.tres" id="1_ki1vk"]
+[ext_resource type="Script" path="res://scripts/user_interface/button/Hover.gd" id="3_qavlj"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ki1vk")
 script = ExtResource("1_4xphw")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -28,36 +31,52 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 105
+theme_override_constants/margin_top = 145
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
 text = "Anemoia"
 
-[node name="Play" type="LinkButton" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 48
-text = "Play"
+theme_override_constants/margin_top = 170
 
-[node name="Settings" type="LinkButton" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 48
-text = "Settings"
 
-[node name="Exit" type="LinkButton" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Play2" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 48
-text = "Exit"
+text = " PLAY"
+alignment = 0
+script = ExtResource("3_qavlj")
 
-[connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="Settings" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = " SETTINGS"
+alignment = 0
+script = ExtResource("3_qavlj")
+
+[node name="Exit" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = " EXIT"
+alignment = 0
+script = ExtResource("3_qavlj")
+
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_exited"]
+[connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
