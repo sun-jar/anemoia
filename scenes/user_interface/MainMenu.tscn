@@ -55,9 +55,16 @@ theme_override_constants/margin_top = 170
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Play2" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="NewGame" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = " PLAY"
+text = " NEW GAME"
+alignment = 0
+script = ExtResource("3_qavlj")
+
+[node name="Continue" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = " CONTINUE"
 alignment = 0
 script = ExtResource("3_qavlj")
 
@@ -73,8 +80,10 @@ text = " EXIT"
 alignment = 0
 script = ExtResource("3_qavlj")
 
-[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Play2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_entered"]

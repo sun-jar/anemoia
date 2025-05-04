@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://5d5eftq5ef1f"]
+
+[ext_resource type="Script" path="res://scripts/user_interface/MainMenuWave.gd" id="1_byqjh"]
+
+[node name="MainMenuWave" type="Node2D"]
+script = ExtResource("1_byqjh")
+radius = 20.0
+expansion_speed = 300.0
+
+[node name="Line2D" type="Line2D" parent="."]
+default_color = Color(0.955963, 0.955963, 0.955963, 1)

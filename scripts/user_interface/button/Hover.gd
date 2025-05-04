@@ -1,6 +1,7 @@
 extends Button
 
 @onready var root_node = get_tree().root.get_node("MainMenu")
+
 var show_focus_outline: bool = false
 var hover_stylebox: StyleBoxFlat
 var tween: Tween
