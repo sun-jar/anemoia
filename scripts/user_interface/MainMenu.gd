@@ -1,6 +1,7 @@
 extends Control
 
 @onready var hover_stylebox := theme.get_stylebox("hover", "Button") as StyleBoxFlat
+@export var laboratory_scene : PackedScene
 
 var animation_finished = false
 
@@ -27,3 +28,11 @@ func _input(event):
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
+
+func _on_new_game_pressed() -> void:
+	var tween = self.create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($ColorRect, "modulate:a", 0.0, 1.0)
+	tween.tween_property(AudioManager.main_menu_theme, "volume_db", -80, 1.0)
+	await tween.finished
+	get_tree().change_scene_to_packed(laboratory_scene)

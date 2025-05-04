@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0676ltae3gea"]
+
+[ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
+[ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
+[ext_resource type="AudioStream" uid="uid://bj8gmnyojmhs7" path="res://assets/sfx/beep_n_glitch_08.wav" id="3_6p0bx"]
+[ext_resource type="AudioStream" uid="uid://djno2euxrvjdx" path="res://assets/sfx/beep_n_glitch_07.wav" id="4_xanlp"]
+[ext_resource type="AudioStream" uid="uid://ufgl63baue51" path="res://assets/sfx/beep_n_glitch_06.wav" id="5_lu07r"]
+[ext_resource type="Texture2D" uid="uid://dqid1bi8w6hdx" path="res://assets/entity/nameless_sleep_1.png" id="6_wvda1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_41wq0"]
+size = Vector2(78, 60)
+
+[node name="TheLaboratory" type="Node2D"]
+script = ExtResource("1_he5fh")
+
+[node name="InitialBeep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_jseq7")
+
+[node name="Beep1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6p0bx")
+
+[node name="Beep2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xanlp")
+
+[node name="Beep3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_lu07r")
+
+[node name="PlayerPLACEHOLDER" type="CharacterBody2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerPLACEHOLDER"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("6_wvda1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPLACEHOLDER"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_41wq0")
+
+[node name="Camera2D" type="Camera2D" parent="PlayerPLACEHOLDER"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjvytuot3wumt"]
+[gd_scene load_steps=6 format=3 uid="uid://cjvytuot3wumt"]
 
 [ext_resource type="Script" path="res://scripts/user_interface/MainMenu.gd" id="1_4xphw"]
 [ext_resource type="Theme" uid="uid://ckj3o7pvq8kca" path="res://scenes/user_interface/ui_theme.tres" id="1_ki1vk"]
+[ext_resource type="PackedScene" uid="uid://c0676ltae3gea" path="res://scenes/level/TheLaboratory.tscn" id="3_6arnl"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Hover.gd" id="3_qavlj"]
 [ext_resource type="FontFile" uid="uid://b728vgu6m2eum" path="res://assets/fonts/Falling Dried.ttf" id="3_xo1mm"]
 
@@ -14,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ki1vk")
 script = ExtResource("1_4xphw")
+laboratory_scene = ExtResource("3_6arnl")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -84,6 +86,7 @@ script = ExtResource("3_qavlj")
 
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_exited"]
+[connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_entered"]

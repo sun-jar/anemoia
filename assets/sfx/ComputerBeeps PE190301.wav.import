@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjjmqnsqos1mh"
+path="res://.godot/imported/ComputerBeeps PE190301.wav-85219349275c9de70c638b34562db668.sample"
+
+[deps]
+
+source_file="res://assets/sfx/ComputerBeeps PE190301.wav"
+dest_files=["res://.godot/imported/ComputerBeeps PE190301.wav-85219349275c9de70c638b34562db668.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
