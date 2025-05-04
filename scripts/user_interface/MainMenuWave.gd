@@ -9,13 +9,13 @@ extends Node2D
 var fade_timer: float = 0.0
 var points: Array = []
 
-func generate_circle(radius: float, segments: int = 128):
+func generate_circle(circle_radius: float, segments: int = 128):
 	$Line2D.clear_points()
 	
 	points = []
 	for i in range(segments + 1):
 		var angle = (i / float(segments)) * PI * 2
-		var point = Vector2(cos(angle) * radius, sin(angle) * radius)
+		var point = Vector2(cos(angle) * circle_radius, sin(angle) * circle_radius)
 		points.append(point)
 		
 	if $Line2D:

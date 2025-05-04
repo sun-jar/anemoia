@@ -12,6 +12,7 @@ func _ready() -> void:
 	tween.tween_property($ColorRect, "modulate:a", 1.0, 1.0)
 	hover_stylebox.bg_color.a = 0.0
 	await tween.finished
+	AudioManager.play_music()
 	animation_finished = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
