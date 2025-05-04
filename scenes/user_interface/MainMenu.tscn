@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjvytuot3wumt"]
+[gd_scene load_steps=5 format=3 uid="uid://cjvytuot3wumt"]
 
 [ext_resource type="Script" path="res://scripts/user_interface/MainMenu.gd" id="1_4xphw"]
 [ext_resource type="Theme" uid="uid://ckj3o7pvq8kca" path="res://scenes/user_interface/ui_theme.tres" id="1_ki1vk"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Hover.gd" id="3_qavlj"]
+[ext_resource type="FontFile" uid="uid://b728vgu6m2eum" path="res://assets/fonts/Falling Dried.ttf" id="3_xo1mm"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -45,7 +46,8 @@ size_flags_vertical = 8
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
+theme_override_fonts/font = ExtResource("3_xo1mm")
+theme_override_font_sizes/font_size = 144
 text = "Anemoia"
 
 [node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
