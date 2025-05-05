@@ -20,7 +20,8 @@ func _ready() -> void:
 	tween.tween_interval(2)
 	await tween.finished
 	$PlayerPLACEHOLDER/Sprite2D.texture = nameless_awake
-	
+	Dialogic.start("timeline")
+	get_viewport().set_input_as_handled()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
