@@ -6,11 +6,11 @@
 "custom_info": {
 "sound_mood_default": "",
 "sound_moods": {},
-"style": ""
+"style": "dialogue_style"
 },
 "default_portrait": "",
 "description": "Unknown entity speaking to us.",
-"display_name": "???",
+"display_name": "The Creator",
 "mirror": false,
 "nicknames": ["???"],
 "offset": Vector2(0, 0),
