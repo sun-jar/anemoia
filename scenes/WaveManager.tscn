@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dgp8hfvqec432"]
+
+[node name="WaveManager" type="Node2D"]
