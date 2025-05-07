@@ -17,10 +17,11 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 		
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("wave"):
-		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time - last_wave_time >= wave_cooldown:
-			emit_signal("trigger_wave")
-			last_wave_time = current_time
+	if not GameManager.movement_disabled:
+		if Input.is_action_just_pressed("wave"):
+			var current_time = Time.get_ticks_msec() / 1000.0
+			if current_time - last_wave_time >= wave_cooldown:
+				emit_signal("trigger_wave")
+				last_wave_time = current_time
 		
 		
