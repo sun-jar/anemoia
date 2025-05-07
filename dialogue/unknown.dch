@@ -10,7 +10,7 @@
 },
 "default_portrait": "",
 "description": "Unknown entity speaking to us.",
-"display_name": "The Creator",
+"display_name": "???",
 "mirror": false,
 "nicknames": ["???"],
 "offset": Vector2(0, 0),

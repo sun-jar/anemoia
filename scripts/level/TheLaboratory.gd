@@ -9,6 +9,7 @@ var nameless_awake = preload("res://assets/entity/nameless_1.png")
 
 # Called when the node enters the scene tree for the first time.
 func _start_game():
+	$Player/EntitySprite.texture = nameless_sleep
 	var tween = create_tween()
 	tween.tween_interval(initial_beep.stream.get_length()-2.73)
 	initial_beep.play()
@@ -30,7 +31,6 @@ func _start_game():
 func _ready() -> void:
 	if not GameManager.game_started:
 		await _start_game()
-	print("called")
 	GameManager.movement_disabled = false
 
 

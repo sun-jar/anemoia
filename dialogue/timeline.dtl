@@ -1,6 +1,3 @@
-unknown: *static noise*
-*static* Can- *static* -hear? *static*
-*static* -come *static* me.
-unknown: Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue neque a augue vestibulum rutrum. Vivamus pretium, ligula at dapibus luctus, quam ex pretium elit, vitae tristique lorem nisl nec erat. Aliquam at tempus velit, eget lobortis nibh. Vivamus at mauris vel tortor porttitor rutrum at eu sapien.
-- Choose this
-- No, choose this
+unknown: [speed=3]*static noise*
+unknown: *static* Can- *static* -hear? *static*
+unknown: *static* -come *static* me.
