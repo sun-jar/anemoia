@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=13 format=4 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -6,6 +6,23 @@
 [ext_resource type="AudioStream" uid="uid://djno2euxrvjdx" path="res://assets/sfx/beep_n_glitch_07.wav" id="4_xanlp"]
 [ext_resource type="AudioStream" uid="uid://ufgl63baue51" path="res://assets/sfx/beep_n_glitch_06.wav" id="5_lu07r"]
 [ext_resource type="PackedScene" uid="uid://b1or3r36ptmby" path="res://scenes/entity/Player.tscn" id="6_5e2qs"]
+[ext_resource type="Texture2D" uid="uid://dd3k4c8c25e3m" path="res://assets/tiles.png" id="6_eywet"]
+[ext_resource type="PackedScene" uid="uid://dgp8hfvqec432" path="res://scenes/WaveManager.tscn" id="6_r8imk"]
+[ext_resource type="PackedScene" uid="uid://cu31cxpasagc0" path="res://scenes/Wave.tscn" id="7_5hugr"]
+[ext_resource type="Texture2D" uid="uid://dtcqk0iwuiw33" path="res://assets/black.png" id="7_7lo6a"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
+texture = ExtResource("6_eywet")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_dmteh"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_4kww6")
 
 [node name="TheLaboratory" type="Node2D"]
 script = ExtResource("1_he5fh")
@@ -24,11 +41,23 @@ stream = ExtResource("4_xanlp")
 [node name="Beep3" type="AudioStreamPlayer" parent="LabAudioManager"]
 stream = ExtResource("5_lu07r")
 
+[node name="Stage1MapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD8//3/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wMAAAAAAAAAAAD8//f/AAAAAAAAAAD8//j/AAAAAAAAAAD8//n/AAAAAAAAAAD8//r/AAAAAAAAAAD8//v/AAAAAAAAAAD8//z/AAAAAAAAAAD8/wQAAAAAAAAAAAD8/wUAAAAAAAAAAAD8/wYAAAAAAAAAAAD8/wcAAAAAAAAAAAD8/wgAAAAAAAAAAAD9//z/AAAAAAAAAAD+//z/AAAAAAAAAAD///z/AAAAAAAAAAAAAPz/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAADAPz/AAAAAAAAAAAEAPz/AAAAAAAAAAAFAPz/AAAAAAAAAAAGAPz/AAAAAAAAAAAGAPn/AAAAAAAAAAAGAPr/AAAAAAAAAAAGAPv/AAAAAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAKAAIAAAAAAAAAAAAKAAMAAAAAAAAAAAAKAAQAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAYAAAAAAAAAAAD8/wkAAAAAAAAAAAD8/woAAAAAAAAAAAD8/wsAAAAAAAAAAAD8/wwAAAAAAAAAAAD9/wwAAAAAAAAAAAD+/wwAAAAAAAAAAAD//wwAAAAAAAAAAAAAAAwAAAAAAAAAAAABAAwAAAAAAAAAAAACAAwAAAAAAAAAAAADAAwAAAAAAAAAAAAEAAwAAAAAAAAAAAAFAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAIAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAKAAwAAAAAAAAAAAALAAwAAAAAAAAAAAAMAAwAAAAAAAAAAAANAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAAPAAwAAAAAAAAAAAAQAAwAAAAAAAAAAAAQAAsAAAAAAAAAAAAQAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAcAAAAAAAAAAAAQAAYAAAAAAAAAAAAQAAUAAAAAAAAAAAAQAAQAAAAAAAAAAAAQAAMAAAAAAAAAAAAQAAIAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAP//AAAAAAAAAAAQAP7/AAAAAAAAAAAQAP3/AAAAAAAAAAAQAPz/AAAAAAAAAAAQAPv/AAAAAAAAAAAQAPr/AAAAAAAAAAAQAPn/AAAAAAAAAAAQAPj/AAAAAAAAAAAPAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAMAPv/AAAAAAAAAAAMAPz/AAAAAAAAAAAMAP3/AAAAAAAAAAAMAP7/AAAAAAAAAAAQAPf/AAAAAAAAAAAQAPb/AAAAAAAAAAAQAPX/AAAAAAAAAAAMAPT/AAAAAAAAAAALAPT/AAAAAAAAAAAKAPT/AAAAAAAAAAAJAPT/AAAAAAAAAAAIAPT/AAAAAAAAAAAHAPT/AAAAAAAAAAAGAPT/AAAAAAAAAAAFAPT/AAAAAAAAAAAEAPT/AAAAAAAAAAADAPT/AAAAAAAAAAACAPT/AAAAAAAAAAABAPT/AAAAAAAAAAAAAPT/AAAAAAAAAAD///T/AAAAAAAAAAD+//T/AAAAAAAAAAD9//T/AAAAAAAAAAD8//X/AAAAAAAAAAD8//b/AAAAAAAAAAD8//T/AAAAAAAAAAANAPT/AAAAAAAAAAAOAPT/AAAAAAAAAAAPAPT/AAAAAAAAAAAQAPT/AAAAAAAAAAAKAAcAAAAAAAAAAAAKAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_dmteh")
+
+[node name="MapLayerCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="BlackLayer" type="Sprite2D" parent="MapLayerCopy"]
+position = Vector2(651, 107)
+scale = Vector2(1.88177, 2.02593)
+texture = ExtResource("7_7lo6a")
+
+[node name="WaveManager" parent="MapLayerCopy" instance=ExtResource("6_r8imk")]
+wave = ExtResource("7_5hugr")
+
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-limit_left = -950
-limit_top = -550
-limit_right = 950
-limit_bottom = 550

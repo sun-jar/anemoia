@@ -2,6 +2,10 @@ extends Node2D
 
 var nameless_sleep = preload("res://assets/entity/nameless_sleep_1.png")
 var nameless_awake = preload("res://assets/entity/nameless_1.png")
+
+@onready var wave_manager = $MapLayerCopy/WaveManager
+@onready var player_node = $Player
+
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
 @onready var beep2 = $LabAudioManager/Beep2
@@ -31,7 +35,14 @@ func _start_game():
 func _ready() -> void:
 	if not GameManager.game_started:
 		await _start_game()
+	# TODO: ini movement ga disabled kalo dialog masih jalan
+	# so harus ada cara buat disable dlu UNTIL dialogue finishes
 	GameManager.movement_disabled = false
+	player_node.visible = true
+	
+	wave_manager.player_node = player_node
+	player_node.trigger_wave.connect(wave_manager.emit_wave)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -2,7 +2,7 @@ extends Node
 
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
-var game_started: bool = false
+var game_started: bool = true
 var player_stage: int = 1
 var movement_disabled: bool = true
 

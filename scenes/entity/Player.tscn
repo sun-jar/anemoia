@@ -10,6 +10,7 @@ size = Vector2(78, 60)
 [node name="Player" instance=ExtResource("1_c2u52")]
 script = ExtResource("2_pcdnv")
 speed = 400
+wave_cooldown = 1.0
 
 [node name="EntitySprite" parent="." index="0"]
 texture = ExtResource("2_36qqs")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu31cxpasagc0"]
+
+[ext_resource type="Shader" path="res://scripts/shaders/Wave.gdshader" id="1_lr63y"]
+[ext_resource type="Texture2D" uid="uid://dl5dqyh864w8t" path="res://assets/circle_mask.png" id="2_wrrxu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8frg4"]
+shader = ExtResource("1_lr63y")
+
+[node name="Wave" type="Sprite2D"]
+material = SubResource("ShaderMaterial_8frg4")
+scale = Vector2(0.015, 0.015)
+texture = ExtResource("2_wrrxu")
