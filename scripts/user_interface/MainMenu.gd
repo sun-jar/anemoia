@@ -45,13 +45,11 @@ func _on_exit_pressed() -> void:
 func _on_new_game_pressed() -> void:
 	var tween = _exit_fade_out_tween()
 	await tween.finished
-	GameManager.game_started = false
 	get_tree().change_scene_to_packed(laboratory_scene)
 
 
 func _on_continue_pressed() -> void:
+	GameManager.load_game()
 	var tween = _exit_fade_out_tween()
 	await tween.finished
-	GameManager.game_started = true
-	GameManager.load_game()
 	get_tree().change_scene_to_packed(laboratory_scene)

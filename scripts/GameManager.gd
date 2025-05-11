@@ -30,6 +30,8 @@ func _on_timeline_ended():
 func save_game(game):
 	var player = game.get_node("Player")
 	var game_data = {
+		"game_started": GameManager.game_started,
+		
 		"player_speed": player.speed,
 		"player_wave_cooldown": player.wave_cooldown,
 		"player_health": player.health,
@@ -52,4 +54,5 @@ func load_game():
 	var game_data = JSON.parse_string(json_string)
 	
 	Globals.game_data = game_data
+	GameManager.game_started = game_data.get("game_started", false)
 	

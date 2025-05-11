@@ -50,6 +50,7 @@ func _ready() -> void:
 		Globals.game_data = null
 		_start_game()
 		GameManager.game_started = true
+		GameManager.save_game(self)
 	else:
 		if (Globals.game_data != null):
 			_load_saved()
