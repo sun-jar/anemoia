@@ -39,13 +39,13 @@ func save_game(game):
 	}
 
 	var json_string = JSON.stringify(game_data)
-	var save_file = FileAccess.open("res://savegame.json", FileAccess.WRITE)
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
 	
 	save_file.store_line(json_string)
 	save_file.close()
 	
 func load_game():
-	var save_file = FileAccess.open("res://savegame.json", FileAccess.READ)
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.READ)
 	var json_string = save_file.get_as_text()
 	save_file.close()
 	
