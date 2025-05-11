@@ -30,6 +30,8 @@ func _on_timeline_ended():
 func save_game(game):
 	var player = game.get_node("Player")
 	var game_data = {
+		"game_started": GameManager.game_started,
+		
 		"player_speed": player.speed,
 		"player_wave_cooldown": player.wave_cooldown,
 		"player_health": player.health,
@@ -39,17 +41,18 @@ func save_game(game):
 	}
 
 	var json_string = JSON.stringify(game_data)
-	var save_file = FileAccess.open("res://savegame.json", FileAccess.WRITE)
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
 	
 	save_file.store_line(json_string)
 	save_file.close()
 	
 func load_game():
-	var save_file = FileAccess.open("res://savegame.json", FileAccess.READ)
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.READ)
 	var json_string = save_file.get_as_text()
 	save_file.close()
 	
 	var game_data = JSON.parse_string(json_string)
 	
 	Globals.game_data = game_data
+	GameManager.game_started = game_data.get("game_started", false)
 	
