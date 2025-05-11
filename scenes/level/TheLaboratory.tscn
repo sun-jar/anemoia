@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=14 format=4 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dgp8hfvqec432" path="res://scenes/WaveManager.tscn" id="6_r8imk"]
 [ext_resource type="PackedScene" uid="uid://cu31cxpasagc0" path="res://scenes/Wave.tscn" id="7_5hugr"]
 [ext_resource type="Texture2D" uid="uid://dtcqk0iwuiw33" path="res://assets/black.png" id="7_7lo6a"]
+[ext_resource type="PackedScene" uid="uid://rxerk6xulbkl" path="res://scenes/user_interface/PauseMenu.tscn" id="11_vmmhu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
 texture = ExtResource("6_eywet")
@@ -61,3 +62,7 @@ wave = ExtResource("7_5hugr")
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
