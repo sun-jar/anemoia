@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 AudioManager="*res://scenes/AudioManager.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 GameManager="*res://scenes/GameManager.tscn"
+Globals="*res://scripts/Globals.gd"
 
 [dialogic]
 

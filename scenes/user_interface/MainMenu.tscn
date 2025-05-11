@@ -66,6 +66,7 @@ alignment = 0
 script = ExtResource("3_qavlj")
 
 [node name="Continue" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = " CONTINUE"
@@ -89,6 +90,7 @@ script = ExtResource("3_qavlj")
 [connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" method="_on_mouse_exited"]
+[connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Settings" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_entered"]

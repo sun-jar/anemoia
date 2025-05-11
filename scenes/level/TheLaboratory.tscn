@@ -47,6 +47,7 @@ tile_map_data = PackedByteArray("AAD8//3/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAA
 tile_set = SubResource("TileSet_dmteh")
 
 [node name="MapLayerCopy" type="BackBufferCopy" parent="."]
+visible = false
 copy_mode = 2
 
 [node name="BlackLayer" type="Sprite2D" parent="MapLayerCopy"]
@@ -58,6 +59,5 @@ texture = ExtResource("7_7lo6a")
 wave = ExtResource("7_5hugr")
 
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
-visible = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

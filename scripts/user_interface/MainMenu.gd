@@ -1,6 +1,7 @@
 extends Control
 
 @onready var hover_stylebox := theme.get_stylebox("hover", "Button") as StyleBoxFlat
+@onready var continue_game = get_node("%Continue")
 @export var laboratory_scene : PackedScene
 
 var animation_finished = false
@@ -15,6 +16,9 @@ func _ready() -> void:
 	await tween.finished
 	AudioManager.play_music()
 	animation_finished = true
+	
+	if (FileAccess.file_exists("res://savegame.json")):
+		continue_game.disabled = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -35,4 +39,11 @@ func _on_new_game_pressed() -> void:
 	tween.tween_property($ColorRect, "modulate:a", 0.0, 1.0)
 	tween.tween_property(AudioManager.main_menu_theme, "volume_db", -80, 1.0)
 	await tween.finished
+	GameManager.game_started = false
+	get_tree().change_scene_to_packed(laboratory_scene)
+
+
+func _on_continue_pressed() -> void:
+	GameManager.game_started = true
+	GameManager.load_game()
 	get_tree().change_scene_to_packed(laboratory_scene)

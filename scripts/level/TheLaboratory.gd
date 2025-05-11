@@ -12,6 +12,15 @@ var nameless_awake = preload("res://assets/entity/nameless_1.png")
 @onready var beep2 = $LabAudioManager/Beep2
 @onready var beep3 = $LabAudioManager/Beep3
 
+func _load_saved():
+	var game_data = Globals.game_data
+	
+	player_node.health = game_data.player_health
+	player_node.position.x = game_data.player_x
+	player_node.position.y = game_data.player_y
+	player_node.speed = game_data.player_speed
+	player_node.wave_cooldown = game_data.player_wave_cooldown
+
 # Called when the node enters the scene tree for the first time.
 func _start_game():
 	player_sprite.texture = nameless_sleep
@@ -38,16 +47,22 @@ func _start_game():
 	
 func _ready() -> void:
 	if not GameManager.game_started:
+		Globals.game_data = null
 		_start_game()
 		GameManager.game_started = true
 	else:
+		if (Globals.game_data != null):
+			_load_saved()
+
 		GameManager.movement_disabled = false
 		player_node.visible = true
 	
 	wave_manager.player_node = player_node
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	
-
+func _input(event: InputEvent) -> void:
+	if Input.is_key_pressed(KEY_O):
+		GameManager.save_game(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
