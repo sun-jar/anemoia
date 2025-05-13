@@ -1,5 +1,7 @@
 extends Control
 
+signal save_game
+
 func _ready() -> void:
 	visible = false
 
@@ -21,3 +23,6 @@ func _on_main_menu_pressed() -> void:
 
 func _on_unpause_pressed() -> void:
 	unpause()
+
+func _on_save_pressed() -> void:
+	emit_signal("save_game")

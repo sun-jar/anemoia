@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00392157, 0.00392157, 0.00392157, 0.858824)
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,18 +31,24 @@ grow_vertical = 2
 theme_override_constants/margin_left = 700
 theme_override_constants/margin_right = 700
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 72
+theme_override_constants/separation = 27
 
-[node name="Unpause" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "RETURN TO GAME"
+text = "RESUME"
 
-[node name="MainMenu" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="Save" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "MAIN MENU"
 
-[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
-[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

@@ -46,6 +46,8 @@ func _start_game():
 	get_viewport().set_input_as_handled()
 	
 func _ready() -> void:
+	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
+	
 	if not GameManager.game_started:
 		Globals.game_data = null
 		_start_game()
@@ -60,10 +62,6 @@ func _ready() -> void:
 	
 	wave_manager.player_node = player_node
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
-	
-func _input(event: InputEvent) -> void:
-	if Input.is_key_pressed(KEY_O):
-		GameManager.save_game(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -74,3 +72,6 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
+	
+func save_game():
+	GameManager.save_game(self)

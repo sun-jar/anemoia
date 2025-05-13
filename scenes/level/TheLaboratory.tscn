@@ -51,7 +51,6 @@ tile_map_data = PackedByteArray("AAAOAPz/AAAAAAAAAAAPAPz/AAAAAAAAAAAQAPz/AAAAAAA
 tile_set = SubResource("TileSet_dmteh")
 
 [node name="MapLayerCopy" type="BackBufferCopy" parent="."]
-visible = false
 copy_mode = 2
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy"]
@@ -71,7 +70,6 @@ position = Vector2(-3840, 0)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
 
