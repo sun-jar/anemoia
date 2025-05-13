@@ -33,6 +33,7 @@ directories/dch_directory={
 "unknown": "res://dialogue/unknown.dch"
 }
 directories/dtl_directory={
+"guide": "res://dialogue/guide.dtl",
 "timeline": "res://dialogue/timeline.dtl"
 }
 extensions_folder="res://addons/dialogic_additions"
