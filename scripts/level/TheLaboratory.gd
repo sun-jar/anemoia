@@ -68,3 +68,9 @@ func _input(event: InputEvent) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+
+func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		GameManager.start_dialogue("guide")
+	$DialogueTrigger1.queue_free()
