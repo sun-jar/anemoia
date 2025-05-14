@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqid1bi8w6hdx"
-path="res://.godot/imported/nameless_sleep_1.png-dab902822c52bd11804660845d88aec6.ctex"
+uid="uid://cewywkf5lcc0t"
+path="res://.godot/imported/wall_sprite.png-5e4c33fb56037cf5cf89074e901a8ae6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/entity/nameless_sleep_1.png"
-dest_files=["res://.godot/imported/nameless_sleep_1.png-dab902822c52bd11804660845d88aec6.ctex"]
+source_file="res://assets/wall_sprite.png"
+dest_files=["res://.godot/imported/wall_sprite.png-5e4c33fb56037cf5cf89074e901a8ae6.ctex"]
 
 [params]
 

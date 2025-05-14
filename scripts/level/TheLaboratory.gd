@@ -1,11 +1,10 @@
 extends Node2D
 
-var nameless_sleep = preload("res://assets/entity/nameless_sleep_1.png")
-var nameless_awake = preload("res://assets/entity/nameless_1.png")
+var player_in_power_area = false
 
 @onready var wave_manager = $MapLayerCopy/WaveManager
 @onready var player_node = $Player
-@onready var player_sprite = $Player/EntitySprite
+@onready var player_sprite = $Player/AnimatedSprite
 
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
@@ -23,7 +22,7 @@ func _load_saved():
 
 # Called when the node enters the scene tree for the first time.
 func _start_game():
-	player_sprite.texture = nameless_sleep
+	player_sprite.play("sleep1")
 	var tween = create_tween()
 	tween.tween_interval(initial_beep.stream.get_length()-2.73)
 	initial_beep.play()
@@ -38,7 +37,7 @@ func _start_game():
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
-	player_sprite.texture = nameless_awake
+	player_sprite.play("idle1")
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
@@ -65,7 +64,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("interact") and player_in_power_area:
+		player_node.stage += 1
+		
 
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
@@ -75,3 +76,13 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	
 func save_game():
 	GameManager.save_game(self)
+
+
+func _on_next_stage_trigger_body_entered(body: Node2D) -> void:
+	if body.name == "Player" and not player_in_power_area:
+		player_in_power_area = true
+		
+		
+func _on_next_stage_trigger_body_exited(body: Node2D) -> void:
+	if body.name == "Player" and player_in_power_area:
+		player_in_power_area = false
