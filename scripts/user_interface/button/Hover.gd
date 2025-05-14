@@ -8,7 +8,7 @@ var tween: Tween
 
 func _ready():
 	var shared_stylebox := root_node.theme.get_stylebox("hover", "Button") as StyleBoxFlat
-	focus_mode = Control.FOCUS_ALL
+	focus_mode = Control.FOCUS_ALL 
 	hover_stylebox = shared_stylebox.duplicate() as StyleBoxFlat
 	hover_stylebox.bg_color.a = 0.0
 	add_theme_stylebox_override("hover", hover_stylebox)
