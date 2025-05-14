@@ -5,6 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8frg4"]
 shader = ExtResource("1_lr63y")
+shader_parameter/color_addition = Vector3(0.1, 0.1, 0.1)
 
 [node name="Wave" type="Sprite2D"]
 material = SubResource("ShaderMaterial_8frg4")
