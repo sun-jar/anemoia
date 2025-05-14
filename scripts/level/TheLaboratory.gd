@@ -79,25 +79,35 @@ func _process(_delta: float) -> void:
 
 func next_stage():
 	if GameManager.player_stage == 2:
-		var next_level_wave = wave_manager.wave.instantiate()
+		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
+		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
+		var power_node = get_node_or_null(power_node_str % power_node_stage)
+		power_node.material = null
 		
+		var next_level_wave = wave_manager.wave.instantiate()
 		next_level_wave.global_position = player_node.global_position
+		next_level_wave.material = next_level_wave.material.duplicate()
+		next_level_wave.material.set_shader_parameter("color_addition", Vector3(0, 0, 0))
 		wave_manager.add_child(next_level_wave)
 		
 		var expand_tween = create_tween()
 		var fade_tween = create_tween()
-		expand_tween.tween_property(next_level_wave, "scale", Vector2(6.0, 6.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		fade_tween.tween_property(next_level_wave, "modulate:a", 1.0/3.0, 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		var power_tween = create_tween()
+		expand_tween.tween_property(next_level_wave, "scale", Vector2(6.0, 6.0), 6.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		fade_tween.tween_property(next_level_wave, "modulate", Color(1.0/3.0, 1.0/3.0, 1.0/3.0), 6.0)
+		power_tween.tween_property(power_node, "modulate:a", 0.0, 5.0)
 		await expand_tween.finished
 		
+		power_node.queue_free()
 		var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
-		map_stage_1_scene_ins.modulate.a = 1.0/3.0
+		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 		mask_layers.add_child(map_stage_1_scene_ins)
 		
 		next_level_wave.queue_free()
 		map_stage_1.queue_free()
 		
-		#map_stage_2.visible = true
+		await get_tree().process_frame
+		map_stage_2.visible = true
 
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
@@ -109,11 +119,11 @@ func save_game():
 	GameManager.save_game(self)
 
 
-func _on_next_stage_trigger_body_entered(body: Node2D) -> void:
+func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not player_in_power_area:
 		player_in_power_area = true
 		
 		
-func _on_next_stage_trigger_body_exited(body: Node2D) -> void:
+func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and player_in_power_area:
 		player_in_power_area = false
