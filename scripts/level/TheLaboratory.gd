@@ -6,10 +6,16 @@ var player_in_power_area = false
 @onready var player_node = $Player
 @onready var player_sprite = $Player/AnimatedSprite
 
+@onready var mask_layers = $MapLayerCopy/MaskLayers
+@onready var map_stage_1 = $MapLayer/Stage1MapLayer
+@onready var map_stage_2 = $MapLayer/Stage3MapLayer
+
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
 @onready var beep2 = $LabAudioManager/Beep2
 @onready var beep3 = $LabAudioManager/Beep3
+
+@export var map_stage_1_scene: PackedScene
 
 func _load_saved():
 	var game_data = Globals.game_data
@@ -66,6 +72,12 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and player_in_power_area:
 		player_node.stage += 1
+		if player_node.stage == 2:
+			var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+			map_stage_1_scene_ins.modulate.a = 75
+			mask_layers.add_child(map_stage_1_scene_ins)
+			map_stage_1.queue_free()
+			map_stage_2.visible = true
 		
 
 
