@@ -32,6 +32,7 @@ func save_game(game):
 	var game_data = {
 		"game_started": GameManager.game_started,
 		
+		"player_stage": GameManager.player_stage,
 		"player_speed": player.speed,
 		"player_wave_cooldown": player.wave_cooldown,
 		"player_health": player.health,

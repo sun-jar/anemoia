@@ -20,6 +20,8 @@ var player_in_power_area = false
 func _load_saved():
 	var game_data = Globals.game_data
 	
+	GameManager.player_stage = game_data.player_stage
+	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
 	player_node.position.y = game_data.player_y
@@ -61,6 +63,7 @@ func _ready() -> void:
 	else:
 		if (Globals.game_data != null):
 			_load_saved()
+		next_stage()
 
 		GameManager.movement_disabled = false
 		player_node.visible = true
@@ -71,14 +74,30 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and player_in_power_area:
-		player_node.stage += 1
-		if player_node.stage == 2:
-			var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
-			map_stage_1_scene_ins.modulate.a = 75
-			mask_layers.add_child(map_stage_1_scene_ins)
-			map_stage_1.queue_free()
-			map_stage_2.visible = true
+		GameManager.player_stage += 1
+		next_stage()
+
+func next_stage():
+	if GameManager.player_stage == 2:
+		var next_level_wave = wave_manager.wave.instantiate()
 		
+		next_level_wave.global_position = player_node.global_position
+		wave_manager.add_child(next_level_wave)
+		
+		var expand_tween = create_tween()
+		var fade_tween = create_tween()
+		expand_tween.tween_property(next_level_wave, "scale", Vector2(6.0, 6.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		fade_tween.tween_property(next_level_wave, "modulate:a", 1.0/3.0, 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		await expand_tween.finished
+		
+		var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+		map_stage_1_scene_ins.modulate.a = 1.0/3.0
+		mask_layers.add_child(map_stage_1_scene_ins)
+		
+		next_level_wave.queue_free()
+		map_stage_1.queue_free()
+		
+		#map_stage_2.visible = true
 
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:

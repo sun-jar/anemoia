@@ -19,7 +19,6 @@ var requested_state = StableState.IDLE
 var last_direction = Vector2.ZERO
 
 var last_wave_time: float
-var stage: int = 1
 
 var idle_timer := 0.0
 const CUTOFF_DURATION := 0.15
@@ -43,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		requested_state = StableState.MOVE
 		
 	elif idle_timer < CUTOFF_DURATION and move_loop_started:
-		_ensure_play("move" + str(stage) + "_u")
+		_ensure_play("move" + str(GameManager.player_stage) + "_u")
 	elif idle_timer >= CUTOFF_DURATION:
 		requested_state = StableState.IDLE
 
@@ -56,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		_start_transition_to_idle()
 	else:
 		if current_state == State.IDLE:
-			_ensure_play("idle" + str(stage))
+			_ensure_play("idle" + str(GameManager.player_stage))
 		else:
 			_play_move_loop(last_direction)
 
@@ -72,23 +71,23 @@ func _process(_delta: float) -> void:
 
 func _start_transition_to_move():
 	current_state = State.T_IM
-	anim.play("idle" + str(stage) + "_move")
+	anim.play("idle" + str(GameManager.player_stage) + "_move")
 
 func _start_transition_to_idle():
 	current_state = State.T_MI
-	anim.play("move" + str(stage) + "_idle")
+	anim.play("move" + str(GameManager.player_stage) + "_idle")
 
 func _play_move_loop(direction):
 	move_loop_started = true
 	var anim_name := ""
 	if direction.y < 0 or direction.y > 0:
-		anim_name = "move" + str(stage) + "_u"
+		anim_name = "move" + str(GameManager.player_stage) + "_u"
 	elif direction.x < 0:
-		anim_name = "move" + str(stage) + "_l"
+		anim_name = "move" + str(GameManager.player_stage) + "_l"
 	elif direction.x > 0:
-		anim_name = "move" + str(stage) + "_r"
+		anim_name = "move" + str(GameManager.player_stage) + "_r"
 	else:
-		anim_name = "move" + str(stage) + "_u"
+		anim_name = "move" + str(GameManager.player_stage) + "_u"
 		move_loop_started = false
 	_ensure_play(anim_name)
 
@@ -103,7 +102,7 @@ func _on_animated_sprite_animation_finished():
 			_play_move_loop(last_direction)
 		State.T_MI:
 			current_state = State.IDLE
-			_ensure_play("idle" + str(stage))
+			_ensure_play("idle" + str(GameManager.player_stage))
 		_:
 			return
 
