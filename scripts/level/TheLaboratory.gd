@@ -1,6 +1,7 @@
 extends Node2D
 
 var player_in_power_area = false
+var chroma_shader = preload("res://scripts/shaders/WaveChroma.gdshader")
 
 @onready var wave_manager = $MapLayerCopy/WaveManager
 @onready var player_node = $Player
@@ -53,6 +54,7 @@ func _start_game():
 	get_viewport().set_input_as_handled()
 	
 func _ready() -> void:
+	map_stage_1.material = chroma_shader
 	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
 	
 	if not GameManager.game_started:
@@ -79,6 +81,9 @@ func _process(_delta: float) -> void:
 
 func next_stage():
 	if GameManager.player_stage == 2:
+		var chroma_material = ShaderMaterial.new()
+		chroma_material.shader = chroma_shader
+		
 		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
 		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
 		var power_node = get_node_or_null(power_node_str % power_node_stage)
@@ -86,23 +91,33 @@ func next_stage():
 		
 		var next_level_wave = wave_manager.wave.instantiate()
 		next_level_wave.global_position = player_node.global_position
-		next_level_wave.material = next_level_wave.material.duplicate()
-		next_level_wave.material.set_shader_parameter("color_addition", Vector3(0, 0, 0))
+		next_level_wave.material = chroma_material
 		wave_manager.add_child(next_level_wave)
 		
+		var radius_tween = create_tween()
 		var expand_tween = create_tween()
 		var fade_tween = create_tween()
 		var power_tween = create_tween()
-		expand_tween.tween_property(next_level_wave, "scale", Vector2(6.0, 6.0), 6.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		fade_tween.tween_property(next_level_wave, "modulate", Color(1.0/3.0, 1.0/3.0, 1.0/3.0), 6.0)
-		power_tween.tween_property(power_node, "modulate:a", 0.0, 5.0)
-		await expand_tween.finished
+		
+		var set_shader_radius = func (value):
+			chroma_material.set_shader_parameter("radius", value)
+			
+		var set_shader_fade = func (value):
+			chroma_material.set_shader_parameter("alpha", value)
+		
+		radius_tween.tween_method(set_shader_radius, 0.1, 1.0, 2.0)
+		expand_tween.tween_property(next_level_wave, "scale", Vector2(3.0, 3.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		fade_tween.tween_method(set_shader_fade, 1.0, 1.0/3.0, 4.0)
+		power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
+		await fade_tween.finished
 		
 		power_node.queue_free()
 		var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
 		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 		mask_layers.add_child(map_stage_1_scene_ins)
 		
+		next_level_wave.visible = false
+		await get_tree().process_frame
 		next_level_wave.queue_free()
 		map_stage_1.queue_free()
 		
