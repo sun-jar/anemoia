@@ -17,6 +17,7 @@ func _ready() -> void:
 	tween.tween_property($ColorRect, "modulate:a", 1.0, 1.0)
 	hover_stylebox.bg_color.a = 0.0
 	await tween.finished
+	AudioManager.main_menu_theme.volume_db = 0.0
 	AudioManager.play_music()
 	animation_finished = true
 
@@ -46,11 +47,12 @@ func _on_new_game_pressed() -> void:
 	GameManager.game_started = false
 	var tween = _exit_fade_out_tween()
 	await tween.finished
+	AudioManager.pause_music()
 	get_tree().change_scene_to_packed(laboratory_scene)
-
 
 func _on_continue_pressed() -> void:
 	GameManager.load_game()
 	var tween = _exit_fade_out_tween()
 	await tween.finished
+	AudioManager.pause_music()
 	get_tree().change_scene_to_packed(laboratory_scene)

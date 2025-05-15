@@ -14,3 +14,6 @@ func _process(_delta: float) -> void:
 
 func play_music():
 	main_menu_theme.play()
+	
+func pause_music():
+	main_menu_theme.stop()
