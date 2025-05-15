@@ -1,5 +1,9 @@
 shader_type canvas_item;
 
+uniform vec2 r_displacement = vec2(4.0, 1.0);
+uniform vec2 g_displacement = vec2(0.0, 0.0);
+uniform vec2 b_displacement = vec2(-4.0, 1.0);
+
 uniform float strength : hint_range(0.0, 0.1, 0.001) = 0.08;
 uniform vec2 center = vec2(0.5, 0.5);
 uniform float radius : hint_range(0.0, 1.0, 0.001) = 0.25;
@@ -33,9 +37,9 @@ void fragment() {
 	vec2 final_st = st * (1.0 - mask) + biased_st * mask;
 
 	// Sample the screen texture for each color channel
-	vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec);
-	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec);
-	vec4 ori = texture(SCREEN_TEXTURE, final_st);
+	vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec + vec2(SCREEN_PIXEL_SIZE*r_displacement));
+	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec + vec2(SCREEN_PIXEL_SIZE*g_displacement));
+	vec4 ori = texture(SCREEN_TEXTURE, final_st + vec2(SCREEN_PIXEL_SIZE*g_displacement));
 	
 	// Combine channels to create the final color
 	COLOR = vec4(red.r, ori.g, blue.b, alpha);

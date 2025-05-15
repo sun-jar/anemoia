@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cu31cxpasagc0"]
+[gd_scene load_steps=5 format=3 uid="uid://cu31cxpasagc0"]
 
 [ext_resource type="Shader" path="res://scripts/shaders/Wave.gdshader" id="1_lr63y"]
 [ext_resource type="Texture2D" uid="uid://dl5dqyh864w8t" path="res://assets/circle_mask.png" id="2_wrrxu"]
+[ext_resource type="Script" path="res://scripts/Wave.gd" id="3_2krqf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8frg4"]
 shader = ExtResource("1_lr63y")
@@ -11,3 +12,4 @@ shader_parameter/color_addition = Vector3(0.1, 0.1, 0.1)
 material = SubResource("ShaderMaterial_8frg4")
 scale = Vector2(0.015, 0.015)
 texture = ExtResource("2_wrrxu")
+script = ExtResource("3_2krqf")

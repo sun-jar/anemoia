@@ -18,11 +18,5 @@ func emit_wave():
 	var wave_node = wave.instantiate()
 	wave_node.global_position = player_node.global_position
 	add_child(wave_node)
-	
-	var wave_tween = create_tween()
-	var fade_tween = create_tween()
-	wave_tween.tween_property(wave_node, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	fade_tween.tween_property(wave_node, "modulate:a", 0.0, 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	wave_tween.tween_callback(Callable(wave_node, "queue_free"))
+	wave_node.emit_wave()
 	
