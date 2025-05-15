@@ -82,14 +82,14 @@ func _process(_delta: float) -> void:
 		GameManager.player_stage += 1
 		next_stage(true)
 
-func next_stage(effect: bool):
+func next_stage(with_effect: bool):
 	if GameManager.player_stage == 2:
 		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
 		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
 		var power_node = get_node_or_null(power_node_str % power_node_stage)
 		power_node.material = null
 		
-		if effect:
+		if with_effect:
 			var next_level_wave = wave_manager.wave.instantiate()
 			next_level_wave.global_position = player_node.global_position
 			wave_manager.add_child(next_level_wave)

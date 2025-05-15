@@ -47,12 +47,12 @@ func _on_new_game_pressed() -> void:
 	GameManager.game_started = false
 	var tween = _exit_fade_out_tween()
 	await tween.finished
-	AudioManager.pause_music()
+	AudioManager.stop_music()
 	get_tree().change_scene_to_packed(laboratory_scene)
 
 func _on_continue_pressed() -> void:
 	GameManager.load_game()
 	var tween = _exit_fade_out_tween()
 	await tween.finished
-	AudioManager.pause_music()
+	AudioManager.stop_music()
 	get_tree().change_scene_to_packed(laboratory_scene)
