@@ -242,7 +242,7 @@ wave_cooldown = 1.0
 
 [node name="AnimatedSprite" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_lta0u")
-animation = &"idle1_move"
+animation = &"sleep1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, -9)

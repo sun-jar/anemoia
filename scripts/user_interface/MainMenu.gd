@@ -43,6 +43,7 @@ func _on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_new_game_pressed() -> void:
+	GameManager.game_started = false
 	var tween = _exit_fade_out_tween()
 	await tween.finished
 	get_tree().change_scene_to_packed(laboratory_scene)
