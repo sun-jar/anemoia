@@ -8,13 +8,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 	
-func create_shader_tween(material: ShaderMaterial, parameter_name: String, from_value, to_value, duration: float) -> Tween:
+func create_shader_tween(shader_material: ShaderMaterial, parameter_name: String, from_value, to_value, duration: float) -> Tween:
 	var tween = create_tween()
 	var set_shader_param = func(value):
-		material.set_shader_parameter(parameter_name, value)
+		shader_material.set_shader_parameter(parameter_name, value)
 	tween.tween_method(set_shader_param, from_value, to_value, duration)
 	return tween
 	
@@ -32,10 +32,10 @@ func emit_shockwave():
 	chroma_material.shader = chroma_shader
 	self.material = chroma_material
 
-	var radius_tween = create_shader_tween(chroma_material, "radius", 0.1, 1.0, 2.0)
+	create_shader_tween(chroma_material, "radius", 0.1, 1.0, 2.0)
+	create_shader_tween(chroma_material, "r_displacement", Vector2(4.0, 2.0), Vector2(0.0, 0.0), 4.0)
+	create_shader_tween(chroma_material, "b_displacement", Vector2(-4.0, -1.0), Vector2(0.0, 0.0), 4.0)
 	var fade_tween = create_shader_tween(chroma_material, "alpha", 1.0, 1.0 / 3.0, 4.0)
-	var r_displacement_tween = create_shader_tween(chroma_material, "r_displacement", Vector2(4.0, 2.0), Vector2(0.0, 0.0), 4.0)
-	var b_displacement_tween = create_shader_tween(chroma_material, "b_displacement", Vector2(-4.0, -1.0), Vector2(0.0, 0.0), 4.0)
 
 	var expand_tween = create_tween()
 	expand_tween.tween_property(self, "scale", Vector2(3.0, 3.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
