@@ -4,7 +4,7 @@ var player_in_power_area = false
 
 @onready var wave_manager = $MapLayerCopy/WaveManager
 @onready var player_node = $Player
-@onready var player_sprite = $Player/AnimatedSprite
+@onready var player_sprite = $Player/AnimationPlayer
 
 @onready var mask_layers = $MapLayerCopy/MaskLayers
 @onready var map_stage_1 = $MapLayer/Stage1MapLayer
