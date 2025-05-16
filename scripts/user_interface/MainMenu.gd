@@ -32,6 +32,7 @@ func _input(event):
 		add_child(wave)
 
 func _exit_fade_out_tween() -> Tween:
+	animation_finished = false
 	var tween = self.create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property($ColorRect, "modulate:a", 0.0, 1.0)
