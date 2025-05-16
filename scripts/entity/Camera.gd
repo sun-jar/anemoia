@@ -15,7 +15,6 @@ var is_done = false
 func _process(delta: float) -> void:
 	if is_shaking:
 		if shake_strength > 0.1:
-			print(shake_strength)
 			shake_strength = lerpf(shake_strength, 0, shake_fade * delta)
 			offset = _random_offset()
 		else:
@@ -40,14 +39,12 @@ func shake(random_strength, fade_intensity):
 	is_buildup_shake = false
 
 func start_buildup_shake(duration, min_strength, max_strength):
-	print("called buildup shake")
 	buildup_duration = duration
 	buildup_min_strength = min_strength
 	buildup_max_strength = max_strength
 	is_buildup_shake = true
 
 func stop_buildup_shake():
-	print("stopped buildup shake")
 	buildup_duration = 0.0
 	buildup_min_strength = 0.0
 	buildup_max_strength = 0.0
