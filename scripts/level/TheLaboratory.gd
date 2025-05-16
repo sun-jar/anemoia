@@ -134,6 +134,7 @@ func next_stage(with_effect: bool):
 		
 		await get_tree().process_frame
 		map_stage_2.visible = true
+		map_stage_2.collision_enabled = true
 	
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
