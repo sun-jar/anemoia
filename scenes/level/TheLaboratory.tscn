@@ -138,7 +138,6 @@ stream = ExtResource("5_lu07r")
 [node name="MapLayer" type="Node2D" parent="."]
 
 [node name="Stage3MapLayer" type="TileMapLayer" parent="MapLayer"]
-visible = false
 texture_filter = 1
 position = Vector2(0, 1)
 scale = Vector2(2, 2)
@@ -146,6 +145,7 @@ tile_map_data = PackedByteArray("AAAOAPz/AgAEAAIAAAAPAPz/AgAEAAIAAAAQAPz/AgAEAAI
 tile_set = SubResource("TileSet_dmteh")
 
 [node name="Power3" type="Sprite2D" parent="MapLayer/Stage3MapLayer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_6cajc")
 position = Vector2(1049.5, -1553)
 texture = ExtResource("9_vanv6")
@@ -159,6 +159,7 @@ shape = SubResource("RectangleShape2D_bxsvq")
 [node name="Stage1MapLayer" parent="MapLayer" instance=ExtResource("11_yh21x")]
 
 [node name="Power1" type="Sprite2D" parent="MapLayer/Stage1MapLayer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_6cajc")
 position = Vector2(1390.5, -1713)
 texture = ExtResource("9_vanv6")
@@ -185,7 +186,6 @@ color = Color(0, 0, 0, 1)
 wave = ExtResource("7_5hugr")
 
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
-visible = false
 position = Vector2(-3840, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -207,4 +207,3 @@ one_shot = true
 [connection signal="body_entered" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_entered"]
 [connection signal="body_exited" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_exited"]
 [connection signal="body_entered" from="DialogueTrigger1" to="." method="_on_dialogue_trigger_1_body_entered"]
-[connection signal="timeout" from="InteractTimer" to="." method="_on_interact_timer_timeout"]
