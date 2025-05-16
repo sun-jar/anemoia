@@ -30,10 +30,7 @@ func _load_saved():
 
 # Called when the node enters the scene tree for the first time.
 func _start_game():
-	GameManager.player_stage = 1
-	player_node.health = 100
-	player_node.speed = 400
-	player_node.wave_cooldown = 1.0
+	GameManager.reset_game(player_node)
 	
 	player_sprite.play("sleep1")
 	var tween = create_tween()
