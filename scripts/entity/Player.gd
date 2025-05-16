@@ -12,7 +12,8 @@ enum State {
 @export var speed = 400
 @export var wave_cooldown = 1.0
 
-@onready var anim = $AnimatedSprite
+@onready var anim = $AnimationPlayer
+var current_anim = ""
 
 var current_state = State.IDLE
 var requested_state = StableState.IDLE
@@ -72,10 +73,12 @@ func _process(_delta: float) -> void:
 func _start_transition_to_move():
 	current_state = State.T_IM
 	anim.play("idle" + str(GameManager.player_stage) + "_move")
+	current_anim = "idle" + str(GameManager.player_stage) + "_move"
 
 func _start_transition_to_idle():
 	current_state = State.T_MI
 	anim.play("move" + str(GameManager.player_stage) + "_idle")
+	current_anim = "move" + str(GameManager.player_stage) + "_idle"
 
 func _play_move_loop(direction):
 	move_loop_started = true
@@ -92,10 +95,11 @@ func _play_move_loop(direction):
 	_ensure_play(anim_name)
 
 func _ensure_play(anim_name: String) -> void:
-	if anim.animation != anim_name:
+	if current_anim != anim_name:
 		anim.play(anim_name)
+		current_anim = anim_name
 
-func _on_animated_sprite_animation_finished():
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	match current_state:
 		State.T_IM:
 			current_state = State.MOVE
