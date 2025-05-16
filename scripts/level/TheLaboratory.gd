@@ -15,6 +15,10 @@ var player_in_power_area = false
 @onready var beep2 = $LabAudioManager/Beep2
 @onready var beep3 = $LabAudioManager/Beep3
 
+@onready var interact_timer = $InteractTimer
+
+@onready var next_wave_trigger = get_node("%Power1")
+
 @export var map_stage_1_scene: PackedScene
 
 func _load_saved():
@@ -75,9 +79,33 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+<<<<<<< Updated upstream
 	if Input.is_action_just_pressed("interact") and player_in_power_area:
 		GameManager.player_stage += 1
 		next_stage(true)
+=======
+	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
+	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
+	var trigger_distance = triger_position.distance_to(player_position)
+	
+	var scaled_distance = 1 / log(max(trigger_distance, 100) / 100) # the formula is just a heuristic lmao
+	
+	var pitch_shift = AudioServer.get_bus_effect(1, 1)
+	pitch_shift.pitch_scale = max(0.01, min(1, scaled_distance))
+	
+func _input(event: InputEvent) -> void:
+	if player_in_power_area:
+		if event.is_action_pressed("interact"):
+			print("pressed")
+			AudioManager.play_shockwave()
+			if not interact_timer.is_stopped():
+				return
+			interact_timer.start()
+		elif event.is_action_released("interact") and not interact_timer.is_stopped():
+			print("stopped")
+			AudioManager.stop_shockwave()
+			interact_timer.stop()
+>>>>>>> Stashed changes
 
 func next_stage(with_effect: bool):
 	if GameManager.player_stage == 2:
@@ -128,3 +156,9 @@ func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
 func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and player_in_power_area:
 		player_in_power_area = false
+
+
+func _on_interact_timer_timeout() -> void:
+	if player_in_power_area and Input.is_action_pressed("interact"):
+		GameManager.player_stage += 1
+		next_stage(true)
