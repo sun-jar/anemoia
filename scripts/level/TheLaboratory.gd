@@ -8,7 +8,7 @@ var player_in_power_area = false
 
 @onready var mask_layers = $MapLayerCopy/MaskLayers
 @onready var map_stage_1 = $MapLayer/Stage1MapLayer
-@onready var map_stage_2 = $MapLayer/Stage3MapLayer
+@onready var map_stage_2 = $MapLayer/Stage2MapLayer
 
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
