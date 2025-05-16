@@ -145,6 +145,7 @@ tile_map_data = PackedByteArray("AAAOAPz/AgAEAAIAAAAPAPz/AgAEAAIAAAAQAPz/AgAEAAI
 tile_set = SubResource("TileSet_dmteh")
 
 [node name="Power3" type="Sprite2D" parent="MapLayer/Stage3MapLayer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_6cajc")
 position = Vector2(1049.5, -1553)
 texture = ExtResource("9_vanv6")
@@ -158,6 +159,7 @@ shape = SubResource("RectangleShape2D_bxsvq")
 [node name="Stage1MapLayer" parent="MapLayer" instance=ExtResource("11_yh21x")]
 
 [node name="Power1" type="Sprite2D" parent="MapLayer/Stage1MapLayer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_6cajc")
 position = Vector2(1390.5, -1713)
 texture = ExtResource("9_vanv6")
@@ -174,6 +176,7 @@ copy_mode = 2
 [node name="MaskLayers" type="Node2D" parent="MapLayerCopy"]
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
+visible = false
 offset_left = -5483.0
 offset_top = -4133.0
 offset_right = 9520.0

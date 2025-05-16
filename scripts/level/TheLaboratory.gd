@@ -15,6 +15,8 @@ var player_in_power_area = false
 @onready var beep2 = $LabAudioManager/Beep2
 @onready var beep3 = $LabAudioManager/Beep3
 
+@onready var next_wave_trigger = get_node("%Power1")
+
 @export var map_stage_1_scene: PackedScene
 
 func _load_saved():
@@ -75,6 +77,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
+	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
+	var trigger_distance = triger_position.distance_to(player_position)
+	
+	var scaled_distance = 1 / log(max(trigger_distance, 100) / 100) # the formula is just a heuristic lmao
+	
+	var pitch_shift = AudioServer.get_bus_effect(1, 1)
+	pitch_shift.pitch_scale = max(0.01, min(1, scaled_distance))
+	
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact") and player_in_power_area:
 		GameManager.player_stage += 1
 		next_stage(true)

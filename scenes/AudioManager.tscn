@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://btq3j6cxt6ykm"]
+[gd_scene load_steps=3 format=3 uid="uid://c80364fw1xkjs"]
 
 [ext_resource type="Script" path="res://scripts/AudioManager.gd" id="1_k07ah"]
 [ext_resource type="AudioStream" uid="uid://dran3n7cbshls" path="res://assets/music/anemoia_menu.mp3" id="2_bgt88"]

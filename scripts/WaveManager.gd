@@ -1,6 +1,7 @@
 extends Node2D
 
 var player_node: CharacterBody2D
+var wave_node: Variant
 
 @export var wave: PackedScene
 
@@ -15,7 +16,7 @@ func _process(_delta: float) -> void:
 	
 	
 func emit_wave():
-	var wave_node = wave.instantiate()
+	wave_node = wave.instantiate()
 	wave_node.global_position = player_node.global_position
 	add_child(wave_node)
 	wave_node.emit_wave()

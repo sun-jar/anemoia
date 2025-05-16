@@ -17,3 +17,4 @@ script = ExtResource("3_2krqf")
 
 [node name="WaveBeep" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_cpayw")
+bus = &"Beep"
