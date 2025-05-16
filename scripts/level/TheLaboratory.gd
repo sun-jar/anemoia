@@ -93,13 +93,11 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if player_in_power_area:
 		if event.is_action_pressed("interact"):
-			print("pressed")
 			AudioManager.play_shockwave()
 			if not interact_timer.is_stopped():
 				return
 			interact_timer.start()
 		elif event.is_action_released("interact") and not interact_timer.is_stopped():
-			print("stopped")
 			AudioManager.stop_shockwave()
 			interact_timer.stop()
 
