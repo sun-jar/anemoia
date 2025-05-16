@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bqtqqjyc45os7"
-path="res://.godot/imported/Electronic Robot Noise-2.wav-de254905a5c928117b237f1dc94b2c62.sample"
+path="res://.godot/imported/Electronic Robot Noise-2.wav-5a2d1f300dda242cdd21c84c59d28ae1.sample"
 
 [deps]
 
-source_file="res://assets/sfx/dialogue/Electronic Robot Noise-2.wav"
-dest_files=["res://.godot/imported/Electronic Robot Noise-2.wav-de254905a5c928117b237f1dc94b2c62.sample"]
+source_file="res://assets/sfx/Electronic Robot Noise-2.wav"
+dest_files=["res://.godot/imported/Electronic Robot Noise-2.wav-5a2d1f300dda242cdd21c84c59d28ae1.sample"]
 
 [params]
 
