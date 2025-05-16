@@ -84,7 +84,6 @@ func _process(_delta: float) -> void:
 	var scaled_distance = -(trigger_distance / 200) - 15 # fine tuned constants
 	
 	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
-	print(AudioServer.get_bus_volume_db(1))
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
 	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
