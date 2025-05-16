@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://r2v3rqs2ft7q"
+path="res://.godot/imported/Electronic Robot Noise-1.wav-d46252a050d24ba8b6d14c8d29c7d103.sample"
+
+[deps]
+
+source_file="res://assets/sfx/Electronic Robot Noise-1.wav"
+dest_files=["res://.godot/imported/Electronic Robot Noise-1.wav-d46252a050d24ba8b6d14c8d29c7d103.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
