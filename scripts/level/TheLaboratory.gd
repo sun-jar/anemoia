@@ -79,11 +79,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-<<<<<<< Updated upstream
-	if Input.is_action_just_pressed("interact") and player_in_power_area:
-		GameManager.player_stage += 1
-		next_stage(true)
-=======
 	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
 	var trigger_distance = triger_position.distance_to(player_position)
@@ -105,7 +100,6 @@ func _input(event: InputEvent) -> void:
 			print("stopped")
 			AudioManager.stop_shockwave()
 			interact_timer.stop()
->>>>>>> Stashed changes
 
 func next_stage(with_effect: bool):
 	if GameManager.player_stage == 2:
