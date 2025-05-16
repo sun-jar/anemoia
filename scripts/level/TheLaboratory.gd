@@ -104,6 +104,7 @@ func next_stage(with_effect: bool):
 		map_stage_1.queue_free()
 		var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
 		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+		map_stage_1_scene_ins.collision_enabled = false
 		mask_layers.add_child(map_stage_1_scene_ins)
 		
 		await get_tree().process_frame
