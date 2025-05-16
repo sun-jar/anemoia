@@ -48,7 +48,8 @@ overrides = {
 "normal_font": "\"res://assets/fonts/Noison-Regular.otf\"",
 "text_size": "36.0",
 "text_use_global_font": "false",
-"text_use_global_size": "false"
+"text_use_global_size": "false",
+"typing_sounds_sounds_folder": "\"res://assets/sfx/dialogue\""
 }
 
 [sub_resource type="Resource" id="Resource_f1d48"]
