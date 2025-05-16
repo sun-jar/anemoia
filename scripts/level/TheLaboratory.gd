@@ -97,9 +97,11 @@ func _input(event: InputEvent) -> void:
 			if not interact_timer.is_stopped():
 				return
 			interact_timer.start()
+			$Player/Camera2D.start_buildup_shake(3.4, 0.2, 4.0)
 		elif event.is_action_released("interact") and not interact_timer.is_stopped():
 			AudioManager.stop_shockwave()
 			interact_timer.stop()
+			$Player/Camera2D.stop_buildup_shake()
 
 func next_stage(with_effect: bool):
 	if GameManager.player_stage == 2:
@@ -112,6 +114,7 @@ func next_stage(with_effect: bool):
 			var next_level_wave = wave_manager.wave.instantiate()
 			next_level_wave.global_position = player_node.global_position
 			wave_manager.add_child(next_level_wave)
+			$Player/Camera2D.shake(25.0, 2.0)
 			
 			var power_tween = create_tween()
 			var fade_tween = next_level_wave.emit_shockwave()
@@ -131,7 +134,7 @@ func next_stage(with_effect: bool):
 		
 		await get_tree().process_frame
 		map_stage_2.visible = true
-
+	
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -150,7 +153,10 @@ func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
 func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and player_in_power_area:
 		player_in_power_area = false
-
+		if Input.is_action_pressed("interact"):
+			AudioManager.stop_shockwave()
+			interact_timer.stop()
+			$Player/Camera2D.stop_buildup_shake()
 
 func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
