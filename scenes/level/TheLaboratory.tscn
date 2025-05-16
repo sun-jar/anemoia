@@ -138,7 +138,6 @@ stream = ExtResource("5_lu07r")
 [node name="MapLayer" type="Node2D" parent="."]
 
 [node name="Stage3MapLayer" type="TileMapLayer" parent="MapLayer"]
-visible = false
 texture_filter = 1
 position = Vector2(0, 1)
 scale = Vector2(2, 2)
@@ -185,7 +184,6 @@ color = Color(0, 0, 0, 1)
 wave = ExtResource("7_5hugr")
 
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
-visible = false
 position = Vector2(-3840, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
