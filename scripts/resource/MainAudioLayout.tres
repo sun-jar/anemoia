@@ -1,0 +1,21 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://yeiok3ak2ccq"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_rqfbq"]
+resource_name = "Reverb"
+room_size = 0.4
+
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_hgxfu"]
+resource_name = "PitchShift"
+
+[resource]
+bus/0/volume_db = -0.030508
+bus/1/name = &"Beep"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_rqfbq")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectPitchShift_hgxfu")
+bus/1/effect/1/enabled = true

@@ -4,7 +4,7 @@ var player_in_power_area = false
 
 @onready var wave_manager = $MapLayerCopy/WaveManager
 @onready var player_node = $Player
-@onready var player_sprite = $Player/AnimatedSprite
+@onready var player_sprite = $Player/AnimationPlayer
 
 @onready var mask_layers = $MapLayerCopy/MaskLayers
 @onready var map_stage_1 = $MapLayer/Stage1MapLayer
@@ -14,6 +14,8 @@ var player_in_power_area = false
 @onready var beep1 = $LabAudioManager/Beep1
 @onready var beep2 = $LabAudioManager/Beep2
 @onready var beep3 = $LabAudioManager/Beep3
+
+@onready var interact_timer = $InteractTimer
 
 @onready var next_wave_trigger = get_node("%Power1")
 
@@ -86,10 +88,18 @@ func _process(_delta: float) -> void:
 	var pitch_shift = AudioServer.get_bus_effect(1, 1)
 	pitch_shift.pitch_scale = max(0.01, min(1, scaled_distance))
 	
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("interact") and player_in_power_area:
-		GameManager.player_stage += 1
-		next_stage(true)
+func _input(event: InputEvent) -> void:
+	if player_in_power_area:
+		if event.is_action_pressed("interact"):
+			print("pressed")
+			AudioManager.play_shockwave()
+			if not interact_timer.is_stopped():
+				return
+			interact_timer.start()
+		elif event.is_action_released("interact") and not interact_timer.is_stopped():
+			print("stopped")
+			AudioManager.stop_shockwave()
+			interact_timer.stop()
 
 func next_stage(with_effect: bool):
 	if GameManager.player_stage == 2:
@@ -140,3 +150,9 @@ func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
 func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and player_in_power_area:
 		player_in_power_area = false
+
+
+func _on_interact_timer_timeout() -> void:
+	if player_in_power_area and Input.is_action_pressed("interact"):
+		GameManager.player_stage += 1
+		next_stage(true)

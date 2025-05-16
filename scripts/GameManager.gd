@@ -18,7 +18,6 @@ func _process(_delta: float) -> void:
 	
 func start_dialogue(title: String) -> void:
 	movement_disabled = true
-	print("Movement got disabled!")
 	Dialogic.timeline_ended.connect(_on_timeline_ended)
 	Dialogic.start(title)
 	
