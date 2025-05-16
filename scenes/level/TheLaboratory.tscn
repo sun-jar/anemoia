@@ -176,6 +176,7 @@ copy_mode = 2
 [node name="MaskLayers" type="Node2D" parent="MapLayerCopy"]
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
+visible = false
 offset_left = -5483.0
 offset_top = -4133.0
 offset_right = 9520.0
