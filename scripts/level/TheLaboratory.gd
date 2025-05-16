@@ -81,10 +81,13 @@ func _process(_delta: float) -> void:
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
 	var trigger_distance = triger_position.distance_to(player_position)
 	
-	var scaled_distance = 1 / log(max(trigger_distance, 100) / 100) # the formula is just a heuristic lmao
+	var scaled_distance = -(trigger_distance / 200) - 15 # fine tuned constants
 	
-	var pitch_shift = AudioServer.get_bus_effect(1, 1)
-	pitch_shift.pitch_scale = max(0.01, min(1, scaled_distance))
+	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
+	print(AudioServer.get_bus_volume_db(1))
+	
+	var pitch_scale = AudioServer.get_bus_effect(1, 1)
+	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
 	
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact") and player_in_power_area:
