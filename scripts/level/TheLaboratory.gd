@@ -121,11 +121,11 @@ func _input(event: InputEvent) -> void:
 			$Player/Camera2D.stop_buildup_shake()
 
 func next_stage(with_effect: bool):
-	var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
-	var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
-	var power_node = get_node_or_null(power_node_str % power_node_stage)
-	power_node.material = null
 	if with_effect:
+		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
+		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
+		var power_node = get_node_or_null(power_node_str % power_node_stage)
+		power_node.material = null
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		GameManager.movement_disabled = true
 		var next_level_wave = wave_manager.wave.instantiate()
