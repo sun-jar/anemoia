@@ -111,10 +111,12 @@ func next_stage(with_effect: bool):
 		power_node.material = null
 		
 		if with_effect:
+			player_node.anim.play("idle2")
+			GameManager.movement_disabled = true
 			var next_level_wave = wave_manager.wave.instantiate()
 			next_level_wave.global_position = player_node.global_position
 			wave_manager.add_child(next_level_wave)
-			$Player/Camera2D.shake(25.0, 2.0)
+			$Player/Camera2D.shake(8.0, 2.0)
 			
 			var power_tween = create_tween()
 			var fade_tween = next_level_wave.emit_shockwave()
@@ -135,6 +137,7 @@ func next_stage(with_effect: bool):
 		await get_tree().process_frame
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
+		GameManager.movement_disabled = false
 	
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
