@@ -17,8 +17,6 @@ var player_in_power_area = false
 
 @onready var interact_timer = $InteractTimer
 
-@onready var next_wave_trigger = get_node("%Power1")
-
 @export var map_stage_1_scene: PackedScene
 
 func _load_saved():
@@ -79,6 +77,7 @@ func _ready() -> void:
 	player_node.trigger_wave.connect(calculate_pitch)
 	
 func calculate_pitch():
+	var next_wave_trigger = get_node("%" + ("Power%d" % GameManager.player_stage))
 	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
 	var trigger_distance = triger_position.distance_to(player_position)
