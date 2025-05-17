@@ -76,9 +76,9 @@ func _ready() -> void:
 	
 	wave_manager.player_node = player_node
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+	player_node.trigger_wave.connect(calculate_pitch)
+	
+func calculate_pitch():
 	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
 	var trigger_distance = triger_position.distance_to(player_position)
@@ -89,6 +89,7 @@ func _process(_delta: float) -> void:
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
 	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
+
 	
 func _input(event: InputEvent) -> void:
 	if player_in_power_area:

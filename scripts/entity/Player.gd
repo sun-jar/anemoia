@@ -2,9 +2,9 @@ extends Entity
 signal trigger_wave
 
 enum StableState { IDLE, MOVE }
-enum State { 
-	IDLE      = 0, 
-	MOVE      = 1, 
+enum State {
+	IDLE      = 0,
+	MOVE      = 1,
 	T_IM      = 2,  # Transition Idle→Move
 	T_MI      = 3   # Transition Move→Idle
 }
@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 
 	if dir != Vector2.ZERO:
 		requested_state = StableState.MOVE
-		
+
 	elif idle_timer < CUTOFF_DURATION and move_loop_started:
 		_ensure_play("move" + str(GameManager.player_stage) + "_u")
 	elif idle_timer >= CUTOFF_DURATION:
