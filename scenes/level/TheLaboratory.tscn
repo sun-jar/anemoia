@@ -201,8 +201,8 @@ copy_mode = 2
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
 offset_left = -5483.0
-offset_top = -4133.0
-offset_right = 9520.0
+offset_top = -4660.0
+offset_right = 9506.0
 offset_bottom = 5224.0
 color = Color(0, 0, 0, 1)
 
