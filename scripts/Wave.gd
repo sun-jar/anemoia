@@ -1,6 +1,7 @@
 extends Sprite2D
 
 var chroma_shader = preload("res://scripts/shaders/WaveChroma.gdshader")
+@onready var beep_player = $WaveBeep
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,9 +22,11 @@ func create_shader_tween(shader_material: ShaderMaterial, parameter_name: String
 func emit_wave():
 	var wave_tween = create_tween()
 	var fade_tween = create_tween()
+	beep_player.play()
 	wave_tween.tween_property(self, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	fade_tween.tween_property(self, "modulate:a", 0.0, 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await wave_tween.finished
+	await beep_player.finished
 	
 	queue_free()
 	
@@ -33,8 +36,8 @@ func emit_shockwave():
 	self.material = chroma_material
 
 	create_shader_tween(chroma_material, "radius", 0.1, 1.0, 2.0)
-	create_shader_tween(chroma_material, "r_displacement", Vector2(4.0, 2.0), Vector2(0.0, 0.0), 4.0)
-	create_shader_tween(chroma_material, "b_displacement", Vector2(-4.0, -1.0), Vector2(0.0, 0.0), 4.0)
+	create_shader_tween(chroma_material, "r_displacement", Vector2(16.0, 6.0), Vector2(0.0, 0.0), 4.0)
+	create_shader_tween(chroma_material, "b_displacement", Vector2(-17.0, -9.0), Vector2(0.0, 0.0), 4.0)
 	var fade_tween = create_shader_tween(chroma_material, "alpha", 1.0, 1.0 / 3.0, 4.0)
 
 	var expand_tween = create_tween()

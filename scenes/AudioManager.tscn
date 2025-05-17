@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c80364fw1xkjs"]
+[gd_scene load_steps=4 format=3 uid="uid://c80364fw1xkjs"]
 
 [ext_resource type="Script" path="res://scripts/AudioManager.gd" id="1_k07ah"]
 [ext_resource type="AudioStream" uid="uid://dran3n7cbshls" path="res://assets/music/anemoia_menu.mp3" id="2_bgt88"]
+[ext_resource type="AudioStream" uid="uid://dk8ddpkmhotf0" path="res://assets/sfx/shockwave.mp3" id="3_x028g"]
 
 [node name="AudioManager" type="Node2D"]
 script = ExtResource("1_k07ah")
 
 [node name="MainMenuTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_bgt88")
+
+[node name="ShockwaveSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_x028g")
+volume_db = 5.0

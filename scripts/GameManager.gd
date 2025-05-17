@@ -57,3 +57,11 @@ func load_game():
 	Globals.game_data = game_data
 	GameManager.game_started = game_data.get("game_started", false)
 	
+func reset_game(player_node):
+	player_stage = 1
+	game_started = false
+	movement_disabled = true
+	
+	player_node.health = 100
+	player_node.speed = 400
+	player_node.wave_cooldown = 1.0

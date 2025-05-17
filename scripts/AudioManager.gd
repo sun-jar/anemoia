@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var main_menu_theme = $MainMenuTheme
+@onready var shockwave_sfx = $ShockwaveSFX
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,3 +15,13 @@ func _process(_delta: float) -> void:
 
 func play_music():
 	main_menu_theme.play()
+	
+func stop_music():
+	main_menu_theme.stop()
+	
+func play_shockwave():
+	shockwave_sfx.play()
+	
+func stop_shockwave():
+	shockwave_sfx.stop()
+	
