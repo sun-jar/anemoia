@@ -18,6 +18,7 @@ func unpause():
 	visible = false
 	
 func _on_main_menu_pressed() -> void:
+	AudioManager.stop_room_tone()
 	unpause()
 	get_tree().change_scene_to_file("res://scenes/user_interface/MainMenu.tscn")
 

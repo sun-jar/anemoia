@@ -7,8 +7,10 @@ var player_in_power_area = false
 @onready var player_sprite = $Player/AnimationPlayer
 
 @onready var mask_layers = $MapLayerCopy/MaskLayers
+@onready var map_layer = $MapLayer
 @onready var map_stage_1 = $MapLayer/Stage1MapLayer
 @onready var map_stage_2 = $MapLayer/Stage2MapLayer
+@onready var map_stage_3 = $MapLayer/Stage3MapLayer
 
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
@@ -17,9 +19,11 @@ var player_in_power_area = false
 
 @onready var interact_timer = $InteractTimer
 
-@onready var next_wave_trigger = get_node("%Power1")
-
 @export var map_stage_1_scene: PackedScene
+@export var map_stage_2_scene: PackedScene
+
+var map_stage_1_scene_ins
+var map_stage_2_scene_ins
 
 func _load_saved():
 	var game_data = Globals.game_data
@@ -39,9 +43,13 @@ func _start_game():
 	player_sprite.play("sleep1")
 	var tween = create_tween()
 	tween.tween_interval(initial_beep.stream.get_length()-2.73)
+	mask_layers.modulate.a = 1.0
 	initial_beep.play()
 	await tween.finished
-	player_node.visible = true
+	
+	player_node.modulate.a = 1.0
+	map_layer.visible = true
+	
 	beep1.play()
 	await beep1.finished
 	beep2.play()
@@ -51,16 +59,18 @@ func _start_game():
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
+	
 	player_sprite.play("idle1")
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
+	
 	GameManager.start_dialogue("timeline")
 	get_viewport().set_input_as_handled()
 	
 func _ready() -> void:
+	AudioManager.play_room_tone()
 	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
-	
 	if not GameManager.game_started:
 		Globals.game_data = null
 		_start_game()
@@ -70,15 +80,21 @@ func _ready() -> void:
 		if (Globals.game_data != null):
 			_load_saved()
 		next_stage(false)
-
-		GameManager.movement_disabled = false
-		player_node.visible = true
+		
+		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
+		var mask_tween = create_tween()
+		mask_tween.tween_property(mask_layers, "modulate:a", 1.0, 2.0)
+		await mask_tween.finished
+		map_layer.visible = true
 	
+		GameManager.movement_disabled = false
+		
 	wave_manager.player_node = player_node
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
 	
 func calculate_pitch():
+	var next_wave_trigger = get_node("%" + ("Power%d" % GameManager.player_stage))
 	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2) # to balance out, because the map layers are scaled by 2
 	var trigger_distance = triger_position.distance_to(player_position)
@@ -105,30 +121,30 @@ func _input(event: InputEvent) -> void:
 			$Player/Camera2D.stop_buildup_shake()
 
 func next_stage(with_effect: bool):
-	if GameManager.player_stage == 2:
+	if with_effect:
 		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
 		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
 		var power_node = get_node_or_null(power_node_str % power_node_stage)
 		power_node.material = null
-		
-		if with_effect:
-			var next_level_wave = wave_manager.wave.instantiate()
-			next_level_wave.global_position = player_node.global_position
-			wave_manager.add_child(next_level_wave)
-			$Player/Camera2D.shake(25.0, 2.0)
+		player_node.anim.play("idle" + str(GameManager.player_stage))
+		GameManager.movement_disabled = true
+		var next_level_wave = wave_manager.wave.instantiate()
+		next_level_wave.global_position = player_node.global_position
+		wave_manager.add_child(next_level_wave)
+		$Player/Camera2D.shake(8.0, 2.0)
 			
-			var power_tween = create_tween()
-			var fade_tween = next_level_wave.emit_shockwave()
+		var power_tween = create_tween()
+		var fade_tween = next_level_wave.emit_shockwave()
 			
-			power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
+		power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
 			
-			await fade_tween.finished
+		await fade_tween.finished
 			
-			power_node.queue_free()
-			next_level_wave.safe_queue_free()
-		
+		power_node.queue_free()
+		next_level_wave.safe_queue_free()
+	if GameManager.player_stage == 2:
 		map_stage_1.queue_free()
-		var map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+		map_stage_1_scene_ins = map_stage_1_scene.instantiate()
 		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 		map_stage_1_scene_ins.collision_enabled = false
 		mask_layers.add_child(map_stage_1_scene_ins)
@@ -136,6 +152,18 @@ func next_stage(with_effect: bool):
 		await get_tree().process_frame
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
+	elif GameManager.player_stage == 3:
+		map_stage_1_scene_ins.queue_free()
+		map_stage_2.queue_free()
+		map_stage_2_scene_ins = map_stage_2_scene.instantiate()
+		map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+		map_stage_2_scene_ins.collision_enabled = false
+		mask_layers.add_child(map_stage_2_scene_ins)
+		
+		await get_tree().process_frame
+		map_stage_3.visible = true
+		map_stage_3.collision_enabled = true
+	GameManager.movement_disabled = false
 	
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
@@ -148,7 +176,7 @@ func save_game():
 
 
 func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
-	if body.name == "Player" and not player_in_power_area:
+	if body.name == "Player" and not player_in_power_area and GameManager.player_stage == 1:
 		player_in_power_area = true
 		
 		
@@ -159,6 +187,21 @@ func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
 			AudioManager.stop_shockwave()
 			interact_timer.stop()
 			$Player/Camera2D.stop_buildup_shake()
+
+
+func _on_next_stage_trigger_2_body_entered(body: Node2D) -> void:
+	if body.name == "Player" and not player_in_power_area and GameManager.player_stage == 2:
+		player_in_power_area = true
+
+
+func _on_next_stage_trigger_2_body_exited(body: Node2D) -> void:
+	if body.name == "Player" and player_in_power_area:
+		player_in_power_area = false
+		if Input.is_action_pressed("interact"):
+			AudioManager.stop_shockwave()
+			interact_timer.stop()
+			$Player/Camera2D.stop_buildup_shake()
+
 
 func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
