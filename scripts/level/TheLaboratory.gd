@@ -43,9 +43,13 @@ func _start_game():
 	player_sprite.play("sleep1")
 	var tween = create_tween()
 	tween.tween_interval(initial_beep.stream.get_length()-2.73)
+	mask_layers.modulate.a = 1.0
 	initial_beep.play()
 	await tween.finished
-	player_node.visible = true
+	
+	player_node.modulate.a = 1.0
+	map_layer.visible = true
+	
 	beep1.play()
 	await beep1.finished
 	beep2.play()
@@ -55,10 +59,12 @@ func _start_game():
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
+	
 	player_sprite.play("idle1")
 	tween = create_tween()
 	tween.tween_interval(2)
 	await tween.finished
+	
 	GameManager.start_dialogue("timeline")
 	get_viewport().set_input_as_handled()
 	
@@ -75,7 +81,6 @@ func _ready() -> void:
 			_load_saved()
 		next_stage(false)
 		
-		player_node.visible = true
 		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
 		var mask_tween = create_tween()
 		mask_tween.tween_property(mask_layers, "modulate:a", 1.0, 2.0)
@@ -84,7 +89,6 @@ func _ready() -> void:
 	
 		GameManager.movement_disabled = false
 		
-	
 	wave_manager.player_node = player_node
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
