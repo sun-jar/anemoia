@@ -80,13 +80,14 @@ func _ready() -> void:
 		if (Globals.game_data != null):
 			_load_saved()
 		next_stage(false)
+		player_node.anim.play("idle" + str(GameManager.player_stage))
 		
 		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
 		var mask_tween = create_tween()
 		mask_tween.tween_property(mask_layers, "modulate:a", 1.0, 2.0)
 		await mask_tween.finished
 		map_layer.visible = true
-	
+		
 		GameManager.movement_disabled = false
 		
 	wave_manager.player_node = player_node
@@ -122,26 +123,31 @@ func _input(event: InputEvent) -> void:
 
 func next_stage(with_effect: bool):
 	if with_effect:
-		var power_node_str = "MapLayer/Stage%dMapLayer/Power%d"
-		var power_node_stage = [(GameManager.player_stage - 1), (GameManager.player_stage - 1)]
-		var power_node = get_node_or_null(power_node_str % power_node_stage)
+		var power_node_path = "MapLayer/Stage%dMapLayer/Power%d" % [GameManager.player_stage - 1, GameManager.player_stage - 1]
+		var power_node = get_node_or_null(power_node_path)
 		power_node.material = null
+		
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		GameManager.movement_disabled = true
+		
 		var next_level_wave = wave_manager.wave.instantiate()
 		next_level_wave.global_position = player_node.global_position
 		wave_manager.add_child(next_level_wave)
 		$Player/Camera2D.shake(8.0, 2.0)
-			
+		
 		var power_tween = create_tween()
-		var fade_tween = next_level_wave.emit_shockwave()
-			
 		power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
-			
-		await fade_tween.finished
-			
+		var fade_tween = next_level_wave.emit_shockwave()
+		
+		await power_tween.finished
 		power_node.queue_free()
+		
+		if GameManager.player_stage == 3:
+			map_stage_1_scene_ins.queue_free()
+		
+		await fade_tween.finished
 		next_level_wave.safe_queue_free()
+	
 	if GameManager.player_stage == 2:
 		map_stage_1.queue_free()
 		map_stage_1_scene_ins = map_stage_1_scene.instantiate()
@@ -152,8 +158,8 @@ func next_stage(with_effect: bool):
 		await get_tree().process_frame
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
+	
 	elif GameManager.player_stage == 3:
-		map_stage_1_scene_ins.queue_free()
 		map_stage_2.queue_free()
 		map_stage_2_scene_ins = map_stage_2_scene.instantiate()
 		map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
@@ -163,7 +169,9 @@ func next_stage(with_effect: bool):
 		await get_tree().process_frame
 		map_stage_3.visible = true
 		map_stage_3.collision_enabled = true
-	GameManager.movement_disabled = false
+	
+	if with_effect:
+		GameManager.movement_disabled = false
 	
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
