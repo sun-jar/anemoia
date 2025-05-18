@@ -1,5 +1,7 @@
 extends Node
 
+signal dialogue_finished
+
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
 var game_started: bool = false
@@ -25,6 +27,7 @@ func _on_timeline_ended():
 	Dialogic.timeline_ended.disconnect(_on_timeline_ended)
 	await get_tree().create_timer(0.1).timeout
 	movement_disabled = false
+	emit_signal("dialogue_finished")
 	
 	
 func save_game(game):
