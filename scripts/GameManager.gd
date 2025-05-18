@@ -8,6 +8,11 @@ var game_started: bool = false
 var player_stage: int = 1
 var movement_disabled: bool = true
 
+var shown_one_time_dialogues = {
+	"guide": false
+}
+var last_played_dialogue
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -22,9 +27,12 @@ func start_dialogue(title: String) -> void:
 	movement_disabled = true
 	Dialogic.timeline_ended.connect(_on_timeline_ended)
 	Dialogic.start(title)
+	last_played_dialogue = title
 	
 func _on_timeline_ended():
 	Dialogic.timeline_ended.disconnect(_on_timeline_ended)
+	if shown_one_time_dialogues.has(last_played_dialogue):
+		shown_one_time_dialogues[last_played_dialogue] = true
 	await get_tree().create_timer(0.1).timeout
 	movement_disabled = false
 	emit_signal("dialogue_finished")
@@ -34,6 +42,7 @@ func save_game(game):
 	var player = game.get_node("Player")
 	var game_data = {
 		"game_started": GameManager.game_started,
+		"shown_one_time_dialogues": shown_one_time_dialogues,
 		
 		"player_stage": GameManager.player_stage,
 		"player_speed": player.speed,
@@ -59,6 +68,7 @@ func load_game():
 	
 	Globals.game_data = game_data
 	GameManager.game_started = game_data.get("game_started", false)
+	GameManager.shown_one_time_dialogues = game_data.get("shown_one_time_dialogues", {})
 	
 func reset_game(player_node):
 	player_stage = 1
