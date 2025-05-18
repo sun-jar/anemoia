@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 		shake_strength = lerp(buildup_min_strength, buildup_max_strength, t)
 		offset = _random_offset()
 		if buildup_time >= buildup_duration:
+			buildup_time = 0.0
 			is_buildup_shake = false
 	else:
 		offset = Vector2.ZERO
