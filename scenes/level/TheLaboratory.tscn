@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=21 format=3 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://b6hqgu8jprppr" path="res://assets/power_stage1.png" id="9_vanv6"]
 [ext_resource type="PackedScene" uid="uid://rxerk6xulbkl" path="res://scenes/user_interface/PauseMenu.tscn" id="11_vmmhu"]
 [ext_resource type="PackedScene" uid="uid://cfl4wvuv112yw" path="res://scenes/level/Stage1MapLayer.tscn" id="11_yh21x"]
+[ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
+[ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="13_lf2t4"]
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6cajc"]
@@ -26,6 +28,13 @@ shader_parameter/pulse_amplitude = 0.5
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxsvq"]
 size = Vector2(84.5, 84)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dld1k"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_k642p"]
 radius = 140.602
 
@@ -38,6 +47,7 @@ map_stage_2_scene = ExtResource("7_uyki4")
 
 [node name="InitialBeep" type="AudioStreamPlayer" parent="LabAudioManager"]
 stream = ExtResource("2_jseq7")
+volume_db = -5.0
 
 [node name="Beep1" type="AudioStreamPlayer" parent="LabAudioManager"]
 stream = ExtResource("3_6p0bx")
@@ -115,8 +125,47 @@ wave = ExtResource("7_5hugr")
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-3840, 0)
 
+[node name="InitialGuide" type="Panel" parent="Player"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -176.0
+offset_right = 150.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dld1k")
+script = ExtResource("13_bxagd")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player/InitialGuide"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="Label" type="Label" parent="Player/InitialGuide/MarginContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_lf2t4")
+theme_override_font_sizes/font_size = 28
+text = "Press SPACE to emit a sonar wave and see around."
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="Camera2D" type="Camera2D" parent="Player"]
 script = ExtResource("15_5xiti")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player"]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
