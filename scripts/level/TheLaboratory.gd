@@ -28,8 +28,11 @@ var is_new_game = false
 
 func _load_saved():
 	var game_data = Globals.game_data
-	
+		
 	GameManager.player_stage = game_data.player_stage
+	
+	if GameManager.player_stage > 2:
+		map_stage_1.queue_free()
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -71,7 +74,7 @@ func _start_game():
 	
 func _ready() -> void:
 	AudioManager.play_room_tone()
-	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
+	$CanvasLayer/PauseMenu.save_game.connect(self._save_game)
 	if not GameManager.game_started:
 		is_new_game = true
 		Globals.game_data = null
@@ -188,7 +191,7 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
 	
-func save_game():
+func _save_game():
 	GameManager.save_game(self)
 
 
