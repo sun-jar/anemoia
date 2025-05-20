@@ -1081,7 +1081,7 @@ _data = {
 "sleep1": SubResource("Animation_oj6q1")
 }
 
-[node name="Player" instance=ExtResource("1_c2u52")]
+[node name="Player" groups=["player"] instance=ExtResource("1_c2u52")]
 script = ExtResource("2_pcdnv")
 speed = 400
 wave_cooldown = 1.0

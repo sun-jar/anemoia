@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwpx1foe2uvk3"]
+
+[ext_resource type="Script" path="res://scripts/entity/Turret.gd" id="1_krf0r"]
+[ext_resource type="Texture2D" uid="uid://cpukb6e7fue0o" path="res://icon.svg" id="2_kxpmr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yxo4t"]
+size = Vector2(439, 339)
+
+[node name="Turret" type="Area2D"]
+script = ExtResource("1_krf0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_kxpmr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="DetectionRange" type="CollisionShape2D" parent="."]
+position = Vector2(-13.5, 159.5)
+shape = SubResource("RectangleShape2D_yxo4t")
+
+[connection signal="body_entered" from="." to="." method="_on_player_entered"]
+[connection signal="body_exited" from="." to="." method="_on_player_exited"]
