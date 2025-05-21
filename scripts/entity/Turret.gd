@@ -49,6 +49,7 @@ func _check_behind_object() -> bool:
 	
 func _apply_damage():
 	player.health -= 1
+	GameManager.damage_taken.emit()
 	cooldown_timer.start()
 	in_cooldown = true
 	$AudioStreamPlayer.play()

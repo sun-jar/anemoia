@@ -25,6 +25,12 @@ var idle_timer := 0.0
 const CUTOFF_DURATION := 0.15
 var move_loop_started := false
 
+@onready var healthbar = $CanvasLayer/HealthBar
+
+func _ready() -> void:
+	healthbar.init_health(self.health)
+	GameManager.damage_taken.connect(_set_health)
+
 func _physics_process(delta: float) -> void:
 	if GameManager.movement_disabled:
 		return
@@ -114,3 +120,7 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 		_start_transition_to_move()
 	elif requested_state == StableState.IDLE and current_state == State.MOVE:
 		_start_transition_to_idle()
+
+func _set_health():
+	print(self.health)
+	healthbar.health = health
