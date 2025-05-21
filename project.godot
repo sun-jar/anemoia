@@ -34,6 +34,7 @@ Globals="*res://scripts/Globals.gd"
 [dialogic]
 
 directories/dch_directory={
+"system_alert": "res://dialogue/system_alert.dch",
 "unknown": "res://dialogue/unknown.dch"
 }
 directories/dtl_directory={
@@ -69,6 +70,7 @@ layout/default_style="res://dialogue/dialogue_style.tres"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=4
 window/size/resizable=false
 
 [editor_plugins]

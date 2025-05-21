@@ -29,7 +29,7 @@ func stop_shockwave():
 func play_room_tone():
 	room_tone.play()
 	var db_tween = create_tween()
-	db_tween.tween_property(room_tone, "volume_db", 1.0, 1.0)
+	db_tween.tween_property(room_tone, "volume_db", 1.0, 2.0)
 	
 func stop_room_tone():
 	room_tone.stop()

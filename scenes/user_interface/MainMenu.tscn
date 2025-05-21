@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjvytuot3wumt"]
+[gd_scene load_steps=7 format=3 uid="uid://cjvytuot3wumt"]
 
 [ext_resource type="Script" path="res://scripts/user_interface/MainMenu.gd" id="1_4xphw"]
 [ext_resource type="Theme" uid="uid://ckj3o7pvq8kca" path="res://scenes/user_interface/ui_theme.tres" id="1_ki1vk"]
 [ext_resource type="PackedScene" uid="uid://c0676ltae3gea" path="res://scenes/level/TheLaboratory.tscn" id="3_6arnl"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Hover.gd" id="3_qavlj"]
 [ext_resource type="FontFile" uid="uid://b728vgu6m2eum" path="res://assets/fonts/Falling Dried.ttf" id="3_xo1mm"]
+[ext_resource type="Script" path="res://scripts/user_interface/button/Glowbox.gd" id="6_xx0uv"]
 
 [node name="MainMenu" type="Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,7 +20,6 @@ script = ExtResource("1_4xphw")
 laboratory_scene = ExtResource("3_6arnl")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,6 +86,53 @@ text = " EXIT"
 alignment = 0
 script = ExtResource("3_qavlj")
 
+[node name="ConfirmationScreen" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ConfirmationScreen"]
+layout_mode = 2
+color = Color(0.00392157, 0.00392157, 0.00392157, 0.858824)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationScreen"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="ConfirmationScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_xo1mm")
+theme_override_font_sizes/font_size = 48
+text = "New game will reset the progress you've made.
+proceed?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmationScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 152
+
+[node name="Cancel" type="Button" parent="ConfirmationScreen/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_xo1mm")
+theme_override_font_sizes/font_size = 32
+text = "CANCEL 
+"
+script = ExtResource("6_xx0uv")
+
+[node name="ProceedNewGame" type="Button" parent="ConfirmationScreen/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_xo1mm")
+theme_override_font_sizes/font_size = 32
+text = "new game"
+script = ExtResource("6_xx0uv")
+
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" method="_on_mouse_exited"]
 [connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
@@ -96,3 +144,5 @@ script = ExtResource("3_qavlj")
 [connection signal="mouse_entered" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" method="_on_mouse_exited"]
 [connection signal="pressed" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="ConfirmationScreen/VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="ConfirmationScreen/VBoxContainer/HBoxContainer/ProceedNewGame" to="." method="_on_proceed_new_game_pressed"]
