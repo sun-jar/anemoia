@@ -182,6 +182,10 @@ func _init_stage_2():
 	for child in map_stage_1_scene_ins.get_children():
 		if child.name in map_stage_2.switches:
 			child.toggle_enable("1")
+			
+	for child in map_stage_2.get_children():
+		if child.name in map_stage_2.switches:
+			child.toggle_enable("2")
 
 	await get_tree().process_frame
 
