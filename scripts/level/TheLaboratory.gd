@@ -268,11 +268,12 @@ func _delete_4x1_door(layer, top_left, tile_source, tile_coords):
 
 func open_door(id):
 	if GameManager.player_stage == 2:
+		print(id)
 		if id in [1, 2, 6, 8, 10]:
-			_delete_4x3_door(map_stage_1_scene_ins, GameManager.door_4x3[id], 2, Vector2i(4, 3))
-			_delete_4x3_door(map_stage_2, GameManager.door_4x3[id], 2, Vector2i(5, 2))
+			_delete_4x3_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
+			_delete_4x3_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
 		if id in [3, 5, 11]:
-			_delete_4x1_door(map_stage_1_scene_ins, GameManager.door_4x3[id], 2, Vector2i(4, 3))
-			_delete_4x1_door(map_stage_2, GameManager.door_4x3[id], 2, Vector2i(5, 2))
+			_delete_4x1_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
+			_delete_4x1_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
 		
 	
