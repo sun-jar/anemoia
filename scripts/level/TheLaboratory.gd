@@ -185,15 +185,14 @@ func _init_stage_2():
 		if child.name in map_stage_2.switches:
 			child.disabled = false
 			# TODO GANTI SPRITE SWITCH DI MAP LAYER 1 INSTANCE DISINI
-	
+
 	await get_tree().process_frame
-			
+
 	GameManager.closed_doors[0] = true
 	_draw_door0(map_stage_1_scene_ins, GameManager.door0)
 	
-	if is_instance_valid(map_stage_2):
-		map_stage_2.visible = true
-		map_stage_2.collision_enabled = true
+	map_stage_2.visible = true
+	map_stage_2.collision_enabled = true
 	
 func _init_stage_3():
 	map_stage_2.queue_free()
