@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b1or3r36ptmby"]
+[gd_scene load_steps=27 format=3 uid="uid://b1or3r36ptmby"]
 
 [ext_resource type="PackedScene" uid="uid://3eyvetp2072b" path="res://scenes/entity/Entity.tscn" id="1_c2u52"]
 [ext_resource type="Script" path="res://scripts/entity/Player.gd" id="2_pcdnv"]
@@ -1081,6 +1081,9 @@ _data = {
 "sleep1": SubResource("Animation_oj6q1")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lg88k"]
+radius = 53.6004
+
 [node name="Player" instance=ExtResource("1_c2u52")]
 script = ExtResource("2_pcdnv")
 speed = 400
@@ -1104,4 +1107,12 @@ libraries = {
 "": SubResource("AnimationLibrary_6lnvr")
 }
 
+[node name="Area2D" type="Area2D" parent="." index="3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(1, 23)
+shape = SubResource("CircleShape2D_lg88k")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

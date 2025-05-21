@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cu31cxpasagc0" path="res://scenes/Wave.tscn" id="7_5hugr"]
 [ext_resource type="PackedScene" uid="uid://btcxc2omgytvw" path="res://scenes/level/Stage2MapLayer.tscn" id="7_uyki4"]
 [ext_resource type="Shader" path="res://scripts/shaders/PowerStage1.gdshader" id="8_463o3"]
-[ext_resource type="PackedScene" uid="uid://0clk8dlep3f5" path="res://scenes/level/Stage3MapLayer.tscn" id="8_jy8pg"]
+[ext_resource type="PackedScene" path="res://scenes/level/Stage3MapLayer.tscn" id="8_jy8pg"]
 [ext_resource type="Texture2D" uid="uid://b6hqgu8jprppr" path="res://assets/power_stage1.png" id="9_vanv6"]
 [ext_resource type="Texture2D" uid="uid://ccfd5ciuseeyv" path="res://assets/power_source.png" id="10_xa4d0"]
 [ext_resource type="PackedScene" uid="uid://rxerk6xulbkl" path="res://scenes/user_interface/PauseMenu.tscn" id="11_vmmhu"]
@@ -62,6 +62,7 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
+visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
@@ -80,6 +81,7 @@ position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage2MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
+visible = false
 
 [node name="Power2" type="Sprite2D" parent="MapLayer/Stage2MapLayer"]
 unique_name_in_owner = true
