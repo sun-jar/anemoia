@@ -117,7 +117,7 @@ func calculate_pitch():
 	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
-	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
+	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.4)
 
 	
 func _input(event: InputEvent) -> void:
@@ -168,6 +168,13 @@ func next_stage(with_effect: bool):
 		mask_layers.add_child(map_stage_1_scene_ins)
 		
 		await get_tree().process_frame
+				
+		Globals.door0_closed = true
+		
+		for coord in Globals.door0:
+			map_stage_2.set_cell(coord, 2, Vector2i(6, 2))
+			map_stage_1_scene_ins.set_cell(coord, 2, Vector2i(6, 2))
+
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
 	
