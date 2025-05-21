@@ -12,8 +12,8 @@ var chroma_shader = preload("res://scripts/shaders/WaveChroma.gdshader")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	#for i in range(1, 12):
-		#door_sound.append(load("res://assets/sfx/doors/%d.mp3" % i)) # gabisa preload karena preload gabisa format string (executed at compile time)
+	for i in range(1, 12):
+		door_sound.append(load("res://assets/sfx/doorbeeps/sound%d.wav" % i)) # gabisa preload karena preload gabisa format string (executed at compile time)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -33,8 +33,8 @@ func emit_wave():
 	if sound_id == -1:
 		beep_player.play()
 	else:
-		#door_player.stream = door_sound[sound_id]
-		#door_player.play()
+		door_player.stream = door_sound[sound_id]
+		door_player.play()
 		get_parent().door_id = -1
 	wave_tween.tween_property(self, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hitbox_tween.tween_property(wave_hitbox, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT) #heuristic for the visual
