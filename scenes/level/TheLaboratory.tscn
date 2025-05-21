@@ -62,6 +62,7 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
+visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
@@ -80,6 +81,7 @@ position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage2MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
+visible = false
 
 [node name="Power2" type="Sprite2D" parent="MapLayer/Stage2MapLayer"]
 unique_name_in_owner = true

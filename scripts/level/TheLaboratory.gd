@@ -28,8 +28,6 @@ var is_new_game = false
 
 func _load_saved():
 	var game_data = Globals.game_data
-		
-	GameManager.player_stage = game_data.player_stage
 	
 	if GameManager.player_stage > 1:
 		_init_stage_2()
@@ -183,8 +181,7 @@ func _init_stage_2():
 	
 	for child in map_stage_1_scene_ins.get_children():
 		if child.name in map_stage_2.switches:
-			child.disabled = false
-			# TODO GANTI SPRITE SWITCH DI MAP LAYER 1 INSTANCE DISINI
+			child.toggle_enable("1")
 
 	await get_tree().process_frame
 

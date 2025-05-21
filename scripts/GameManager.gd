@@ -77,7 +77,7 @@ func load_game():
 	Globals.game_data = game_data
 	GameManager.game_started = game_data.get("game_started", false)
 	GameManager.shown_one_time_dialogues = game_data.get("shown_one_time_dialogues", {})
-	
+	GameManager.player_stage = game_data.player_stage
 	GameManager.closed_doors = game_data.closed_doors
 	
 func reset_game(player_node):
