@@ -2,8 +2,11 @@ extends Control
 
 signal save_game
 
+@onready var save_complete_label = $MarginContainer/VBoxContainer2/SaveCompleteLabel
+
 func _ready() -> void:
 	visible = false
+	save_complete_label.text = ""
 
 func _process(_delta: float) -> void:
 	pass
@@ -25,6 +28,8 @@ func _on_main_menu_pressed() -> void:
 
 func _on_unpause_pressed() -> void:
 	unpause()
+	save_complete_label.text = ""
 
 func _on_save_pressed() -> void:
 	emit_signal("save_game")
+	save_complete_label.text = "Save complete."

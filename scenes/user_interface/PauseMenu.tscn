@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://rxerk6xulbkl"]
+[gd_scene load_steps=5 format=3 uid="uid://rxerk6xulbkl"]
 
 [ext_resource type="Script" path="res://scripts/user_interface/PauseMenu.gd" id="1_llhgt"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Glowbox.gd" id="2_78y50"]
 [ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="2_d2km4"]
+[ext_resource type="FontFile" uid="uid://b728vgu6m2eum" path="res://assets/fonts/Falling Dried.ttf" id="4_ulfxa"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -33,13 +34,18 @@ grow_vertical = 2
 theme_override_constants/margin_left = 700
 theme_override_constants/margin_right = 700
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 42
 
-[node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d2km4")
 theme_override_font_sizes/font_size = 56
@@ -47,7 +53,7 @@ text = "RESUME"
 icon_alignment = 1
 script = ExtResource("2_78y50")
 
-[node name="Save" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Save" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d2km4")
 theme_override_font_sizes/font_size = 56
@@ -55,13 +61,20 @@ text = "SAVE"
 icon_alignment = 1
 script = ExtResource("2_78y50")
 
-[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d2km4")
 theme_override_font_sizes/font_size = 56
 text = "MAIN MENU"
 script = ExtResource("2_78y50")
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[node name="SaveCompleteLabel" type="Label" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ulfxa")
+theme_override_font_sizes/font_size = 24
+text = "Save complete ."
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
