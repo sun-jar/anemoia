@@ -2,6 +2,8 @@ extends Control
 
 @onready var hover_stylebox := theme.get_stylebox("hover", "Button") as StyleBoxFlat
 @onready var continue_game = get_node("%Continue")
+@onready var confirmation_screen = $ConfirmationScreen
+
 @export var laboratory_scene : PackedScene
 
 var animation_finished = false
@@ -14,7 +16,7 @@ func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_PASS
 	var tween = self.create_tween()
 	tween.tween_interval(0.5)
-	tween.tween_property($ColorRect, "modulate:a", 1.0, 1.0)
+	tween.tween_property(self, "modulate:a", 1.0, 1.0)
 	hover_stylebox.bg_color.a = 0.0
 	await tween.finished
 	AudioManager.main_menu_theme.volume_db = 0.0
@@ -35,9 +37,16 @@ func _exit_fade_out_tween() -> Tween:
 	animation_finished = false
 	var tween = self.create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($ColorRect, "modulate:a", 0.0, 1.0)
+	tween.tween_property(self, "modulate:a", 0.0, 1.0)
 	tween.tween_property(AudioManager.main_menu_theme, "volume_db", -80, 1.0)
 	return tween
+	
+func new_game():
+	GameManager.game_started = false
+	var tween = _exit_fade_out_tween()
+	await tween.finished
+	AudioManager.stop_music()
+	get_tree().change_scene_to_packed(laboratory_scene)
 
 func _on_exit_pressed() -> void:
 	var tween = _exit_fade_out_tween()
@@ -45,11 +54,10 @@ func _on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_new_game_pressed() -> void:
-	GameManager.game_started = false
-	var tween = _exit_fade_out_tween()
-	await tween.finished
-	AudioManager.stop_music()
-	get_tree().change_scene_to_packed(laboratory_scene)
+	if continue_game.disabled:
+		new_game()
+	else:
+		confirmation_screen.visible = true
 
 func _on_continue_pressed() -> void:
 	GameManager.load_game()
@@ -57,3 +65,11 @@ func _on_continue_pressed() -> void:
 	await tween.finished
 	AudioManager.stop_music()
 	get_tree().change_scene_to_packed(laboratory_scene)
+
+
+func _on_proceed_new_game_pressed() -> void:
+	new_game()
+
+
+func _on_cancel_pressed() -> void:
+	confirmation_screen.visible = false
