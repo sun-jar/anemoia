@@ -91,6 +91,7 @@ position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage1MapLayer" parent="MapLayer" instance=ExtResource("11_yh21x")]
+visible = false
 position = Vector2(0, 0)
 
 [node name="Power1" type="Sprite2D" parent="MapLayer/Stage1MapLayer"]
