@@ -60,7 +60,6 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
-visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
 visible = false
@@ -78,7 +77,6 @@ position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage2MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
-visible = false
 
 [node name="Power2" type="Sprite2D" parent="MapLayer/Stage2MapLayer"]
 unique_name_in_owner = true
@@ -93,6 +91,7 @@ position = Vector2(-0.25, 0)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage1MapLayer" parent="MapLayer" instance=ExtResource("11_yh21x")]
+position = Vector2(0, 0)
 
 [node name="Power1" type="Sprite2D" parent="MapLayer/Stage1MapLayer"]
 unique_name_in_owner = true
@@ -123,7 +122,6 @@ color = Color(0, 0, 0, 1)
 wave = ExtResource("7_5hugr")
 
 [node name="Player" parent="." instance=ExtResource("6_5e2qs")]
-visible = false
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-3840, 0)
 
