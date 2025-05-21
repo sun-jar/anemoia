@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cu31cxpasagc0"]
+[gd_scene load_steps=7 format=3 uid="uid://cu31cxpasagc0"]
 
 [ext_resource type="Shader" path="res://scripts/shaders/Wave.gdshader" id="1_lr63y"]
 [ext_resource type="Texture2D" uid="uid://dl5dqyh864w8t" path="res://assets/circle_mask.png" id="2_wrrxu"]
@@ -9,12 +9,25 @@
 shader = ExtResource("1_lr63y")
 shader_parameter/color_addition = Vector3(0.1, 0.1, 0.1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1lbog"]
+
 [node name="Wave" type="Sprite2D"]
 material = SubResource("ShaderMaterial_8frg4")
 scale = Vector2(0.015, 0.015)
 texture = ExtResource("2_wrrxu")
 script = ExtResource("3_2krqf")
 
+[node name="DoorBeep" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1, 1)
+
 [node name="WaveBeep" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_cpayw")
 bus = &"Beep"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(58.98, 58.98)
+shape = SubResource("CircleShape2D_1lbog")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

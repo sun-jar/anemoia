@@ -13,6 +13,13 @@ var shown_one_time_dialogues = {
 }
 var last_played_dialogue
 
+
+var closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]
+
+var door0 = [Vector2i(-3, -61), Vector2i(-3, -62), Vector2i(-3, -63), Vector2i(-3, -64)]
+var door_4x3 = [null, Vector2i(55, -46), Vector2i(62, -17), null, null, null, Vector2i(-42, 69), null, Vector2i(30, -6), null, Vector2i(-8, 49), null]
+var door_4x1 = [null, null, null, Vector2i(59, 7), null, Vector2i(68, 73), null, null, null, Vector2i(32, 11), null, null]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

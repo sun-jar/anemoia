@@ -31,8 +31,11 @@ func _load_saved():
 		
 	GameManager.player_stage = game_data.player_stage
 	
+	if GameManager.player_stage > 1:
+		_init_stage_2()
+	
 	if GameManager.player_stage > 2:
-		map_stage_1.queue_free()
+		_init_stage_3()
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -85,7 +88,7 @@ func _ready() -> void:
 		is_new_game = false
 		if (Globals.game_data != null):
 			_load_saved()
-		next_stage(false)
+
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		
 		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
@@ -102,6 +105,8 @@ func _ready() -> void:
 	else:
 		$Player/InitialGuide.queue_free()
 	wave_manager.player_node = player_node
+	wave_manager.door_matched.connect(open_door)
+	
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
 	
@@ -161,36 +166,49 @@ func next_stage(with_effect: bool):
 		next_level_wave.safe_queue_free()
 	
 	if GameManager.player_stage == 2:
-		map_stage_1.queue_free()
-		map_stage_1_scene_ins = map_stage_1_scene.instantiate()
-		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
-		map_stage_1_scene_ins.collision_enabled = false
-		mask_layers.add_child(map_stage_1_scene_ins)
-		
-		await get_tree().process_frame
-				
-		Globals.door0_closed = true
-		
-		for coord in Globals.door0:
-			map_stage_1_scene_ins.set_cell(coord, 2, Vector2i(4, 2))
-
-		map_stage_2.visible = true
-		map_stage_2.collision_enabled = true
+		_init_stage_2()
 	
 	elif GameManager.player_stage == 3:
-		map_stage_2.queue_free()
-		map_stage_2_scene_ins = map_stage_2_scene.instantiate()
-		map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
-		map_stage_2_scene_ins.collision_enabled = false
-		mask_layers.add_child(map_stage_2_scene_ins)
-		
-		await get_tree().process_frame
-		map_stage_3.visible = true
-		map_stage_3.collision_enabled = true
+		_init_stage_3()
 	
 	if with_effect:
 		GameManager.movement_disabled = false
+
+func _init_stage_2():
+	map_stage_1.queue_free()
+	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+	map_stage_1_scene_ins.collision_enabled = false
+	mask_layers.add_child(map_stage_1_scene_ins)
 	
+	for child in map_stage_1_scene_ins.get_children():
+		if child.name in map_stage_2.switches:
+			child.disabled = false
+			# TODO GANTI SPRITE SWITCH DI MAP LAYER 1 INSTANCE DISINI
+	
+	await get_tree().process_frame
+			
+	GameManager.closed_doors[0] = true
+	_draw_door0(map_stage_1_scene_ins, GameManager.door0)
+
+	map_stage_2.visible = true
+	map_stage_2.collision_enabled = true
+	
+func _init_stage_3():
+	map_stage_2.queue_free()
+	map_stage_2_scene_ins = map_stage_2_scene.instantiate()
+	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+	map_stage_2_scene_ins.collision_enabled = false
+	mask_layers.add_child(map_stage_2_scene_ins)
+	
+	for child in map_stage_2_scene_ins.get_children():
+		if child.name in map_stage_3.switches:
+			child.disabled = false
+			# TODO GANTI SPRITE SWITCH DI MAP LAYER 2 INSTANCE DISINI
+	
+	await get_tree().process_frame
+	map_stage_3.visible = true
+	map_stage_3.collision_enabled = true
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
@@ -233,3 +251,28 @@ func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
 		GameManager.player_stage += 1
 		next_stage(true)
+
+# special case for door 0
+func _draw_door0(layer, coords):
+	for coord in coords:
+		layer.set_cell(coord, 2, Vector2i(4, 2))
+		
+func _delete_4x3_door(layer, top_left, tile_source, tile_coords):
+	for i in range(0, 3):
+		for j in range(0, 4):
+			layer.set_cell(top_left + Vector2i(j, i), tile_source, tile_coords)
+
+func _delete_4x1_door(layer, top_left, tile_source, tile_coords):
+		for i in range(0, 4):
+			layer.set_cell(top_left + Vector2i(0, i), tile_source, tile_coords)
+
+func open_door(id):
+	if GameManager.player_stage == 2:
+		if id in [1, 2, 6, 8, 10]:
+			_delete_4x3_door(map_stage_1_scene_ins, GameManager.door_4x3[id], 2, Vector2i(4, 3))
+			_delete_4x3_door(map_stage_2, GameManager.door_4x3[id], 2, Vector2i(5, 2))
+		if id in [3, 5, 11]:
+			_delete_4x1_door(map_stage_1_scene_ins, GameManager.door_4x3[id], 2, Vector2i(4, 3))
+			_delete_4x1_door(map_stage_2, GameManager.door_4x3[id], 2, Vector2i(5, 2))
+		
+	
