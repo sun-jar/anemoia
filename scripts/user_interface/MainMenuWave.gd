@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var radius: float = 10.0
-@export var expansion_speed: float = 150.0
-@export var fade_duration: float = 1.75
+@export var expansion_speed: float = 0.0
+@export var fade_duration: float = 2.0
 
 @onready var lines = $Line2D
 
