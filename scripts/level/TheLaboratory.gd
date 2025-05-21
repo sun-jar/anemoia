@@ -117,7 +117,7 @@ func calculate_pitch():
 	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
-	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.2d)
+	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.2)
 
 	
 func _input(event: InputEvent) -> void:
