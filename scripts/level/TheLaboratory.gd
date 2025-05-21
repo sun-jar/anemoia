@@ -28,8 +28,11 @@ var is_new_game = false
 
 func _load_saved():
 	var game_data = Globals.game_data
-	
+		
 	GameManager.player_stage = game_data.player_stage
+	
+	if GameManager.player_stage > 2:
+		map_stage_1.queue_free()
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -71,7 +74,7 @@ func _start_game():
 	
 func _ready() -> void:
 	AudioManager.play_room_tone()
-	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
+	$CanvasLayer/PauseMenu.save_game.connect(self._save_game)
 	if not GameManager.game_started:
 		is_new_game = true
 		Globals.game_data = null
@@ -114,7 +117,7 @@ func calculate_pitch():
 	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
-	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
+	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.2)
 
 	
 func _input(event: InputEvent) -> void:
@@ -165,6 +168,12 @@ func next_stage(with_effect: bool):
 		mask_layers.add_child(map_stage_1_scene_ins)
 		
 		await get_tree().process_frame
+				
+		Globals.door0_closed = true
+		
+		for coord in Globals.door0:
+			map_stage_1_scene_ins.set_cell(coord, 2, Vector2i(4, 2))
+
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
 	
@@ -188,7 +197,7 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
 	
-func save_game():
+func _save_game():
 	GameManager.save_game(self)
 
 
