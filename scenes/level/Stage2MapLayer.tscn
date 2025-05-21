@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://btcxc2omgytvw"]
+[gd_scene load_steps=16 format=4 uid="uid://btcxc2omgytvw"]
 
 [ext_resource type="Texture2D" uid="uid://dd3k4c8c25e3m" path="res://assets/tiles.png" id="1_4pifv"]
 [ext_resource type="Texture2D" uid="uid://cewywkf5lcc0t" path="res://assets/wall_sprite.png" id="2_ikomj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://datald8shj1nc" path="res://assets/sideways_door.png" id="5_y3oux"]
 [ext_resource type="Script" path="res://scripts/level/Stages.gd" id="6_psm0e"]
 [ext_resource type="PackedScene" uid="uid://dogw2jjpougi2" path="res://scenes/interactables/Switch.tscn" id="6_raeu8"]
+[ext_resource type="PackedScene" uid="uid://b8ycv5h2ewy0j" path="res://scenes/interactables/PowerSource.tscn" id="7_cwbyn"]
 [ext_resource type="PackedScene" uid="uid://cv6kbe2dt74dv" path="res://scenes/interactables/Door.tscn" id="8_pikyo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
@@ -160,6 +161,12 @@ collision_enabled = false
 script = ExtResource("6_psm0e")
 stage = 2
 switches = ["Switch1", "Switch2", "Switch3", "Switch4", "Switch8", "Switch9"]
+
+[node name="PowerSource" parent="." instance=ExtResource("7_cwbyn")]
+position = Vector2(1397.65, -1722)
+animation = &"inactive_2"
+frame = 0
+frame_progress = 0.616905
 
 [node name="Switch1" parent="." instance=ExtResource("6_raeu8")]
 position = Vector2(1201, -2146)
