@@ -20,6 +20,8 @@ extends Node2D
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
 
+@export var respawn_screen: PackedScene
+
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
 
@@ -71,6 +73,7 @@ func _start_game():
 	
 func _ready() -> void:
 	AudioManager.play_room_tone()
+	GameManager.die.connect(_respawn)
 	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
 	if not GameManager.game_started:
 		is_new_game = true
@@ -224,3 +227,9 @@ func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
 		GameManager.player_stage += 1
 		next_stage(true)
+
+func _respawn():
+	player_node.anim.play("death" + str(GameManager.player_stage))
+	# temporarily use a timer to make sure the animation plays
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_packed(respawn_screen)

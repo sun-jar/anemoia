@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b1or3r36ptmby"]
+[gd_scene load_steps=30 format=3 uid="uid://b1or3r36ptmby"]
 
 [ext_resource type="PackedScene" uid="uid://3eyvetp2072b" path="res://scenes/entity/Entity.tscn" id="1_c2u52"]
 [ext_resource type="Script" path="res://scripts/entity/Player.gd" id="2_pcdnv"]
@@ -57,6 +57,22 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_p2i4t"]
+resource_name = "death1"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.166667, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [64, 65, 66, 67]
 }
 
 [sub_resource type="Animation" id="Animation_72v4w"]
@@ -1058,9 +1074,44 @@ tracks/3/keys = {
 "values": [Vector2(1, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_krlg7"]
+resource_name = "death2"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.166667, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [68, 68, 70, 71]
+}
+
+[sub_resource type="Animation" id="Animation_7a3hb"]
+resource_name = "death3"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.166667, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [72, 73, 74, 75]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6lnvr"]
 _data = {
 "RESET": SubResource("Animation_jowpp"),
+"death1": SubResource("Animation_p2i4t"),
+"death2": SubResource("Animation_krlg7"),
+"death3": SubResource("Animation_7a3hb"),
 "idle1": SubResource("Animation_72v4w"),
 "idle1_move": SubResource("Animation_850vd"),
 "idle2": SubResource("Animation_5ekos"),
@@ -1094,7 +1145,7 @@ texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("3_x0d3f")
 hframes = 4
-vframes = 16
+vframes = 19
 frame = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]

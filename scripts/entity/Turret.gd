@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 	if in_range and is_shoot and not in_cooldown:
 		_turret_on()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	projectile_raycast.target_position = to_local(player.position)
 
 func _on_player_entered(body: Node2D) -> void:

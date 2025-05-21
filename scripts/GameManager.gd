@@ -2,6 +2,7 @@ extends Node
 
 signal dialogue_finished
 signal damage_taken
+signal die
 
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
