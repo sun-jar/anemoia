@@ -60,6 +60,7 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
+visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
 visible = false

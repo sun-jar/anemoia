@@ -1,4 +1,4 @@
-SYSTEM ALERT\: LOW POWER\
+system_alert: LOW POWER\
 [warning, power critical. unit efficiency compromised]
 unknown: *static* ... hello? Can you hear me? *static*
 unknown: *static* hey.. I can feel your energy fading... When was the last time you charged properly? *static*
