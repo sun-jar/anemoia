@@ -185,7 +185,7 @@ wait_time = 3.65
 one_shot = true
 
 [node name="Turret" parent="." instance=ExtResource("17_gjl4x")]
-position = Vector2(-3025.42, -250)
+position = Vector2(3731, -4199)
 scale = Vector2(1.30637, 1.19138)
 
 [connection signal="body_entered" from="MapLayer/Stage2MapLayer/Power2/NextStageTrigger2" to="." method="_on_next_stage_trigger_2_body_entered"]
