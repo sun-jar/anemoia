@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://67lt4fwpxhgd"]
+
+[ext_resource type="Script" path="res://scripts/entity/objects/item.gd" id="1_0cug8"]
+
+[node name="Item" type="StaticBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_0cug8")
