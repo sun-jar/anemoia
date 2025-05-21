@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dogw2jjpougi2"]
+
+[ext_resource type="Texture2D" uid="uid://bbea0efx0ybu7" path="res://addons/dialogic/Editor/Images/Resources/character.svg" id="1_tmlob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hryd4"]
+
+[node name="Switch" type="Sprite2D"]
+texture = ExtResource("1_tmlob")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1.75, 1.75)
+shape = SubResource("RectangleShape2D_hryd4")

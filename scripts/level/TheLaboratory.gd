@@ -172,8 +172,7 @@ func next_stage(with_effect: bool):
 		Globals.door0_closed = true
 		
 		for coord in Globals.door0:
-			map_stage_2.set_cell(coord, 2, Vector2i(6, 2))
-			map_stage_1_scene_ins.set_cell(coord, 2, Vector2i(6, 2))
+			map_stage_1_scene_ins.set_cell(coord, 2, Vector2i(4, 2))
 
 		map_stage_2.visible = true
 		map_stage_2.collision_enabled = true
