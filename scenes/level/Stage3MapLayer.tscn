@@ -163,66 +163,79 @@ switches = ["Switch5", "Switch6", "Switch10", "Switch11"]
 
 [node name="Switch1" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(1201, -2146)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 1
 
 [node name="Switch2" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1565.5, -905)
+position = Vector2(1584, -912.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 2
 
 [node name="Switch3" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1336.5, -152)
+position = Vector2(1296, -240.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 3
 
 [node name="Switch4" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1830, 432.5)
+position = Vector2(1776, 448.5)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 4
 
 [node name="Switch5" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(-1955, 2404.5)
+position = Vector2(-1936, 2383.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 5
 
 [node name="Switch6" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(3017.5, 1958)
+position = Vector2(3056, 1919.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 6
 
 [node name="Switch7_1" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(3262.5, 1309)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 7
 
 [node name="Switch7_2" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(-497.5, 1066)
+position = Vector2(-688, 975.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 7
 
 [node name="Switch7_3" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(-1952.5, -127)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 7
 
 [node name="Switch8" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1282.5, 695.5)
+position = Vector2(1296, 687.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 8
 
 [node name="Switch9" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1812, -495.5)
+position = Vector2(1904, -624.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 9
 
 [node name="Switch10" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(3391.5, 2495.5)
+position = Vector2(3376, 2447.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 10
 
 [node name="Switch11" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(2563.5, 2210.5)
+position = Vector2(2512, 2207.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 11
 
