@@ -38,9 +38,10 @@ void fragment() {
 
 	// Sample the screen texture for each color channel
 	vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec + vec2(SCREEN_PIXEL_SIZE*r_displacement));
-	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec + vec2(SCREEN_PIXEL_SIZE*g_displacement));
+	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec + vec2(SCREEN_PIXEL_SIZE*b_displacement));
 	vec4 ori = texture(SCREEN_TEXTURE, final_st + vec2(SCREEN_PIXEL_SIZE*g_displacement));
 
 	// Combine channels to create the final color
 	COLOR.rgb = vec3(red.r, ori.g, blue.b) * brightness;
+	COLOR.a = 1.0;
 }
