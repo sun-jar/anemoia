@@ -75,6 +75,56 @@ theme_override_font_sizes/font_size = 24
 text = "Save complete ."
 horizontal_alignment = 1
 
+[node name="ConfirmationScreen" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ConfirmationScreen"]
+layout_mode = 2
+color = Color(0.00392157, 0.00392157, 0.00392157, 0.858824)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationScreen"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="ConfirmationScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_ulfxa")
+theme_override_font_sizes/font_size = 48
+text = "Are you sure you wanna go back to main menu?
+All unsaved progress will be lost."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmationScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 152
+
+[node name="Cancel" type="Button" parent="ConfirmationScreen/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ulfxa")
+theme_override_font_sizes/font_size = 32
+text = "CANCEL 
+"
+script = ExtResource("2_78y50")
+
+[node name="ProceedMainMenu" type="Button" parent="ConfirmationScreen/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ulfxa")
+theme_override_font_sizes/font_size = 32
+text = "MAIN MENU
+"
+script = ExtResource("2_78y50")
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="ConfirmationScreen/VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="ConfirmationScreen/VBoxContainer/HBoxContainer/ProceedMainMenu" to="." method="_on_proceed_main_menu_pressed"]
