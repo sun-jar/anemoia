@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvsc24uqfll0x"]
+
+[ext_resource type="PackedScene" uid="uid://67lt4fwpxhgd" path="res://scenes/entity/objects/Item.tscn" id="1_omkdx"]
+[ext_resource type="Texture2D" uid="uid://c7yxqjhukr0vp" path="res://assets/entity/furnishing.tres" id="2_q65qb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78i20"]
+atlas = ExtResource("2_q65qb")
+region = Rect2(32, 256, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w468u"]
+size = Vector2(32, 32)
+
+[node name="CoolBox" instance=ExtResource("1_omkdx")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_78i20")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_w468u")
