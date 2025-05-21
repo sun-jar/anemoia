@@ -190,9 +190,10 @@ func _init_stage_2():
 			
 	GameManager.closed_doors[0] = true
 	_draw_door0(map_stage_1_scene_ins, GameManager.door0)
-
-	map_stage_2.visible = true
-	map_stage_2.collision_enabled = true
+	
+	if is_instance_valid(map_stage_2):
+		map_stage_2.visible = true
+		map_stage_2.collision_enabled = true
 	
 func _init_stage_3():
 	map_stage_2.queue_free()
@@ -205,6 +206,8 @@ func _init_stage_3():
 		if child.name in map_stage_3.switches:
 			child.disabled = false
 			# TODO GANTI SPRITE SWITCH DI MAP LAYER 2 INSTANCE DISINI
+			
+	map_stage_3.open_doors()
 	
 	await get_tree().process_frame
 	map_stage_3.visible = true
@@ -256,39 +259,22 @@ func _on_interact_timer_timeout() -> void:
 func _draw_door0(layer, coords):
 	for coord in coords:
 		layer.set_cell(coord, 2, Vector2i(4, 2))
-		
-func _delete_4x3_door(layer, top_left, tile_source, tile_coords):
-	for i in range(0, 3):
-		for j in range(0, 4):
-			layer.set_cell(top_left + Vector2i(j, i), tile_source, tile_coords)
-
-func _delete_6x3_door(layer, top_left, tile_source, tile_coords):
-	for i in range(0, 3):
-		for j in range(0, 6):
-			layer.set_cell(top_left + Vector2i(j, i), tile_source, tile_coords)
-
-func _delete_4x1_door(layer, top_left, tile_source, tile_coords):
-		for i in range(0, 4):
-			layer.set_cell(top_left + Vector2i(0, i), tile_source, tile_coords)
-			
-func _delete_5x1_door(layer, top_left, tile_source, tile_coords):
-		for i in range(0, 5):
-			layer.set_cell(top_left + Vector2i(0, i), tile_source, tile_coords)
 
 func open_door(id):
+	GameManager.closed_doors[id] = true
 	if GameManager.player_stage == 2:
 		if id in [1, 2, 6, 8, 10]:
-			_delete_4x3_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
-			_delete_4x3_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
+			map_stage_1_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
 		if id in [3, 5, 11]:
-			_delete_4x1_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
-			_delete_4x1_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
+			map_stage_1_scene_ins._delete_4x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_4x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
 		if id == 11:
-			_delete_5x1_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
-			_delete_5x1_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
+			map_stage_1_scene_ins._delete_5x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_5x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
 		if id == 4:
-			_delete_6x3_door(map_stage_1_scene_ins, GameManager.doors[id], 2, Vector2i(4, 3))
-			_delete_6x3_door(map_stage_2, GameManager.doors[id], 2, Vector2i(5, 2))
+			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
 			
 		
 	
