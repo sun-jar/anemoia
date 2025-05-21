@@ -9,7 +9,7 @@ func _ready() -> void:
 	if GameManager.player_stage >= stage:
 		for child in self.get_children():
 			if child.name in switches and not GameManager.closed_doors[child.id]:
-				child.disabled = false
+				child.toggle_enable(str(stage))
 				
 	open_doors()
 
