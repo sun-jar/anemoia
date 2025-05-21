@@ -55,7 +55,9 @@ func emit_shockwave():
 	var fade_tween = create_shader_tween(chroma_material, "brightness", 1.0, (1.0/3.0), 4.0)
 
 	var expand_tween = create_tween()
+	var shrink_area2d_tween = create_tween()
 	expand_tween.tween_property(self, "scale", Vector2(3.0, 3.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	shrink_area2d_tween.tween_property(self, "scale", Vector2(3.0, 3.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 	return fade_tween
 	
