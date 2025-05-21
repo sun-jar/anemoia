@@ -19,5 +19,9 @@ texture = ExtResource("2_kxpmr")
 position = Vector2(-13.5, 159.5)
 shape = SubResource("RectangleShape2D_yxo4t")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 2
+hit_from_inside = true
+
 [connection signal="body_entered" from="." to="." method="_on_player_entered"]
 [connection signal="body_exited" from="." to="." method="_on_player_exited"]

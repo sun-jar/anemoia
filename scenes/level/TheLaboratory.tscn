@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=22 format=4 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
 [ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="13_lf2t4"]
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
+[ext_resource type="PackedScene" uid="uid://cwpx1foe2uvk3" path="res://scenes/entity/Turret.tscn" id="17_gjl4x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6cajc"]
 shader = ExtResource("8_463o3")
@@ -182,6 +183,10 @@ shape = SubResource("CircleShape2D_k642p")
 [node name="InteractTimer" type="Timer" parent="."]
 wait_time = 3.65
 one_shot = true
+
+[node name="Turret" parent="." instance=ExtResource("17_gjl4x")]
+position = Vector2(-3025.42, -250)
+scale = Vector2(1.30637, 1.19138)
 
 [connection signal="body_entered" from="MapLayer/Stage2MapLayer/Power2/NextStageTrigger2" to="." method="_on_next_stage_trigger_2_body_entered"]
 [connection signal="body_exited" from="MapLayer/Stage2MapLayer/Power2/NextStageTrigger2" to="." method="_on_next_stage_trigger_2_body_exited"]
