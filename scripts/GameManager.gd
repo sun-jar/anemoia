@@ -82,7 +82,12 @@ func load_game():
 	GameManager.player_stage = game_data.player_stage
 	GameManager.closed_doors = game_data.closed_doors
 	
-func reset_game(player_node):
+func reset_player_state(player_node):
+	player_node.health = 100
+	player_node.speed = 400
+	player_node.wave_cooldown = 1.0
+
+func reset_game_state():
 	movement_disabled = true
 	
 	game_started = false
@@ -91,8 +96,5 @@ func reset_game(player_node):
 	}
 	
 	player_stage = 1
-	player_node.health = 100
-	player_node.speed = 400
-	player_node.wave_cooldown = 1.0
 	
 	closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]
