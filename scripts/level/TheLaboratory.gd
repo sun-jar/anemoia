@@ -108,7 +108,7 @@ func _ready() -> void:
 	
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
-	for i in range(1,3):
+	for i in range(GameManager.player_stage,4):
 		var powers = get_node_or_null("%" + ("Power%d" % i))
 		if powers != null:
 			powers.play("active_%d" % i)
@@ -157,9 +157,6 @@ func next_stage(with_effect: bool):
 		
 		var fade_tween = next_level_wave.emit_shockwave()
 		
-		if GameManager.player_stage == 3:
-			map_stage_1_scene_ins.queue_free()
-		
 		await fade_tween.finished
 		power_node.queue_free()
 		next_level_wave.safe_queue_free()
@@ -176,10 +173,17 @@ func next_stage(with_effect: bool):
 func _init_stage_2():
 	map_stage_1.queue_free()
 	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+	
 	var power_source_display = power_source_scene.instantiate()
 	power_source_display.play("inactive_1")
 	power_source_display.position = Vector2(1397.65, -1722)
 	map_stage_1_scene_ins.add_child(power_source_display)
+	
+	var power_source_display_2 = power_source_scene.instantiate()
+	power_source_display_2.play("active_1")
+	power_source_display_2.position = Vector2(248.56, 1735.03)
+	map_stage_1_scene_ins.add_child(power_source_display_2)
+	
 	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_1_scene_ins.collision_enabled = false
 	mask_layers.add_child(map_stage_1_scene_ins)
@@ -200,7 +204,9 @@ func _init_stage_2():
 	map_stage_2.visible = true
 	map_stage_2.collision_enabled = true
 	
-func _init_stage_3():
+func _init_stage_3():	
+	map_stage_1_scene_ins.visible = false
+	map_stage_1_scene_ins.queue_free()
 	map_stage_2.queue_free()
 	map_stage_2_scene_ins = map_stage_2_scene.instantiate()
 	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)

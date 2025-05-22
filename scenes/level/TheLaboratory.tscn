@@ -55,10 +55,11 @@ stream = ExtResource("5_lu07r")
 visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
-visible = false
 
 [node name="Power3" parent="MapLayer/Stage3MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
+visible = false
+position = Vector2(-836.5, 678.5)
 animation = &"active_2"
 
 [node name="NextStageTrigger2" type="Area2D" parent="MapLayer/Stage3MapLayer/Power3"]
