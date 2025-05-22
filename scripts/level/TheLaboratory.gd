@@ -20,6 +20,8 @@ extends Node2D
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
 
+@export var respawn_screen: PackedScene
+
 var power_source_scene = preload("res://scenes/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
@@ -76,7 +78,8 @@ func _start_game():
 	
 func _ready() -> void:
 	AudioManager.play_room_tone()
-	$CanvasLayer/PauseMenu.save_game.connect(self._save_game)
+	GameManager.die.connect(_respawn)
+	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
 	if not GameManager.game_started:
 		is_new_game = true
 		Globals.game_data = null
@@ -260,6 +263,13 @@ func _on_interact_timer_timeout() -> void:
 		GameManager.player_stage += 1
 		next_stage(true)
 
+
+func _respawn():
+	player_node.anim.play("death" + str(GameManager.player_stage))
+	# temporarily use a timer to make sure the animation plays
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_packed(respawn_screen)
+
 # special case for door 0
 func _draw_door0(layer, coords):
 	for coord in coords:
@@ -293,6 +303,3 @@ func open_door(id):
 		if id == 4:
 			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
-			
-		
-	

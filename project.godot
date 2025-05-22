@@ -77,6 +77,10 @@ window/size/resizable=false
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
+[global_group]
+
+player=""
+
 [input]
 
 dialogic_default_action={
