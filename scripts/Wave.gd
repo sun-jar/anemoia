@@ -75,7 +75,6 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 			door_player.play()
 		self_parent.door_id = parent.id
 	if parent.name.begins_with("Door"):
-		print(parent.id)
 		if sound_id == parent.id:
 			self_parent.door_matched.emit(sound_id)
 		else:
