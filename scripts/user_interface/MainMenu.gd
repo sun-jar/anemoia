@@ -5,6 +5,7 @@ extends Control
 @onready var confirmation_screen = $ConfirmationScreen
 
 @export var laboratory_scene : PackedScene
+@export var credits_scene: PackedScene
 
 var animation_finished = false
 
@@ -73,3 +74,8 @@ func _on_proceed_new_game_pressed() -> void:
 
 func _on_cancel_pressed() -> void:
 	confirmation_screen.visible = false
+
+
+func _on_credits_pressed() -> void:
+	var credits_scene_inst = credits_scene.instantiate()
+	add_child(credits_scene_inst)

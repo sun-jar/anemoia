@@ -5,15 +5,15 @@ var chroma_shader = preload("res://scripts/shaders/WaveChroma.gdshader")
 @onready var door_player = $DoorBeep
 @onready var wave_hitbox = $Area2D
 
-@onready var door_sound = []
+@onready var door_sound = [null]
 
 @export var sound_id = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	#for i in range(1, 12):
-		#door_sound.append(load("res://assets/sfx/doors/%d.mp3" % i)) # gabisa preload karena preload gabisa format string (executed at compile time)
+	for i in range(1, 12):
+		door_sound.append(load("res://assets/sfx/doorbeeps/sound%d.wav" % i)) # gabisa preload karena preload gabisa format string (executed at compile time)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -33,8 +33,8 @@ func emit_wave():
 	if sound_id == -1:
 		beep_player.play()
 	else:
-		#door_player.stream = door_sound[sound_id]
-		#door_player.play()
+		door_player.stream = door_sound[sound_id]
+		door_player.play()
 		get_parent().door_id = -1
 	wave_tween.tween_property(self, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hitbox_tween.tween_property(wave_hitbox, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT) #heuristic for the visual
@@ -55,7 +55,9 @@ func emit_shockwave():
 	var fade_tween = create_shader_tween(chroma_material, "brightness", 1.0, (1.0/3.0), 4.0)
 
 	var expand_tween = create_tween()
+	var shrink_area2d_tween = create_tween()
 	expand_tween.tween_property(self, "scale", Vector2(3.0, 3.0), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	shrink_area2d_tween.tween_property($Area2D, "scale", Vector2(0.0025, 0.0025), 4.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 	return fade_tween
 	
@@ -68,6 +70,13 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	var parent = area.get_parent()
 	var self_parent = self.get_parent()
 	if parent.name.begins_with("Switch") and not parent.disabled:
+		if sound_id != parent.id:
+			door_player.stream = door_sound[parent.id]
+			door_player.play()
 		self_parent.door_id = parent.id
-	if parent.name.begins_with("Door") and sound_id == parent.id:
-		self_parent.door_matched.emit(sound_id)
+	if parent.name.begins_with("Door"):
+		if sound_id == parent.id:
+			self_parent.door_matched.emit(sound_id)
+		else:
+			parent.sound_player.stream = door_sound[parent.id]
+			parent.sound_player.play()
