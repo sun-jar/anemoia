@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=20 format=3 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -9,10 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://dgp8hfvqec432" path="res://scenes/WaveManager.tscn" id="6_r8imk"]
 [ext_resource type="PackedScene" uid="uid://cu31cxpasagc0" path="res://scenes/Wave.tscn" id="7_5hugr"]
 [ext_resource type="PackedScene" uid="uid://btcxc2omgytvw" path="res://scenes/level/Stage2MapLayer.tscn" id="7_uyki4"]
-[ext_resource type="Shader" path="res://scripts/shaders/PowerStage1.gdshader" id="8_463o3"]
 [ext_resource type="PackedScene" uid="uid://0clk8dlep3f5" path="res://scenes/level/Stage3MapLayer.tscn" id="8_jy8pg"]
-[ext_resource type="Texture2D" uid="uid://b6hqgu8jprppr" path="res://assets/power_stage1.png" id="9_vanv6"]
-[ext_resource type="Texture2D" uid="uid://ccfd5ciuseeyv" path="res://assets/power_source.png" id="10_xa4d0"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/PowerSource.tscn" id="9_ptpbr"]
 [ext_resource type="PackedScene" uid="uid://rxerk6xulbkl" path="res://scenes/user_interface/PauseMenu.tscn" id="11_vmmhu"]
 [ext_resource type="PackedScene" uid="uid://cfl4wvuv112yw" path="res://scenes/level/Stage1MapLayer.tscn" id="11_yh21x"]
 [ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
@@ -20,15 +18,7 @@
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxsvq"]
-size = Vector2(84.5, 84)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cajc"]
-shader = ExtResource("8_463o3")
-shader_parameter/glow_size = 4.0
-shader_parameter/base_strength = 1.0
-shader_parameter/glow_color = Color(1, 1, 1, 1)
-shader_parameter/pulse_speed = 2.0
-shader_parameter/pulse_amplitude = 0.5
+size = Vector2(63.5, 64.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dld1k"]
 bg_color = Color(0, 0, 0, 1)
@@ -67,14 +57,13 @@ visible = false
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
 
-[node name="Power3" type="Sprite2D" parent="MapLayer/Stage3MapLayer"]
+[node name="Power3" parent="MapLayer/Stage3MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
-position = Vector2(1049.5, -1553)
-texture = ExtResource("10_xa4d0")
-hframes = 5
-frame = 4
+position = Vector2(-836.5, 678.5)
+animation = &"active_2"
 
 [node name="NextStageTrigger2" type="Area2D" parent="MapLayer/Stage3MapLayer/Power3"]
+position = Vector2(800.94, -3288.03)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapLayer/Stage3MapLayer/Power3/NextStageTrigger2"]
 position = Vector2(-0.25, 0)
@@ -83,28 +72,25 @@ shape = SubResource("RectangleShape2D_bxsvq")
 [node name="Stage2MapLayer" parent="MapLayer" instance=ExtResource("7_uyki4")]
 visible = false
 
-[node name="Power2" type="Sprite2D" parent="MapLayer/Stage2MapLayer"]
+[node name="Power2" parent="MapLayer/Stage2MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
-position = Vector2(248.56, 1735.03)
-texture = ExtResource("10_xa4d0")
-hframes = 5
-frame = 4
+animation = &"active_2"
 
 [node name="NextStageTrigger2" type="Area2D" parent="MapLayer/Stage2MapLayer/Power2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapLayer/Stage2MapLayer/Power2/NextStageTrigger2"]
-position = Vector2(-0.25, 0)
+position = Vector2(0.190002, 0.219971)
 shape = SubResource("RectangleShape2D_bxsvq")
 
 [node name="Stage1MapLayer" parent="MapLayer" instance=ExtResource("11_yh21x")]
 
-[node name="Power1" type="Sprite2D" parent="MapLayer/Stage1MapLayer"]
+[node name="Power1" parent="MapLayer/Stage1MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_6cajc")
-position = Vector2(1397.65, -1722.5)
-texture = ExtResource("9_vanv6")
+position = Vector2(1397.65, -1722)
+frame_progress = 0.591649
 
 [node name="NextStageTrigger1" type="Area2D" parent="MapLayer/Stage1MapLayer/Power1"]
+position = Vector2(0, -0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1"]
 position = Vector2(-0.25, 0)

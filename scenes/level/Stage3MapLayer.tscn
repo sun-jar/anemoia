@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://0clk8dlep3f5"]
+[gd_scene load_steps=16 format=4 uid="uid://0clk8dlep3f5"]
 
 [ext_resource type="Texture2D" uid="uid://dd3k4c8c25e3m" path="res://assets/tiles.png" id="1_mwao3"]
 [ext_resource type="Texture2D" uid="uid://cewywkf5lcc0t" path="res://assets/wall_sprite.png" id="2_hdg8c"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://datald8shj1nc" path="res://assets/sideways_door.png" id="5_yvk41"]
 [ext_resource type="Script" path="res://scripts/level/Stages.gd" id="6_6ju24"]
 [ext_resource type="PackedScene" uid="uid://dogw2jjpougi2" path="res://scenes/interactables/Switch.tscn" id="7_711m1"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/PowerSource.tscn" id="7_ppwos"]
 [ext_resource type="PackedScene" uid="uid://cv6kbe2dt74dv" path="res://scenes/interactables/Door.tscn" id="8_k6tuy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
@@ -161,68 +162,89 @@ script = ExtResource("6_6ju24")
 stage = 3
 switches = ["Switch5", "Switch6", "Switch10", "Switch11"]
 
+[node name="PowerSource1" parent="." instance=ExtResource("7_ppwos")]
+position = Vector2(1397.65, -1722)
+animation = &"inactive_2"
+frame_progress = 0.616905
+
+[node name="PowerSource2" parent="." instance=ExtResource("7_ppwos")]
+animation = &"inactive_2"
+
 [node name="Switch1" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(1201, -2146)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 1
 
 [node name="Switch2" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1565.5, -905)
+position = Vector2(1584, -912.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 2
 
 [node name="Switch3" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1336.5, -152)
+position = Vector2(1296, -240.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 3
 
 [node name="Switch4" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1830, 432.5)
+position = Vector2(1776, 448.5)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 4
 
 [node name="Switch5" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(-1955, 2404.5)
+position = Vector2(-1936, 2383.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 5
 
 [node name="Switch6" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(3017.5, 1958)
+position = Vector2(3056, 1919.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 6
 
 [node name="Switch7_1" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(3262.5, 1309)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 7
 
 [node name="Switch7_2" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(-497.5, 1066)
+position = Vector2(-688, 975.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 7
 
 [node name="Switch7_3" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(-1952.5, -127)
+animation = &"2u_deactivated"
 _enum_index = 2
 id = 7
 
 [node name="Switch8" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1282.5, 695.5)
+position = Vector2(1296, 687.5)
+animation = &"2l_deactivated"
 _enum_index = 0
 id = 8
 
 [node name="Switch9" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(1812, -495.5)
+position = Vector2(1904, -624.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 9
 
 [node name="Switch10" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(3391.5, 2495.5)
+position = Vector2(3376, 2447.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 10
 
 [node name="Switch11" parent="." instance=ExtResource("7_711m1")]
-position = Vector2(2563.5, 2210.5)
+position = Vector2(2512, 2207.5)
+animation = &"2r_deactivated"
 _enum_index = 1
 id = 11
 

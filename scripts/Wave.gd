@@ -5,7 +5,7 @@ var chroma_shader = preload("res://scripts/shaders/WaveChroma.gdshader")
 @onready var door_player = $DoorBeep
 @onready var wave_hitbox = $Area2D
 
-@onready var door_sound = []
+@onready var door_sound = [null]
 
 @export var sound_id = -1
 
@@ -70,6 +70,13 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	var parent = area.get_parent()
 	var self_parent = self.get_parent()
 	if parent.name.begins_with("Switch") and not parent.disabled:
+		if sound_id != parent.id:
+			door_player.stream = door_sound[parent.id]
+			door_player.play()
 		self_parent.door_id = parent.id
-	if parent.name.begins_with("Door") and sound_id == parent.id:
-		self_parent.door_matched.emit(sound_id)
+	if parent.name.begins_with("Door"):
+		if sound_id == parent.id:
+			self_parent.door_matched.emit(sound_id)
+		else:
+			parent.sound_player.stream = door_sound[parent.id]
+			parent.sound_player.play()

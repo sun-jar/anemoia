@@ -20,6 +20,7 @@ extends Node2D
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
 
+var power_source_scene = preload("res://scenes/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
 
@@ -107,6 +108,10 @@ func _ready() -> void:
 	
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
+	for i in range(1,3):
+		var powers = get_node_or_null("%" + ("Power%d" % i))
+		if powers != null:
+			powers.play("active_%d" % i)
 	
 	
 func calculate_pitch():
@@ -140,7 +145,7 @@ func next_stage(with_effect: bool):
 	if with_effect:
 		var power_node_path = "MapLayer/Stage%dMapLayer/Power%d" % [GameManager.player_stage - 1, GameManager.player_stage - 1]
 		var power_node = get_node_or_null(power_node_path)
-		power_node.material = null
+		power_node.play("inactive_" + str(GameManager.player_stage - 1))
 		
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		GameManager.movement_disabled = true
@@ -150,17 +155,13 @@ func next_stage(with_effect: bool):
 		wave_manager.add_child(next_level_wave)
 		$Player/Camera2D.shake(8.0, 2.0)
 		
-		var power_tween = create_tween()
-		power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
 		var fade_tween = next_level_wave.emit_shockwave()
-		
-		await power_tween.finished
-		power_node.queue_free()
 		
 		if GameManager.player_stage == 3:
 			map_stage_1_scene_ins.queue_free()
 		
 		await fade_tween.finished
+		power_node.queue_free()
 		next_level_wave.safe_queue_free()
 	
 	if GameManager.player_stage == 2:
@@ -175,6 +176,10 @@ func next_stage(with_effect: bool):
 func _init_stage_2():
 	map_stage_1.queue_free()
 	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+	var power_source_display = power_source_scene.instantiate()
+	power_source_display.play("inactive_1")
+	power_source_display.position = Vector2(1397.65, -1722)
+	map_stage_1_scene_ins.add_child(power_source_display)
 	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_1_scene_ins.collision_enabled = false
 	mask_layers.add_child(map_stage_1_scene_ins)
@@ -275,6 +280,19 @@ func open_door(id):
 		if id == 4:
 			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+	if GameManager.player_stage == 2:
+		if id in [1, 2, 6, 8, 10]:
+			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id in [3, 5, 11]:
+			map_stage_2_scene_ins._delete_4x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 11:
+			map_stage_2_scene_ins._delete_5x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_5x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 4:
+			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
 			
 		
 	
