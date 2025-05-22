@@ -79,7 +79,7 @@ func _start_game():
 func _ready() -> void:
 	AudioManager.play_room_tone()
 	GameManager.die.connect(_respawn)
-	$CanvasLayer/PauseMenu.save_game.connect(self.save_game)
+	$CanvasLayer/PauseMenu.save_game.connect(self._save_game)
 	if not GameManager.game_started:
 		is_new_game = true
 		Globals.game_data = null
@@ -290,7 +290,7 @@ func open_door(id):
 		if id == 4:
 			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
-	if GameManager.player_stage == 2:
+	if GameManager.player_stage == 3:
 		if id in [1, 2, 6, 8, 10]:
 			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))

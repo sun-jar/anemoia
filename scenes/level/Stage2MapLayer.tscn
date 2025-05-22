@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://datald8shj1nc" path="res://assets/sideways_door.png" id="5_y3oux"]
 [ext_resource type="Script" path="res://scripts/level/Stages.gd" id="6_psm0e"]
 [ext_resource type="PackedScene" uid="uid://dogw2jjpougi2" path="res://scenes/interactables/Switch.tscn" id="6_raeu8"]
-[ext_resource type="PackedScene" path="res://scenes/interactables/PowerSource.tscn" id="7_cwbyn"]
+[ext_resource type="PackedScene" uid="uid://b8ycv5h2ewy0j" path="res://scenes/interactables/PowerSource.tscn" id="7_cwbyn"]
 [ext_resource type="PackedScene" uid="uid://cv6kbe2dt74dv" path="res://scenes/interactables/Door.tscn" id="8_pikyo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
