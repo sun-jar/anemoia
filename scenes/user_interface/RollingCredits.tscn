@@ -1,0 +1,185 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdeb4iqq7h7gn"]
+
+[ext_resource type="FontFile" uid="uid://vrrmdx83skor" path="res://addons/dialogic/Example Assets/Fonts/Roboto-Regular.ttf" id="1_perwj"]
+[ext_resource type="Script" path="res://scripts/user_interface/RollingCredits.gd" id="1_ugxva"]
+[ext_resource type="FontFile" uid="uid://cc4xli25271fd" path="res://addons/dialogic/Example Assets/Fonts/Roboto-Bold.ttf" id="2_mk58p"]
+
+[node name="RollingCredits" type="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ugxva")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.00392157, 0.00392157, 0.00392157, 0.858824)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 4848.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("1_perwj")
+theme_override_fonts/bold_font = ExtResource("2_mk58p")
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[center][b]ANEMOIA - A Game by Sun Jar[/b]
+
+
+[b]Game Designer[/b]
+Alma Putri Nashrida
+Muhammad Nabil Mu’afa
+
+
+[b]Programmers[/b]
+Alden Luthfi
+Alma Putri Nashrida
+Andi Salsabila Ardian
+Athira Reika
+Jeslyn Theodora
+Muhammad Nabil Mu’afa
+
+
+[b]VFX Programmer[/b]
+Muhammad Nabil Mu’afa
+
+
+[b]Visual Artists[/b]
+Alden Luthfi
+Alma Putri Nashrida
+Andi Salsabila Ardian
+Athira Reika
+
+
+[b]Animators[/b]
+Andi Salsabila Ardian
+Alma Putri Nashrida
+
+
+[b]Narrative Designer[/b]
+Andi Salsabila Ardian
+Jeslyn Theodora
+
+
+[b]Sound Designer[/b]
+Andi Salsabila Ardian
+Muhammad Nabil Mu’afa
+
+
+[b]Theme Song Composer[/b]
+Muhammad Nabil Mu’afa
+
+
+[b]Expert Slippers User[/b]
+Alden Luthfi
+
+
+[b]Professional “Severance” Buzzer[/b]
+Alma Putri Nashrida
+
+
+[b]Damgom Analyst[/b]
+Andi Salsabila Ardian
+
+
+[b]Thought Daughter[/b]
+Athira Reika
+
+
+[b]professional procrastinatotr[/b]
+Jeslyn Theodora
+
+
+[b]Daydreamer Specialist[/b]
+Muhammad Nabil Mu’afa
+
+
+[b]Playtesters[/b]
+A
+B
+C
+D
+E
+F
+G
+H
+
+
+
+[b]Special Thanks to[/b]
+Nur Endah Safitri
+Kenichi Komala (& All Other Game Development TAs)
+My Mom
+My Grilfriend (Guess which)
+My Boyfriend (Guess which)
+Mostly Coffee & Space
+Hiccup Haddock
+**** (ytta)
+Damgom AKA Jibun Tsukkomi Kuma AKA Nagano Bear AKA Nagano Kuma AKA Self Deprecating Bear
+Chikawa
+our lord and savior 
+Basically Every Game We Drew Inspiration From
+La La Land (Original Motion Picture Soundtrack) - Justin Hurwitz
+#HER (ytta)
+Loving Vincent"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Close" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 128
+text = "  ×"
+flat = true
+
+[connection signal="pressed" from="MarginContainer/Close" to="." method="_on_close_pressed"]

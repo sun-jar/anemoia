@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv6kbe2dt74dv"]
+
+[ext_resource type="Script" path="res://scripts/interactables/door.gd" id="1_tjpu7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7en71"]
+
+[node name="Door" type="Node2D"]
+script = ExtResource("1_tjpu7")
+
+[node name="Door Area" type="Area2D" parent="."]
+scale = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door Area"]
+scale = Vector2(1.75, 1.75)
+shape = SubResource("RectangleShape2D_7en71")
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]

@@ -15,6 +15,12 @@ var shown_one_time_dialogues = {
 }
 var last_played_dialogue
 
+
+var closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]
+
+var door0 = [Vector2i(-3, -61), Vector2i(-3, -62), Vector2i(-3, -63), Vector2i(-3, -64)]
+var doors = [null, Vector2i(55, -46), Vector2i(62, -17), Vector2i(59, 7), Vector2i(33, 69), Vector2i(68, 73), Vector2i(-42, 69), null, Vector2i(30, -6), Vector2i(32, 11), Vector2i(-8, 49), Vector2i(56, 43)]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -52,7 +58,9 @@ func save_game(game):
 		"player_health": player.health,
 		
 		"player_x": player.position.x,
-		"player_y": player.position.y
+		"player_y": player.position.y,
+		
+		"closed_doors": closed_doors 
 	}
 
 	var json_string = JSON.stringify(game_data)
@@ -71,6 +79,8 @@ func load_game():
 	Globals.game_data = game_data
 	GameManager.game_started = game_data.get("game_started", false)
 	GameManager.shown_one_time_dialogues = game_data.get("shown_one_time_dialogues", {})
+	GameManager.player_stage = game_data.player_stage
+	GameManager.closed_doors = game_data.closed_doors
 	
 func reset_game(player_node):
 	player_stage = 1

@@ -22,6 +22,7 @@ extends Node2D
 
 @export var respawn_screen: PackedScene
 
+var power_source_scene = preload("res://scenes/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
 
@@ -31,7 +32,11 @@ var is_new_game = false
 func _load_saved():
 	var game_data = Globals.game_data
 	
-	GameManager.player_stage = game_data.player_stage
+	if GameManager.player_stage > 1:
+		_init_stage_2()
+	
+	if GameManager.player_stage > 2:
+		_init_stage_3()
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -85,7 +90,7 @@ func _ready() -> void:
 		is_new_game = false
 		if (Globals.game_data != null):
 			_load_saved()
-		next_stage(false)
+
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		
 		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
@@ -102,8 +107,14 @@ func _ready() -> void:
 	else:
 		$Player/InitialGuide.queue_free()
 	wave_manager.player_node = player_node
+	wave_manager.door_matched.connect(open_door)
+	
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
+	for i in range(1,3):
+		var powers = get_node_or_null("%" + ("Power%d" % i))
+		if powers != null:
+			powers.play("active_%d" % i)
 	
 	
 func calculate_pitch():
@@ -117,7 +128,7 @@ func calculate_pitch():
 	AudioServer.set_bus_volume_db(1, -scaled_distance - 30)
 	
 	var pitch_scale = AudioServer.get_bus_effect(1, 1)
-	pitch_scale.pitch_scale = ((scaled_distance + 36) / 21) * 0.8
+	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.2)
 
 	
 func _input(event: InputEvent) -> void:
@@ -137,7 +148,7 @@ func next_stage(with_effect: bool):
 	if with_effect:
 		var power_node_path = "MapLayer/Stage%dMapLayer/Power%d" % [GameManager.player_stage - 1, GameManager.player_stage - 1]
 		var power_node = get_node_or_null(power_node_path)
-		power_node.material = null
+		power_node.play("inactive_" + str(GameManager.player_stage - 1))
 		
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		GameManager.movement_disabled = true
@@ -147,51 +158,75 @@ func next_stage(with_effect: bool):
 		wave_manager.add_child(next_level_wave)
 		$Player/Camera2D.shake(8.0, 2.0)
 		
-		var power_tween = create_tween()
-		power_tween.tween_property(power_node, "modulate:a", 0.0, 3.0)
 		var fade_tween = next_level_wave.emit_shockwave()
-		
-		await power_tween.finished
-		power_node.queue_free()
 		
 		if GameManager.player_stage == 3:
 			map_stage_1_scene_ins.queue_free()
 		
 		await fade_tween.finished
+		power_node.queue_free()
 		next_level_wave.safe_queue_free()
 	
 	if GameManager.player_stage == 2:
-		map_stage_1.queue_free()
-		map_stage_1_scene_ins = map_stage_1_scene.instantiate()
-		map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
-		map_stage_1_scene_ins.collision_enabled = false
-		mask_layers.add_child(map_stage_1_scene_ins)
-		
-		await get_tree().process_frame
-		map_stage_2.visible = true
-		map_stage_2.collision_enabled = true
+		_init_stage_2()
 	
 	elif GameManager.player_stage == 3:
-		map_stage_2.queue_free()
-		map_stage_2_scene_ins = map_stage_2_scene.instantiate()
-		map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
-		map_stage_2_scene_ins.collision_enabled = false
-		mask_layers.add_child(map_stage_2_scene_ins)
-		
-		await get_tree().process_frame
-		map_stage_3.visible = true
-		map_stage_3.collision_enabled = true
+		_init_stage_3()
 	
 	if with_effect:
 		GameManager.movement_disabled = false
+
+func _init_stage_2():
+	map_stage_1.queue_free()
+	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+	var power_source_display = power_source_scene.instantiate()
+	power_source_display.play("inactive_1")
+	power_source_display.position = Vector2(1397.65, -1722)
+	map_stage_1_scene_ins.add_child(power_source_display)
+	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+	map_stage_1_scene_ins.collision_enabled = false
+	mask_layers.add_child(map_stage_1_scene_ins)
 	
+	for child in map_stage_1_scene_ins.get_children():
+		if child.name in map_stage_2.switches:
+			child.toggle_enable("1")
+			
+	for child in map_stage_2.get_children():
+		if child.name in map_stage_2.switches:
+			child.toggle_enable("2")
+
+	await get_tree().process_frame
+
+	GameManager.closed_doors[0] = true
+	_draw_door0(map_stage_1_scene_ins, GameManager.door0)
+	
+	map_stage_2.visible = true
+	map_stage_2.collision_enabled = true
+	
+func _init_stage_3():
+	map_stage_2.queue_free()
+	map_stage_2_scene_ins = map_stage_2_scene.instantiate()
+	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+	map_stage_2_scene_ins.collision_enabled = false
+	mask_layers.add_child(map_stage_2_scene_ins)
+	
+	for child in map_stage_2_scene_ins.get_children():
+		if child.name in map_stage_3.switches:
+			child.disabled = false
+			# TODO GANTI SPRITE SWITCH DI MAP LAYER 2 INSTANCE DISINI
+			
+	map_stage_3.open_doors()
+	
+	await get_tree().process_frame
+	map_stage_3.visible = true
+	map_stage_3.collision_enabled = true
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
 	
-func save_game():
+func _save_game():
 	GameManager.save_game(self)
 
 
@@ -228,8 +263,43 @@ func _on_interact_timer_timeout() -> void:
 		GameManager.player_stage += 1
 		next_stage(true)
 
+
 func _respawn():
 	player_node.anim.play("death" + str(GameManager.player_stage))
 	# temporarily use a timer to make sure the animation plays
 	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_packed(respawn_screen)
+
+# special case for door 0
+func _draw_door0(layer, coords):
+	for coord in coords:
+		layer.set_cell(coord, 2, Vector2i(4, 2))
+
+func open_door(id):
+	GameManager.closed_doors[id] = true
+	if GameManager.player_stage == 2:
+		if id in [1, 2, 6, 8, 10]:
+			map_stage_1_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id in [3, 5, 11]:
+			map_stage_1_scene_ins._delete_4x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_4x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 11:
+			map_stage_1_scene_ins._delete_5x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_5x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 4:
+			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+	if GameManager.player_stage == 2:
+		if id in [1, 2, 6, 8, 10]:
+			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id in [3, 5, 11]:
+			map_stage_2_scene_ins._delete_4x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 11:
+			map_stage_2_scene_ins._delete_5x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_5x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 4:
+			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
