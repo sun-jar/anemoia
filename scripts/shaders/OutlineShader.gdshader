@@ -2,13 +2,13 @@ shader_type canvas_item;
 
 uniform bool show_outline = false;
 uniform vec4 outline_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform float outline_thickness = 2.0;
+uniform float outline_thickness = 1.0;
 
 void fragment() {
     vec4 tex_color = texture(TEXTURE, UV);
     float base_alpha = tex_color.a;
 
-    if (base_alpha < 0.1 && show_outline) {
+    if (show_outline) {
         bool is_edge = false;
 
         for (int x = -1; x <= 1 && !is_edge; x++) {
