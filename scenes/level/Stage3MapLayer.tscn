@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://datald8shj1nc" path="res://assets/sideways_door.png" id="5_yvk41"]
 [ext_resource type="Script" path="res://scripts/level/Stages.gd" id="6_6ju24"]
 [ext_resource type="PackedScene" uid="uid://dogw2jjpougi2" path="res://scenes/interactables/Switch.tscn" id="7_711m1"]
+[ext_resource type="PackedScene" uid="uid://b8ycv5h2ewy0j" path="res://scenes/interactables/PowerSource.tscn" id="7_ppwos"]
 [ext_resource type="PackedScene" uid="uid://cv6kbe2dt74dv" path="res://scenes/interactables/Door.tscn" id="8_k6tuy"]
 [ext_resource type="Texture2D" uid="uid://doe14i31p1h6f" path="res://assets/furnishing.png" id="9_07cxm"]
 [ext_resource type="Texture2D" uid="uid://c6d7ekol1aky6" path="res://assets/decor/wall_decor.png" id="9_kbkiu"]
