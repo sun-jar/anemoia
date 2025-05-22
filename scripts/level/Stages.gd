@@ -8,12 +8,10 @@ func _ready() -> void:
 	if stage >= 2:
 		var power = get_node_or_null("PowerSource1")
 		if power != null:
-			print(str(stage) + "found 1")
 			power.play("inactive_2")
 	if stage >= 3:
 		var power = get_node_or_null("PowerSource2")
 		if power != null:
-			print(str(stage) + "found 2")
 			power.play("inactive_3")
 	if GameManager.player_stage >= stage:
 		for child in self.get_children():
