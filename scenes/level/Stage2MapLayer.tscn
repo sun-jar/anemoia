@@ -320,7 +320,7 @@ script = ExtResource("6_psm0e")
 stage = 2
 switches = ["Switch1", "Switch2", "Switch3", "Switch4", "Switch8", "Switch9"]
 
-[node name="PowerSource" parent="." instance=ExtResource("7_cwbyn")]
+[node name="PowerSource1" parent="." instance=ExtResource("7_cwbyn")]
 position = Vector2(1397.65, -1722)
 animation = &"inactive_2"
 frame_progress = 0.616905
