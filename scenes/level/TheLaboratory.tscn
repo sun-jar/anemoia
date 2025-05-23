@@ -176,7 +176,7 @@ shape = SubResource("CircleShape2D_k642p")
 position = Vector2(392, -184)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialoguePowerSource1Trigger"]
-position = Vector2(2397, -3266)
+position = Vector2(2389, -3259)
 scale = Vector2(12.92, 12.92)
 shape = SubResource("CircleShape2D_f30e7")
 

@@ -306,8 +306,7 @@ func open_door(id):
 
 func _on_dialogue_power_source_1_trigger_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["intro_power_source_1"]:
-		GameManager.start_dialogue("intro_power_source_1")   
-
+		GameManager.start_dialogue("intro_power_source_1")  
 
 func _on_dialogue_power_source_1_trigger_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["intro_power_source_2"]:

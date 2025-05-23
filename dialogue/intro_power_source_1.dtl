@@ -1,5 +1,7 @@
 unknown: *static* Oh, you finally found something, huh? That's great.
 unknown: By taking the energy from the power source, you’ll be able to regain your vision. *static* Clearer, sharper, vivid-er than ever. *static*
 unknown: *static* Go ahead, replenish your energy from the source, then let’s see what you’re truly capable of perceiving.
+unknown: I sent a message to your system, read it to proceed with the power source.
+system_alert: Press 'E' to interact with objects, hold 'E' to interact with power sources.
 unknown: Will you like what you see, I wonder?
 system_alert: [Transmission cuts off]
