@@ -29,8 +29,6 @@ func _ready() -> void:
 func open_doors():
 	if GameManager.player_stage == 4:
 		self._delete_8x1_door(GameManager.doors[7], 2, Vector2i(5, 2))
-		return
-	return
 	for id in range(1, 12):
 		if GameManager.closed_doors[id]:
 			if id in [1, 2, 6, 8, 10]:
