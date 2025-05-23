@@ -1,29 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://qn143ij8sf6d"]
+[gd_scene load_steps=8 format=3 uid="uid://qn143ij8sf6d"]
 
 [ext_resource type="PackedScene" uid="uid://bwpro4rvamfj0" path="res://scenes/interactables/InteractableBase.tscn" id="1_rbm5t"]
-[ext_resource type="Texture2D" uid="uid://c7yxqjhukr0vp" path="res://assets/entity/furnishing.tres" id="2_k5k8a"]
+[ext_resource type="Shader" path="res://scripts/shaders/OutlineShader.gdshader" id="3_ieesd"]
+[ext_resource type="Texture2D" uid="uid://doe14i31p1h6f" path="res://assets/decor/furnishing.png" id="3_m66bs"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m0067"]
-atlas = ExtResource("2_k5k8a")
-region = Rect2(208, 160, 64, 32)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pf8ox"]
+shader = ExtResource("3_ieesd")
+shader_parameter/show_outline = false
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r7ewg"]
-atlas = ExtResource("2_k5k8a")
-region = Rect2(208, 160, 64, 32)
+atlas = ExtResource("3_m66bs")
+region = Rect2(208, 152, 64, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14niw"]
+size = Vector2(32.5, 32.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xxns1"]
 size = Vector2(66, 34.5)
 
 [node name="Machine" instance=ExtResource("1_rbm5t")]
 
-[node name="OutlineSprite" parent="." index="0"]
-texture = SubResource("AtlasTexture_m0067")
-
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_pf8ox")
 texture = SubResource("AtlasTexture_r7ewg")
 
-[node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(0.25, 0)
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_14niw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, 7.75)
