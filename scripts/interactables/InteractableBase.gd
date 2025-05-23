@@ -1,14 +1,12 @@
 extends StaticBody2D
 
-@onready var outline_sprite: Sprite2D = $OutlineSprite
-@onready var shader_material := outline_sprite.material as ShaderMaterial
+@onready var sprite: Sprite2D = $Sprite
+@onready var shader_material = sprite.material
 @onready var interaction_area := $Area2D
 
 var is_interactable: bool = false
 
 func _ready():
-	interaction_area.connect("body_entered", Callable(self, "_on_body_entered"))
-	interaction_area.connect("body_exited", Callable(self, "_on_body_exited"))
 	_update_outline()
 
 func set_interactable(value: bool) -> void:
