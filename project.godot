@@ -39,6 +39,11 @@ directories/dch_directory={
 }
 directories/dtl_directory={
 "guide": "res://dialogue/guide.dtl",
+"intro_key": "res://dialogue/intro_key.dtl",
+"intro_power_source_1": "res://dialogue/intro_power_source_1.dtl",
+"intro_power_source_2": "res://dialogue/intro_power_source_2.dtl",
+"intro_turret": "res://dialogue/intro_turret.dtl",
+"intro_turret_2": "res://dialogue/intro_turret_2.dtl",
 "timeline": "res://dialogue/timeline.dtl"
 }
 extensions_folder="res://addons/dialogic_additions"
@@ -70,6 +75,7 @@ layout/default_style="res://dialogue/dialogue_style.tres"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=4
 window/size/resizable=false
 
 [editor_plugins]

@@ -8,15 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://b1or3r36ptmby" path="res://scenes/entity/Player.tscn" id="6_5e2qs"]
 [ext_resource type="PackedScene" uid="uid://dgp8hfvqec432" path="res://scenes/WaveManager.tscn" id="6_r8imk"]
 [ext_resource type="PackedScene" uid="uid://cu31cxpasagc0" path="res://scenes/Wave.tscn" id="7_5hugr"]
-[ext_resource type="PackedScene" uid="uid://btcxc2omgytvw" path="res://scenes/level/Stage2MapLayer.tscn" id="7_uyki4"]
-[ext_resource type="PackedScene" uid="uid://0clk8dlep3f5" path="res://scenes/level/Stage3MapLayer.tscn" id="8_jy8pg"]
+[ext_resource type="PackedScene" uid="uid://cdawvm5uhalyc" path="res://scenes/level/Stage2MapLayer.tscn" id="7_uyki4"]
+[ext_resource type="PackedScene" uid="uid://c3w0tv105bjru" path="res://scenes/level/Stage3MapLayer.tscn" id="8_jy8pg"]
 [ext_resource type="PackedScene" uid="uid://b8ycv5h2ewy0j" path="res://scenes/interactables/PowerSource.tscn" id="9_ptpbr"]
 [ext_resource type="PackedScene" uid="uid://rxerk6xulbkl" path="res://scenes/user_interface/PauseMenu.tscn" id="11_vmmhu"]
 [ext_resource type="PackedScene" uid="uid://cfl4wvuv112yw" path="res://scenes/level/Stage1MapLayer.tscn" id="11_yh21x"]
 [ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
 [ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="13_lf2t4"]
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
-[ext_resource type="PackedScene" uid="uid://qfbvxhphtpx6" path="res://scenes/user_interface/ObjectiveIndicator.tscn" id="17_ymeu3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxsvq"]
 size = Vector2(63.5, 64.5)
@@ -30,6 +29,9 @@ border_width_bottom = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k642p"]
 radius = 140.602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f30e7"]
+radius = 16.7915
 
 [node name="TheLaboratory" type="Node2D"]
 position = Vector2(-1, 0)
@@ -53,7 +55,6 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
-visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
@@ -91,7 +92,6 @@ tile_map_data = PackedByteArray("AADB//v/AgAEAAIAAADB//z/AgAEAAIAAADB//3/AgAEAAI
 [node name="Power1" parent="MapLayer/Stage1MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
 position = Vector2(1397.65, -1722)
-animation = &"inactive_2"
 
 [node name="NextStageTrigger1" type="Area2D" parent="MapLayer/Stage1MapLayer/Power1"]
 position = Vector2(0, -0.5)
@@ -166,18 +166,6 @@ offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 40
-
-[node name="ObjectiveIndicator" parent="CanvasLayer/MarginContainer" instance=ExtResource("17_ymeu3")]
-layout_mode = 2
-
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
 
 [node name="DialogueTrigger1" type="Area2D" parent="."]
@@ -185,6 +173,14 @@ position = Vector2(-1000, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueTrigger1"]
 shape = SubResource("CircleShape2D_k642p")
+
+[node name="DialoguePowerSource1Trigger" type="Area2D" parent="."]
+position = Vector2(392, -184)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialoguePowerSource1Trigger"]
+position = Vector2(2389, -3259)
+scale = Vector2(12.92, 12.92)
+shape = SubResource("CircleShape2D_f30e7")
 
 [node name="InteractTimer" type="Timer" parent="."]
 wait_time = 3.65
@@ -195,4 +191,6 @@ one_shot = true
 [connection signal="body_entered" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_entered"]
 [connection signal="body_exited" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_exited"]
 [connection signal="body_entered" from="DialogueTrigger1" to="." method="_on_dialogue_trigger_1_body_entered"]
+[connection signal="body_entered" from="DialoguePowerSource1Trigger" to="." method="_on_dialogue_power_source_1_trigger_body_entered"]
+[connection signal="body_exited" from="DialoguePowerSource1Trigger" to="." method="_on_dialogue_power_source_1_trigger_body_exited"]
 [connection signal="timeout" from="InteractTimer" to="." method="_on_interact_timer_timeout"]

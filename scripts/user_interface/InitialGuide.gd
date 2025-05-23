@@ -1,6 +1,7 @@
 extends Panel
 
 var advanced = false
+var interactable = false
 var last_pos
 
 # Called when the node enters the scene tree for the first time.
@@ -23,3 +24,8 @@ func show_initial_guide():
 func advance_guide():
 	advanced = true
 	$MarginContainer/Label.text = "Press WASD to move around."
+
+func interactable_guide():
+	interactable = true
+	$MarginContainer/Label.text = "Press E to interact."
+	
