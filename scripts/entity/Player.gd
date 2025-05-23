@@ -14,6 +14,7 @@ enum State {
 
 @onready var anim = $AnimationPlayer
 var current_anim = ""
+var temp_stage
 
 var current_state = State.IDLE
 var requested_state = StableState.IDLE
@@ -34,6 +35,7 @@ func _ready() -> void:
 	GameManager.damage_taken.connect(_set_health)
 
 func _physics_process(delta: float) -> void:
+	temp_stage = 3 if GameManager.player_stage > 3 else GameManager.player_stage
 	if GameManager.movement_disabled:
 		return
 
@@ -51,7 +53,7 @@ func _physics_process(delta: float) -> void:
 		requested_state = StableState.MOVE
 
 	elif idle_timer < CUTOFF_DURATION and move_loop_started:
-		_ensure_play("move" + str(GameManager.player_stage) + "_u")
+		_ensure_play("move" + str(temp_stage) + "_u")
 	elif idle_timer >= CUTOFF_DURATION:
 		requested_state = StableState.IDLE
 
@@ -64,7 +66,7 @@ func _physics_process(delta: float) -> void:
 		_start_transition_to_idle()
 	else:
 		if current_state == State.IDLE:
-			_ensure_play("idle" + str(GameManager.player_stage))
+			_ensure_play("idle" + str(temp_stage))
 		else:
 			_play_move_loop(last_direction)
 
@@ -84,25 +86,25 @@ func _process(_delta: float) -> void:
 
 func _start_transition_to_move():
 	current_state = State.T_IM
-	anim.play("idle" + str(GameManager.player_stage) + "_move")
-	current_anim = "idle" + str(GameManager.player_stage) + "_move"
+	anim.play("idle" + str(temp_stage) + "_move")
+	current_anim = "idle" + str(temp_stage) + "_move"
 
 func _start_transition_to_idle():
 	current_state = State.T_MI
-	anim.play("move" + str(GameManager.player_stage) + "_idle")
-	current_anim = "move" + str(GameManager.player_stage) + "_idle"
+	anim.play("move" + str(temp_stage) + "_idle")
+	current_anim = "move" + str(temp_stage) + "_idle"
 
 func _play_move_loop(direction):
 	move_loop_started = true
 	var anim_name := ""
 	if direction.y < 0 or direction.y > 0:
-		anim_name = "move" + str(GameManager.player_stage) + "_u"
+		anim_name = "move" + str(temp_stage) + "_u"
 	elif direction.x < 0:
-		anim_name = "move" + str(GameManager.player_stage) + "_l"
+		anim_name = "move" + str(temp_stage) + "_l"
 	elif direction.x > 0:
-		anim_name = "move" + str(GameManager.player_stage) + "_r"
+		anim_name = "move" + str(temp_stage) + "_r"
 	else:
-		anim_name = "move" + str(GameManager.player_stage) + "_u"
+		anim_name = "move" + str(temp_stage) + "_u"
 		move_loop_started = false
 	_ensure_play(anim_name)
 
@@ -118,7 +120,7 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 			_play_move_loop(last_direction)
 		State.T_MI:
 			current_state = State.IDLE
-			_ensure_play("idle" + str(GameManager.player_stage))
+			_ensure_play("idle" + str(temp_stage))
 		_:
 			return
 
@@ -128,7 +130,6 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 		_start_transition_to_idle()
 
 func _set_health():
-	print(self.health)
 	healthbar.health = health
 		
 func _on_Area2D_body_entered(body):
