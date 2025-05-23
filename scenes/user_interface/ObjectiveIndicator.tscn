@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://qfbvxhphtpx6"]
+
+[ext_resource type="Script" path="res://scripts/user_interface/ObjectiveIndicator.gd" id="1_56lnb"]
+[ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="2_gvrik"]
+
+[node name="ObjectiveIndicator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_56lnb")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("2_gvrik")
+theme_override_font_sizes/font_size = 24
+text = "Find the power source. Follow the high pitch."

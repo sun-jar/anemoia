@@ -45,8 +45,7 @@ func open_doors():
 				else:
 					self._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			
-			if get_node("Door%d" % id) != null:
-				get_node("Door%d" % id).queue_free()
+			delete_door_instance(id)
 				
 func _delete_4x3_door(top_left, tile_source, tile_coords):
 	for i in range(0, 3):
@@ -65,3 +64,8 @@ func _delete_4x1_door(top_left, tile_source, tile_coords):
 func _delete_5x1_door(top_left, tile_source, tile_coords):
 		for i in range(0, 5):
 			self.set_cell(top_left + Vector2i(0, i), tile_source, tile_coords)
+			
+func delete_door_instance(id):
+	var door = get_node_or_null("Door%d" % id)
+	if door != null:
+		door.queue_free()

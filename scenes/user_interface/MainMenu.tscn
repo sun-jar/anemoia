@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c0676ltae3gea" path="res://scenes/level/TheLaboratory.tscn" id="3_6arnl"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Hover.gd" id="3_qavlj"]
 [ext_resource type="FontFile" uid="uid://b728vgu6m2eum" path="res://assets/fonts/Falling Dried.ttf" id="3_xo1mm"]
-[ext_resource type="PackedScene" uid="uid://bdeb4iqq7h7gn" path="res://scenes/user_interface/RollingCredits.tscn" id="4_g5fk6"]
+[ext_resource type="PackedScene" path="res://scenes/user_interface/RollingCredits.tscn" id="4_g5fk6"]
 [ext_resource type="Texture2D" uid="uid://b5tu2w2mt45tn" path="res://assets/anemoia_1080p.jpg" id="5_kpvib"]
 [ext_resource type="Script" path="res://scripts/user_interface/button/Glowbox.gd" id="6_xx0uv"]
 
