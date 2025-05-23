@@ -53,6 +53,7 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
+visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
@@ -104,7 +105,6 @@ copy_mode = 2
 modulate = Color(1, 1, 1, 0)
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
-visible = false
 offset_left = -5197.0
 offset_top = -4800.0
 offset_right = 9806.0
@@ -177,7 +177,6 @@ theme_override_constants/margin_top = 40
 layout_mode = 2
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
-visible = false
 
 [node name="DialogueTrigger1" type="Area2D" parent="."]
 position = Vector2(-1000, 0)

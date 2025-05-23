@@ -3,7 +3,7 @@ extends Node
 signal dialogue_finished
 signal damage_taken
 signal die
-signal change_stage
+signal change_objective
 
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
