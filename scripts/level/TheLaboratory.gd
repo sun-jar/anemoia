@@ -32,11 +32,11 @@ var is_new_game = false
 func _load_saved():
 	var game_data = Globals.game_data
 	
-	if GameManager.player_stage > 1:
-		_init_stage_2()
+	if GameManager.player_stage == 2:
+		_init_stage_2(false)
 	
-	if GameManager.player_stage > 2:
-		_init_stage_3()
+	if GameManager.player_stage == 3:
+		_init_stage_3(false)
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -202,7 +202,15 @@ func _init_stage_2():
 	map_stage_2.visible = true
 	map_stage_2.collision_enabled = true
 	
-func _init_stage_3():
+func _init_stage_3(with_effect):
+	# Kalo level load, map_stage_1 bakal ga keapus
+	# Perlu ini biar keapus jg
+	if with_effect:
+		map_stage_1_scene_ins.visible = false
+		map_stage_1_scene_ins.queue_free()
+	else:
+		map_stage_1.queue_free()
+			
 	map_stage_2.queue_free()
 	map_stage_2_scene_ins = map_stage_2_scene.instantiate()
 	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
@@ -211,8 +219,7 @@ func _init_stage_3():
 	
 	for child in map_stage_2_scene_ins.get_children():
 		if child.name in map_stage_3.switches:
-			child.disabled = false
-			# TODO GANTI SPRITE SWITCH DI MAP LAYER 2 INSTANCE DISINI
+			child.toggle_enable("2")
 			
 	map_stage_3.open_doors()
 	

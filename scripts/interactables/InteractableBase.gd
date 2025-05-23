@@ -1,13 +1,13 @@
 extends StaticBody2D
 
-@onready var outline_sprite: Sprite2D = $OutlineSprite
+@onready var sprite: Sprite2D = $Sprite
+@onready var shader_material = sprite.material
 @onready var interaction_area := $Area2D
+@onready var dialogue_name : String
 
 var is_interactable: bool = false
 
 func _ready():
-	interaction_area.connect("body_entered", Callable(self, "_on_body_entered"))
-	interaction_area.connect("body_exited", Callable(self, "_on_body_exited"))
 	_update_outline()
 
 func set_interactable(value: bool) -> void:
@@ -15,12 +15,8 @@ func set_interactable(value: bool) -> void:
 	_update_outline()
 
 func _update_outline():
-	outline_sprite.visible = is_interactable
-
-	if is_interactable:
-		var outline_shader_material := outline_sprite.material as ShaderMaterial
-		outline_shader_material.set_shader_parameter("outline_color", Color(1, 1, 1, 1))
-		print('works')
+	if shader_material:
+		shader_material.set_shader_parameter("show_outline", is_interactable)
 
 func _on_body_entered(body):
 	if body.name == "Player":
@@ -31,7 +27,5 @@ func _on_body_exited(body):
 		set_interactable(false)
 		
 func interact():
-	if is_interactable:
-		print("Interactable", self.name)
-	else:
-		print("Not in range to interact")
+	if is_interactable && dialogue_name:
+		GameManager.start_dialogue(dialogue_name)
