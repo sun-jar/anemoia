@@ -41,6 +41,9 @@ func _load_saved():
 	
 	if GameManager.player_stage == 3:
 		_init_stage_3(false)
+		
+	if GameManager.player_stage == 4:
+		_init_stage_4(false)
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -94,7 +97,8 @@ func _ready() -> void:
 		if (Globals.game_data != null):
 			_load_saved()
 
-		player_node.anim.play("idle" + str(GameManager.player_stage))
+		var temp_stage = 3 if GameManager.player_stage > 3 else GameManager.player_stage
+		player_node.anim.play("idle" + str(temp_stage))
 		
 		create_tween().tween_property(player_node, "modulate:a", 1.0, 2.0)
 		var mask_tween = create_tween()
