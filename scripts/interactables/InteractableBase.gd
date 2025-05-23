@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 @onready var outline_sprite: Sprite2D = $OutlineSprite
+@onready var shader_material := outline_sprite.material as ShaderMaterial
 @onready var interaction_area := $Area2D
 
 var is_interactable: bool = false
@@ -15,12 +16,8 @@ func set_interactable(value: bool) -> void:
 	_update_outline()
 
 func _update_outline():
-	outline_sprite.visible = is_interactable
-
-	if is_interactable:
-		var outline_shader_material := outline_sprite.material as ShaderMaterial
-		outline_shader_material.set_shader_parameter("outline_color", Color(1, 1, 1, 1))
-		print('works')
+	if shader_material:
+		shader_material.set_shader_parameter("show_outline", is_interactable)
 
 func _on_body_entered(body):
 	if body.name == "Player":
