@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+@export var interact_text: String = "*static*"
+
 @onready var sprite: Sprite2D = $Sprite
 @onready var shader_material = sprite.material
 @onready var interaction_area := $Area2D
@@ -27,6 +29,6 @@ func _on_body_exited(body):
 		
 func interact():
 	if is_interactable:
-		print("Interactable", self.name)
+		print(interact_text, self.name)
 	else:
 		print("Not in range to interact")

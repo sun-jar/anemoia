@@ -250,7 +250,6 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
-	GameManager.change_objective.emit()
 	
 func _save_game():
 	GameManager.save_game(self)
