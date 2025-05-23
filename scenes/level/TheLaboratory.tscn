@@ -117,6 +117,7 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(-3840, 0)
 collision_layer = 1
 collision_mask = 1
+speed = 500
 
 [node name="InitialGuide" type="Panel" parent="Player"]
 visible = false
