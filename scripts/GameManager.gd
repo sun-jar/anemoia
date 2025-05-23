@@ -85,7 +85,7 @@ func load_game():
 	
 func reset_player_state(player_node):
 	player_node.health = 100
-	player_node.speed = 400
+	player_node.speed = 500
 	player_node.wave_cooldown = 1.0
 
 func reset_game_state():

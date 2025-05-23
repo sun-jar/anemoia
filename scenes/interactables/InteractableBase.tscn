@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwpro4rvamfj0"]
+
+[ext_resource type="Shader" path="res://scripts/shaders/OutlineShader.gdshader" id="1_6mcp3"]
+[ext_resource type="Script" path="res://scripts/interactables/InteractableBase.gd" id="1_vfe22"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ej3xj"]
+shader = ExtResource("1_6mcp3")
+shader_parameter/show_outline = false
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_thickness = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6egm"]
+size = Vector2(32.5, 32)
+
+[node name="InteractableBase" type="StaticBody2D" groups=["interactables"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_vfe22")
+
+[node name="OutlineSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ej3xj")
+scale = Vector2(1.1, 1.1)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q6egm")
+
+[node name="Area2D" type="Area2D" parent="."]
