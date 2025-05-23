@@ -12,7 +12,12 @@ var player_stage: int = 1
 var movement_disabled: bool = true
 
 var shown_one_time_dialogues = {
-	"guide": false
+	"guide": false,
+	"intro_power_source_1": false,
+	"intro_power_source_2": false,
+	"intro_turret": false,
+	"intro_turret_2": false,
+	"intro_key": false,
 }
 var last_played_dialogue
 

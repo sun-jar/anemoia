@@ -176,8 +176,8 @@ shape = SubResource("CircleShape2D_k642p")
 position = Vector2(392, -184)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialoguePowerSource1Trigger"]
-position = Vector2(-776, -249)
-scale = Vector2(6.8, 6.8)
+position = Vector2(2397, -3266)
+scale = Vector2(12.92, 12.92)
 shape = SubResource("CircleShape2D_f30e7")
 
 [node name="InteractTimer" type="Timer" parent="."]
@@ -190,4 +190,5 @@ one_shot = true
 [connection signal="body_exited" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_exited"]
 [connection signal="body_entered" from="DialogueTrigger1" to="." method="_on_dialogue_trigger_1_body_entered"]
 [connection signal="body_entered" from="DialoguePowerSource1Trigger" to="." method="_on_dialogue_power_source_1_trigger_body_entered"]
+[connection signal="body_exited" from="DialoguePowerSource1Trigger" to="." method="_on_dialogue_power_source_1_trigger_body_exited"]
 [connection signal="timeout" from="InteractTimer" to="." method="_on_interact_timer_timeout"]
