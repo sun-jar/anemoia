@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgedaofik44bl"]
+
+[ext_resource type="PackedScene" uid="uid://bwpro4rvamfj0" path="res://scenes/interactables/InteractableBase.tscn" id="1_i7151"]
+[ext_resource type="Texture2D" uid="uid://doe14i31p1h6f" path="res://assets/decor/furnishing.png" id="2_hs0s2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5k5w"]
+atlas = ExtResource("2_hs0s2")
+region = Rect2(207, 63, 34, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygogr"]
+size = Vector2(32.5, 55.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arvoh"]
+size = Vector2(47, 76.5)
+
+[node name="Bed" instance=ExtResource("1_i7151")]
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_d5k5w")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -5.25)
+shape = SubResource("RectangleShape2D_ygogr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -2.25)
+shape = SubResource("RectangleShape2D_arvoh")
