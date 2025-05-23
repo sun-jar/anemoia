@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbf5vnwllef85"]
+
+[ext_resource type="PackedScene" uid="uid://bwpro4rvamfj0" path="res://scenes/interactables/InteractableBase.tscn" id="1_qfdfq"]
+[ext_resource type="Texture2D" uid="uid://doe14i31p1h6f" path="res://assets/decor/furnishing.png" id="2_rv8xa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm1mk"]
+atlas = ExtResource("2_rv8xa")
+region = Rect2(31, 255, 34, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_llhaq"]
+size = Vector2(32.5, 32.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_escfe"]
+radius = 27.6632
+
+[node name="Box" instance=ExtResource("1_qfdfq")]
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_mm1mk")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_llhaq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_escfe")

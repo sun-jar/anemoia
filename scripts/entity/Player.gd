@@ -9,7 +9,7 @@ enum State {
 	T_MI      = 3   # Transition Move→Idle
 }
 
-@export var speed = 400
+@export var speed = 500
 @export var wave_cooldown = 1.0
 
 @onready var anim = $AnimationPlayer
@@ -24,6 +24,8 @@ var last_wave_time: float
 var idle_timer := 0.0
 const CUTOFF_DURATION := 0.15
 var move_loop_started := false
+
+var current_interactable = null
 
 @onready var healthbar = $CanvasLayer/HealthBar
 
@@ -75,6 +77,10 @@ func _process(_delta: float) -> void:
 		if current_time - last_wave_time >= wave_cooldown:
 			emit_signal("trigger_wave")
 			last_wave_time = current_time
+			
+	if Input.is_action_just_pressed("interact"):
+		if current_interactable != null:
+			current_interactable.interact()
 
 func _start_transition_to_move():
 	current_state = State.T_IM
@@ -124,3 +130,11 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 func _set_health():
 	print(self.health)
 	healthbar.health = health
+		
+func _on_Area2D_body_entered(body):
+	if body.is_in_group("interactables"):
+		current_interactable = body
+
+func _on_Area2D_body_exited(body):
+	if body == current_interactable:
+		current_interactable = null
