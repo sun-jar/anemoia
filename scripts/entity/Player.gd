@@ -9,7 +9,7 @@ enum State {
 	T_MI      = 3   # Transition Move→Idle
 }
 
-@export var speed = 400
+@export var speed = 500
 @export var wave_cooldown = 1.0
 
 @onready var anim = $AnimationPlayer
