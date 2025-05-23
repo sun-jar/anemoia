@@ -17,6 +17,8 @@ extends Node2D
 
 @onready var interact_timer = $InteractTimer
 
+@onready var objective_label = $CanvasLayer/MarginContainer/ObjectiveIndicator
+
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
 
@@ -224,6 +226,7 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
+	objective_label.visible = true
 	
 func _save_game():
 	GameManager.save_game(self)
@@ -260,6 +263,7 @@ func _on_next_stage_trigger_2_body_exited(body: Node2D) -> void:
 func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
 		GameManager.player_stage += 1
+		GameManager.change_stage.emit()
 		next_stage(true)
 
 

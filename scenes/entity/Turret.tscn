@@ -1,8 +1,63 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwpx1foe2uvk3"]
+[gd_scene load_steps=9 format=3 uid="uid://cwpx1foe2uvk3"]
 
 [ext_resource type="Script" path="res://scripts/entity/Turret.gd" id="1_krf0r"]
-[ext_resource type="Texture2D" uid="uid://cpukb6e7fue0o" path="res://icon.svg" id="2_kxpmr"]
+[ext_resource type="Texture2D" uid="uid://b7gib11td0ud6" path="res://assets/turret_reverse.png" id="2_hexjn"]
 [ext_resource type="AudioStream" uid="uid://dwxqtunrqiqpc" path="res://assets/sfx/vine-boom.mp3" id="3_3syw6"]
+
+[sub_resource type="Animation" id="Animation_as3ql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_c0i10"]
+resource_name = "appear"
+length = 0.6
+step = 0.0333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]
+}
+
+[sub_resource type="Animation" id="Animation_6r6y2"]
+resource_name = "shooting"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_go05n"]
+_data = {
+"RESET": SubResource("Animation_as3ql"),
+"appear": SubResource("Animation_c0i10"),
+"shooting": SubResource("Animation_6r6y2")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yxo4t"]
 size = Vector2(439, 339)
@@ -11,10 +66,14 @@ size = Vector2(439, 339)
 script = ExtResource("1_krf0r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_kxpmr")
+scale = Vector2(2, 2)
+texture = ExtResource("2_hexjn")
+hframes = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_go05n")
+}
 
 [node name="DetectionRange" type="CollisionShape2D" parent="."]
 position = Vector2(-13.5, 159.5)

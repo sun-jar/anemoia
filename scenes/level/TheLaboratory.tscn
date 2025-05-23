@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=21 format=3 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
 [ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="13_lf2t4"]
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
+[ext_resource type="PackedScene" uid="uid://qfbvxhphtpx6" path="res://scenes/user_interface/ObjectiveIndicator.tscn" id="17_ymeu3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxsvq"]
 size = Vector2(63.5, 64.5)
@@ -52,7 +53,6 @@ stream = ExtResource("4_xanlp")
 stream = ExtResource("5_lu07r")
 
 [node name="MapLayer" type="Node2D" parent="."]
-visible = false
 
 [node name="Stage3MapLayer" parent="MapLayer" instance=ExtResource("8_jy8pg")]
 visible = false
@@ -88,7 +88,7 @@ shape = SubResource("RectangleShape2D_bxsvq")
 [node name="Power1" parent="MapLayer/Stage1MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
 position = Vector2(1397.65, -1722)
-frame_progress = 0.591649
+animation = &"inactive_2"
 
 [node name="NextStageTrigger1" type="Area2D" parent="MapLayer/Stage1MapLayer/Power1"]
 position = Vector2(0, -0.5)
@@ -104,6 +104,7 @@ copy_mode = 2
 modulate = Color(1, 1, 1, 0)
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
+visible = false
 offset_left = -5197.0
 offset_top = -4800.0
 offset_right = 9806.0
@@ -163,7 +164,20 @@ offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 40
+
+[node name="ObjectiveIndicator" parent="CanvasLayer/MarginContainer" instance=ExtResource("17_ymeu3")]
+layout_mode = 2
+
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
+visible = false
 
 [node name="DialogueTrigger1" type="Area2D" parent="."]
 position = Vector2(-1000, 0)
