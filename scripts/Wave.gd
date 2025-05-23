@@ -35,7 +35,6 @@ func emit_wave():
 	else:
 		door_player.stream = door_sound[sound_id]
 		door_player.play()
-		get_parent().door_id = -1
 	wave_tween.tween_property(self, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	hitbox_tween.tween_property(wave_hitbox, "scale", Vector2(0.7, 0.7), 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT) #heuristic for the visual
 	fade_tween.tween_property(self, "modulate:a", 0.0, 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
@@ -77,6 +76,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if parent.name.begins_with("Door"):
 		if sound_id == parent.id:
 			self_parent.door_matched.emit(sound_id)
-		else:
+			self_parent.door_id = -1
+		elif not GameManager.closed_doors[parent.id]:
 			parent.sound_player.stream = door_sound[parent.id]
 			parent.sound_player.play()
