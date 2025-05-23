@@ -26,6 +26,3 @@ scale = Vector2(1.1, 1.1)
 shape = SubResource("RectangleShape2D_q6egm")
 
 [node name="Area2D" type="Area2D" parent="."]
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
