@@ -43,6 +43,7 @@ func _exit_fade_out_tween() -> Tween:
 	return tween
 	
 func new_game():
+	GameManager.reset_game_state()
 	GameManager.game_started = false
 	var tween = _exit_fade_out_tween()
 	await tween.finished

@@ -46,8 +46,7 @@ func _load_saved():
 
 # Called when the node enters the scene tree for the first time.
 func _start_game():
-	GameManager.reset_game(player_node)
-	
+	GameManager.reset_player_state(player_node)
 	player_sprite.play("sleep1")
 	var tween = create_tween()
 	tween.tween_interval(initial_beep.stream.get_length()-2.73)
@@ -290,7 +289,7 @@ func open_door(id):
 		if id == 4:
 			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
-	if GameManager.player_stage == 3:
+	if GameManager.player_stage == 3  :
 		if id in [1, 2, 6, 8, 10]:
 			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
