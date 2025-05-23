@@ -20,7 +20,7 @@ var last_played_dialogue
 var closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]
 
 var door0 = [Vector2i(-3, -61), Vector2i(-3, -62), Vector2i(-3, -63), Vector2i(-3, -64)]
-var doors = [null, Vector2i(55, -46), Vector2i(62, -17), Vector2i(59, 7), Vector2i(33, 69), Vector2i(68, 73), Vector2i(-42, 69), null, Vector2i(30, -6), Vector2i(32, 11), Vector2i(-8, 49), Vector2i(56, 43)]
+var doors = [null, Vector2i(55, -46), Vector2i(62, -17), Vector2i(59, 7), Vector2i(33, 69), Vector2i(68, 73), Vector2i(-42, 69), Vector2i(68, -2), Vector2i(30, -6), Vector2i(32, 11), Vector2i(-8, 49), Vector2i(56, 43)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

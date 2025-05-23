@@ -6,9 +6,11 @@ extends Node2D
 
 @onready var mask_layers = $MapLayerCopy/MaskLayers
 @onready var map_layer = $MapLayer
+
 @onready var map_stage_1 = $MapLayer/Stage1MapLayer
 @onready var map_stage_2 = $MapLayer/Stage2MapLayer
 @onready var map_stage_3 = $MapLayer/Stage3MapLayer
+@onready var map_stage_4 = $MapLayer/Stage4MapLayer
 
 @onready var initial_beep = $LabAudioManager/InitialBeep
 @onready var beep1 = $LabAudioManager/Beep1
@@ -21,10 +23,12 @@ extends Node2D
 
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
+@export var map_stage_3_scene: PackedScene
 
 var power_source_scene = preload("res://scenes/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
+var map_stage_3_scene_ins
 
 var player_in_power_area = false
 var is_new_game = false
@@ -168,6 +172,9 @@ func next_stage(with_effect: bool):
 	
 	elif GameManager.player_stage == 3:
 		_init_stage_3(with_effect)
+		
+	elif GameManager.player_stage == 4:
+		_init_stage_4(with_effect)
 	
 	if with_effect:
 		GameManager.movement_disabled = false
@@ -230,6 +237,12 @@ func _init_stage_3(with_effect):
 	
 	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_2_scene_ins.collision_enabled = false
+	
+	# Power source 3->4 di stage 2 tilemap
+	# harus di-play dulu biar keliatan nyala
+	var pow3to4 = map_stage_2_scene_ins.get_node_or_null("PowerSource2")
+	if pow3to4 != null:
+		pow3to4.play("active_2")
 	mask_layers.add_child(map_stage_2_scene_ins)
 			
 	for child in map_stage_2_scene_ins.get_children():
@@ -245,6 +258,44 @@ func _init_stage_3(with_effect):
 	await get_tree().process_frame
 	map_stage_3.visible = true
 	map_stage_3.collision_enabled = true
+	
+func _init_stage_4(with_effect):
+	# Kalo level load, map_stage_1 bakal ga keapus
+	# Perlu ini biar keapus jg
+	if with_effect:
+		map_stage_2_scene_ins.visible = false
+		map_stage_2_scene_ins.queue_free()
+	else:
+		map_stage_1.queue_free()
+		map_stage_2.queue_free()
+			
+	map_stage_3.queue_free()
+	map_stage_3_scene_ins = map_stage_3_scene.instantiate()
+	
+	# Power source 2->3 di Stage2 itu di instantiate di TheLaboratory
+	# Perlu nambahin display ga active nya pas di stage 3
+	var power_source_display = power_source_scene.instantiate()
+	power_source_display.play("inactive_3")
+	power_source_display.global_position = Vector2(-820, 727)
+	map_stage_3_scene_ins.add_child(power_source_display)
+	
+	map_stage_3_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
+	map_stage_3_scene_ins.collision_enabled = false
+	mask_layers.add_child(map_stage_3_scene_ins)
+			
+	for child in map_stage_3_scene_ins.get_children():
+		if child.name in map_stage_4.switches:
+			child.toggle_enable("2")
+			
+	for child in map_stage_4.get_children():
+		if child.name in map_stage_4.switches:
+			child.toggle_enable("2")
+	
+	map_stage_4.open_doors()
+	
+	await get_tree().process_frame
+	map_stage_4.visible = true
+	map_stage_4.collision_enabled = true
 
 func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
@@ -275,6 +326,20 @@ func _on_next_stage_trigger_2_body_entered(body: Node2D) -> void:
 
 
 func _on_next_stage_trigger_2_body_exited(body: Node2D) -> void:
+	if body.name == "Player" and player_in_power_area:
+		player_in_power_area = false
+		if Input.is_action_pressed("interact"):
+			AudioManager.stop_shockwave()
+			interact_timer.stop()
+			$Player/Camera2D.stop_buildup_shake()
+			
+			
+func _on_next_stage_trigger_3_body_entered(body: Node2D) -> void:
+	if body.name == "Player" and not player_in_power_area and GameManager.player_stage == 3:
+		player_in_power_area = true
+
+
+func _on_next_stage_trigger_3_body_exited(body: Node2D) -> void:
 	if body.name == "Player" and player_in_power_area:
 		player_in_power_area = false
 		if Input.is_action_pressed("interact"):
@@ -316,6 +381,20 @@ func open_door(id):
 			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
 		map_stage_2.delete_door_instance(id)
+	if GameManager.player_stage == 3:
+		if id in [1, 2, 6, 8, 10]:
+			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id in [3, 5, 11]:
+			map_stage_2_scene_ins._delete_4x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_4x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 11:
+			map_stage_2_scene_ins._delete_5x1_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_5x1_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		if id == 4:
+			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
+			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		map_stage_3.delete_door_instance(id)
 	if GameManager.player_stage == 3:
 		if id in [1, 2, 6, 8, 10]:
 			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))

@@ -370,6 +370,10 @@ position = Vector2(1397.65, -1722)
 animation = &"inactive_2"
 frame_progress = 0.616905
 
+[node name="PowerSource2" parent="." instance=ExtResource("7_cwbyn")]
+position = Vector2(-820, 727)
+animation = &"active_3"
+
 [node name="Switch1" parent="." instance=ExtResource("6_raeu8")]
 position = Vector2(1201, -2146)
 animation = &"2u_deactivated"
