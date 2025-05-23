@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=24 format=4 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
@@ -33,6 +33,9 @@ border_width_bottom = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k642p"]
 radius = 140.602
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3y1qb"]
+size = Vector2(459, 396.25)
 
 [node name="TheLaboratory" type="Node2D"]
 position = Vector2(-1, 0)
@@ -122,6 +125,7 @@ copy_mode = 2
 modulate = Color(1, 1, 1, 0)
 
 [node name="BlackLayer" type="ColorRect" parent="MapLayerCopy/MaskLayers"]
+visible = false
 offset_left = -5197.0
 offset_top = -4800.0
 offset_right = 9806.0
@@ -180,6 +184,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 15
@@ -205,6 +210,13 @@ shape = SubResource("CircleShape2D_k642p")
 wait_time = 3.65
 one_shot = true
 
+[node name="Win" type="Area2D" parent="."]
+position = Vector2(4899, 1467)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Win"]
+position = Vector2(191, -382.125)
+shape = SubResource("RectangleShape2D_3y1qb")
+
 [connection signal="body_entered" from="MapLayer/Stage4MapLayer/Power4/NextStageTrigger3" to="." method="_on_next_stage_trigger_3_body_entered"]
 [connection signal="body_exited" from="MapLayer/Stage4MapLayer/Power4/NextStageTrigger3" to="." method="_on_next_stage_trigger_3_body_exited"]
 [connection signal="body_entered" from="MapLayer/Stage2MapLayer/Power2/NextStageTrigger2" to="." method="_on_next_stage_trigger_2_body_entered"]
@@ -213,3 +225,4 @@ one_shot = true
 [connection signal="body_exited" from="MapLayer/Stage1MapLayer/Power1/NextStageTrigger1" to="." method="_on_next_stage_trigger_1_body_exited"]
 [connection signal="body_entered" from="DialogueTrigger1" to="." method="_on_dialogue_trigger_1_body_entered"]
 [connection signal="timeout" from="InteractTimer" to="." method="_on_interact_timer_timeout"]
+[connection signal="body_entered" from="Win" to="." method="_on_win_body_entered"]

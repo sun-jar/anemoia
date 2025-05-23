@@ -409,3 +409,8 @@ func open_door(id):
 			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
 		map_stage_3.delete_door_instance(id)
+
+
+func _on_win_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		get_tree().change_scene_to_file("res://scenes/user_interface/WinScreen.tscn")
