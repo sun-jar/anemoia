@@ -302,3 +302,9 @@ func open_door(id):
 		if id == 4:
 			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+
+
+func _on_dialogue_power_source_1_trigger_body_entered(body: Node2D) -> void:
+	if body.name == "Player" and not GameManager.shown_one_time_dialogues["intro_turrets_2"]:
+		GameManager.start_dialogue("intro_turrets_2")
+		$DialoguePowerSource1Trigger.queue_free()
