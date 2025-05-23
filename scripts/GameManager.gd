@@ -3,6 +3,7 @@ extends Node
 signal dialogue_finished
 signal damage_taken
 signal die
+signal change_objective
 
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
@@ -92,7 +93,12 @@ func reset_game_state():
 	
 	game_started = false
 	shown_one_time_dialogues = {
-		"guide": false
+		"guide": false,
+		"intro_power_source_1": false,
+		"intro_power_source_2": false,
+		"intro_turret": false,
+		"intro_turret_2": false,
+		"intro_key": false,
 	}
 	
 	player_stage = 1
