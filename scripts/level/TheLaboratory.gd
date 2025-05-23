@@ -33,10 +33,10 @@ func _load_saved():
 	var game_data = Globals.game_data
 	
 	if GameManager.player_stage > 1:
-		_init_stage_2()
+		_init_stage_2(false)
 	
 	if GameManager.player_stage > 2:
-		_init_stage_3()
+		_init_stage_3(false)
 	
 	player_node.health = game_data.player_health
 	player_node.position.x = game_data.player_x
@@ -159,31 +159,35 @@ func next_stage(with_effect: bool):
 		
 		var fade_tween = next_level_wave.emit_shockwave()
 		
-		if GameManager.player_stage == 3:
-			map_stage_1_scene_ins.queue_free()
-		
 		await fade_tween.finished
 		power_node.queue_free()
 		next_level_wave.safe_queue_free()
 	
 	if GameManager.player_stage == 2:
-		_init_stage_2()
+		_init_stage_2(with_effect)
 	
 	elif GameManager.player_stage == 3:
-		_init_stage_3()
+		_init_stage_3(with_effect)
 	
 	if with_effect:
 		GameManager.movement_disabled = false
 
-func _init_stage_2():
+func _init_stage_2(with_effect):
 	map_stage_1.queue_free()
 	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
+	
+	# Power source 1->2 di Stage1 itu di instantiate di TheLaboratory
+	# Perlu nambahin display ga active nya pas di stage 2
 	var power_source_display = power_source_scene.instantiate()
 	power_source_display.play("inactive_1")
-	power_source_display.position = Vector2(1397.65, -1722)
+	power_source_display.global_position = Vector2(1397.65, -1722)
 	map_stage_1_scene_ins.add_child(power_source_display)
+	
 	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_1_scene_ins.collision_enabled = false
+	var pow2to3 = map_stage_1_scene_ins.get_node_or_null("PowerSource")
+	if pow2to3 != null:
+		pow2to3.play("active_1")
 	mask_layers.add_child(map_stage_1_scene_ins)
 	
 	for child in map_stage_1_scene_ins.get_children():
@@ -202,9 +206,26 @@ func _init_stage_2():
 	map_stage_2.visible = true
 	map_stage_2.collision_enabled = true
 	
-func _init_stage_3():
+func _init_stage_3(with_effect):
+	
+	# Kalo level load, map_stage_1 bakal ga keapus
+	# Perlu ini biar keapus jg
+	if with_effect:
+		map_stage_1_scene_ins.visible = false
+		map_stage_1_scene_ins.queue_free()
+	else:
+		map_stage_1.queue_free()
+			
 	map_stage_2.queue_free()
 	map_stage_2_scene_ins = map_stage_2_scene.instantiate()
+	
+	# Power source 2->3 di Stage2 itu di instantiate di TheLaboratory
+	# Perlu nambahin display ga active nya pas di stage 3
+	var power_source_display = power_source_scene.instantiate()
+	power_source_display.play("inactive_2")
+	power_source_display.global_position = Vector2(248.56, 1735.03)
+	map_stage_2_scene_ins.add_child(power_source_display)
+	
 	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_2_scene_ins.collision_enabled = false
 	mask_layers.add_child(map_stage_2_scene_ins)
@@ -290,7 +311,8 @@ func open_door(id):
 		if id == 4:
 			map_stage_1_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_2._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
-	if GameManager.player_stage == 3  :
+		map_stage_2.delete_door_instance(id)
+	if GameManager.player_stage == 3:
 		if id in [1, 2, 6, 8, 10]:
 			map_stage_2_scene_ins._delete_4x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_4x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
@@ -303,3 +325,4 @@ func open_door(id):
 		if id == 4:
 			map_stage_2_scene_ins._delete_6x3_door(GameManager.doors[id], 2, Vector2i(4, 3))
 			map_stage_3._delete_6x3_door(GameManager.doors[id], 2, Vector2i(5, 2))
+		map_stage_3.delete_door_instance(id)

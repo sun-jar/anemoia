@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c0676ltae3gea"]
+[gd_scene load_steps=21 format=4 uid="uid://c0676ltae3gea"]
 
 [ext_resource type="Script" path="res://scripts/level/TheLaboratory.gd" id="1_he5fh"]
 [ext_resource type="AudioStream" uid="uid://bjjmqnsqos1mh" path="res://assets/sfx/ComputerBeeps PE190301.wav" id="2_jseq7"]
