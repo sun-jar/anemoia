@@ -185,6 +185,9 @@ func _init_stage_2(with_effect):
 	
 	map_stage_1_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_1_scene_ins.collision_enabled = false
+	
+	# Power source 2->3 di stage 1 tilemap
+	# harus di-play dulu biar keliatan nyala
 	var pow2to3 = map_stage_1_scene_ins.get_node_or_null("PowerSource")
 	if pow2to3 != null:
 		pow2to3.play("active_1")
@@ -229,12 +232,15 @@ func _init_stage_3(with_effect):
 	map_stage_2_scene_ins.modulate = Color(1.0/3.0, 1.0/3.0, 1.0/3.0)
 	map_stage_2_scene_ins.collision_enabled = false
 	mask_layers.add_child(map_stage_2_scene_ins)
-	
+			
 	for child in map_stage_2_scene_ins.get_children():
 		if child.name in map_stage_3.switches:
-			child.disabled = false
-			# TODO GANTI SPRITE SWITCH DI MAP LAYER 2 INSTANCE DISINI
+			child.toggle_enable("1")
 			
+	for child in map_stage_3.get_children():
+		if child.name in map_stage_3.switches:
+			child.toggle_enable("2")
+	
 	map_stage_3.open_doors()
 	
 	await get_tree().process_frame
