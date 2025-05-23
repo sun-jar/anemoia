@@ -45,6 +45,7 @@ func _on_timeline_ended():
 	await get_tree().create_timer(0.1).timeout
 	movement_disabled = false
 	emit_signal("dialogue_finished")
+	GameManager.change_objective.emit()
 	
 	
 func save_game(game):
