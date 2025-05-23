@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cfl4wvuv112yw"]
+[gd_scene load_steps=13 format=4 uid="uid://cfl4wvuv112yw"]
 
 [ext_resource type="Texture2D" uid="uid://dd3k4c8c25e3m" path="res://assets/tiles.png" id="1_bho8c"]
 [ext_resource type="Texture2D" uid="uid://cewywkf5lcc0t" path="res://assets/wall_sprite.png" id="2_kbf70"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://coahiej2ugee3" path="res://assets/door_sprites.png" id="4_iyb8d"]
 [ext_resource type="Script" path="res://scripts/level/Stages.gd" id="5_w2yjy"]
 [ext_resource type="PackedScene" uid="uid://dogw2jjpougi2" path="res://scenes/interactables/Switch.tscn" id="6_kji0a"]
+[ext_resource type="PackedScene" uid="uid://qn143ij8sf6d" path="res://scenes/interactables/Machine.tscn" id="7_mficx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4kww6"]
 texture = ExtResource("1_bho8c")
@@ -177,3 +178,6 @@ position = Vector2(2512, 2208)
 animation = &"1r_deactivated"
 _enum_index = 1
 id = 11
+
+[node name="Machine" parent="." instance=ExtResource("7_mficx")]
+position = Vector2(-1748.5, -105)
