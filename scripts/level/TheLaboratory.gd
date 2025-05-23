@@ -32,10 +32,10 @@ var is_new_game = false
 func _load_saved():
 	var game_data = Globals.game_data
 	
-	if GameManager.player_stage > 1:
+	if GameManager.player_stage == 2:
 		_init_stage_2(false)
 	
-	if GameManager.player_stage > 2:
+	if GameManager.player_stage == 3:
 		_init_stage_3(false)
 	
 	player_node.health = game_data.player_health
@@ -210,7 +210,6 @@ func _init_stage_2(with_effect):
 	map_stage_2.collision_enabled = true
 	
 func _init_stage_3(with_effect):
-	
 	# Kalo level load, map_stage_1 bakal ga keapus
 	# Perlu ini biar keapus jg
 	if with_effect:
@@ -235,7 +234,7 @@ func _init_stage_3(with_effect):
 			
 	for child in map_stage_2_scene_ins.get_children():
 		if child.name in map_stage_3.switches:
-			child.toggle_enable("1")
+			child.toggle_enable("2")
 			
 	for child in map_stage_3.get_children():
 		if child.name in map_stage_3.switches:
