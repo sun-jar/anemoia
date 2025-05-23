@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbpknl72b84m8"]
+
+[ext_resource type="PackedScene" uid="uid://bwpro4rvamfj0" path="res://scenes/interactables/InteractableBase.tscn" id="1_dipjd"]
+[ext_resource type="Texture2D" uid="uid://doe14i31p1h6f" path="res://assets/decor/furnishing.png" id="2_rijv1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gu1pg"]
+atlas = ExtResource("2_rijv1")
+region = Rect2(303, 143, 36, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifxqo"]
+size = Vector2(11.5, 12.75)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bwihr"]
+radius = 18.527
+
+[node name="Poster" instance=ExtResource("1_dipjd")]
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_gu1pg")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0.75, -0.5)
+shape = SubResource("RectangleShape2D_ifxqo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0.5, 12.5)
+shape = SubResource("CircleShape2D_bwihr")

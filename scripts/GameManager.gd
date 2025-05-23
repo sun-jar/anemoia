@@ -1,6 +1,9 @@
 extends Node
 
 signal dialogue_finished
+signal damage_taken
+signal die
+signal change_objective
 
 # Most of these are still JOROK™ Certified.
 # Just for the sake of seeing it working
@@ -9,9 +12,20 @@ var player_stage: int = 1
 var movement_disabled: bool = true
 
 var shown_one_time_dialogues = {
-	"guide": false
+	"guide": false,
+	"intro_power_source_1": false,
+	"intro_power_source_2": false,
+	"intro_turret": false,
+	"intro_turret_2": false,
+	"intro_key": false,
 }
 var last_played_dialogue
+
+
+var closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]
+
+var door0 = [Vector2i(-3, -61), Vector2i(-3, -62), Vector2i(-3, -63), Vector2i(-3, -64)]
+var doors = [null, Vector2i(55, -46), Vector2i(62, -17), Vector2i(59, 7), Vector2i(33, 69), Vector2i(68, 73), Vector2i(-42, 69), Vector2i(68, -2), Vector2i(30, -6), Vector2i(32, 11), Vector2i(-8, 49), Vector2i(56, 43)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,6 +50,7 @@ func _on_timeline_ended():
 	await get_tree().create_timer(0.1).timeout
 	movement_disabled = false
 	emit_signal("dialogue_finished")
+	GameManager.change_objective.emit()
 	
 	
 func save_game(game):
@@ -50,7 +65,9 @@ func save_game(game):
 		"player_health": player.health,
 		
 		"player_x": player.position.x,
-		"player_y": player.position.y
+		"player_y": player.position.y,
+		
+		"closed_doors": closed_doors 
 	}
 
 	var json_string = JSON.stringify(game_data)
@@ -69,12 +86,27 @@ func load_game():
 	Globals.game_data = game_data
 	GameManager.game_started = game_data.get("game_started", false)
 	GameManager.shown_one_time_dialogues = game_data.get("shown_one_time_dialogues", {})
+	GameManager.player_stage = game_data.player_stage
+	GameManager.closed_doors = game_data.closed_doors
 	
-func reset_game(player_node):
-	player_stage = 1
-	game_started = false
+func reset_player_state(player_node):
+	player_node.health = 100
+	player_node.speed = 500
+	player_node.wave_cooldown = 1.0
+
+func reset_game_state():
 	movement_disabled = true
 	
-	player_node.health = 100
-	player_node.speed = 400
-	player_node.wave_cooldown = 1.0
+	game_started = false
+	shown_one_time_dialogues = {
+		"guide": false,
+		"intro_power_source_1": false,
+		"intro_power_source_2": false,
+		"intro_turret": false,
+		"intro_turret_2": false,
+		"intro_key": false,
+	}
+	
+	player_stage = 1
+	
+	closed_doors = [false, false, false, false, false, false, false, false, false, false, false, false]

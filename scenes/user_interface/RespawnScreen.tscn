@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2dg50w4ymipc"]
+
+[ext_resource type="Script" path="res://scripts/user_interface/RespawnScreen.gd" id="1_ly2kd"]
+[ext_resource type="PackedScene" uid="uid://c0676ltae3gea" path="res://scenes/level/TheLaboratory.tscn" id="2_7p1ip"]
+[ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="3_r2o56"]
+[ext_resource type="Script" path="res://scripts/user_interface/button/Glowbox.gd" id="4_3nvbi"]
+
+[node name="RespawnScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ly2kd")
+laboratory_scene = ExtResource("2_7p1ip")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 160
+
+[node name="Button" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/margin_left = 700
+theme_override_constants/margin_right = 700
+
+[node name="Respawn" type="Button" parent="MarginContainer/Button"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_r2o56")
+theme_override_font_sizes/font_size = 56
+text = "WAKE UP"
+script = ExtResource("4_3nvbi")
+
+[connection signal="pressed" from="MarginContainer/Button/Respawn" to="." method="_on_respawn_pressed"]
