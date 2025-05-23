@@ -17,10 +17,10 @@ extends Node2D
 
 @onready var interact_timer = $InteractTimer
 
+@onready var objective_label = $CanvasLayer/MarginContainer/ObjectiveIndicator
+
 @export var map_stage_1_scene: PackedScene
 @export var map_stage_2_scene: PackedScene
-
-@export var respawn_screen: PackedScene
 
 var power_source_scene = preload("res://scenes/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
@@ -224,6 +224,7 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 	if body.name == "Player" and not GameManager.shown_one_time_dialogues["guide"]:
 		GameManager.start_dialogue("guide")
 	$DialogueTrigger1.queue_free()
+	GameManager.change_objective.emit()
 	
 func _save_game():
 	GameManager.save_game(self)
@@ -260,14 +261,14 @@ func _on_next_stage_trigger_2_body_exited(body: Node2D) -> void:
 func _on_interact_timer_timeout() -> void:
 	if player_in_power_area and Input.is_action_pressed("interact"):
 		GameManager.player_stage += 1
+		GameManager.change_objective.emit()
 		next_stage(true)
-
 
 func _respawn():
 	player_node.anim.play("death" + str(GameManager.player_stage))
 	# temporarily use a timer to make sure the animation plays
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_packed(respawn_screen)
+	get_tree().change_scene_to_file("res://scenes/user_interface/RespawnScreen.tscn")
 
 # special case for door 0
 func _draw_door0(layer, coords):

@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/user_interface/InitialGuide.gd" id="13_bxagd"]
 [ext_resource type="FontFile" uid="uid://b4vxt7jur3dpc" path="res://assets/fonts/Noison-Regular.otf" id="13_lf2t4"]
 [ext_resource type="Script" path="res://scripts/entity/Camera.gd" id="15_5xiti"]
+[ext_resource type="PackedScene" uid="uid://qfbvxhphtpx6" path="res://scenes/user_interface/ObjectiveIndicator.tscn" id="17_ymeu3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxsvq"]
 size = Vector2(63.5, 64.5)
@@ -88,6 +89,7 @@ tile_map_data = PackedByteArray("AADB//v/AgAEAAIAAADB//z/AgAEAAIAAADB//3/AgAEAAI
 [node name="Power1" parent="MapLayer/Stage1MapLayer" instance=ExtResource("9_ptpbr")]
 unique_name_in_owner = true
 position = Vector2(1397.65, -1722)
+animation = &"inactive_2"
 
 [node name="NextStageTrigger1" type="Area2D" parent="MapLayer/Stage1MapLayer/Power1"]
 position = Vector2(0, -0.5)
@@ -161,6 +163,18 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 40
+
+[node name="ObjectiveIndicator" parent="CanvasLayer/MarginContainer" instance=ExtResource("17_ymeu3")]
+layout_mode = 2
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_vmmhu")]
 

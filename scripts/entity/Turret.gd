@@ -8,6 +8,7 @@ var in_cooldown: bool = false
 
 @onready var projectile_raycast = $RayCast2D
 @onready var cooldown_timer = $Timer
+@onready var anim_player = $AnimationPlayer
 
 func _ready() -> void:
 	player = get_parent().find_child("Player")
@@ -28,11 +29,13 @@ func _physics_process(_delta: float) -> void:
 func _on_player_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player = body
+		anim_player.play("appear")
 		in_range = true
 		projectile_raycast.enabled = true
 
 func _on_player_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		anim_player.play_backwards("appear")
 		in_range = false
 		is_shoot = false
 		
