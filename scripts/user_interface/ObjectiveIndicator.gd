@@ -16,11 +16,15 @@ func _show_objective():
 			_fade_in()
 		2:
 			await _fade_out()
-			objective_label.text = "Find the power source. Open locked doors by finding the matching switch."
+			objective_label.text = "Find the next power source. Open locked doors by finding the matching switch."
 			_fade_in()
 		3:
 			await _fade_out()
-			objective_label.text = ""
+			objective_label.text = "Find the last power source. You're so close to the end."
+			_fade_in()
+		4:
+			await _fade_out()
+			objective_label.text = "Find the exit."
 			_fade_in()
 
 func _fade_in():
