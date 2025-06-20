@@ -10,10 +10,12 @@ var in_cooldown: bool = false
 @onready var cooldown_timer = $Timer
 @onready var anim_player = $AnimationPlayer
 
+
 func _ready() -> void:
 	player = get_parent().find_child("Player")
 	projectile_raycast.enabled = false
- 
+
+
 func _process(_delta: float) -> void:
 	if in_range and Input.is_action_just_pressed("wave"):
 		if !is_shoot:
@@ -23,8 +25,10 @@ func _process(_delta: float) -> void:
 	if in_range and is_shoot and not in_cooldown:
 		_turret_on()
 
+
 func _physics_process(_delta: float) -> void:
 	projectile_raycast.target_position = to_local(player.position)
+
 
 func _on_player_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -33,23 +37,26 @@ func _on_player_entered(body: Node2D) -> void:
 		in_range = true
 		projectile_raycast.enabled = true
 
+
 func _on_player_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		anim_player.play_backwards("appear")
 		in_range = false
 		is_shoot = false
-		
+
+
 func _turret_on():
 	if _check_behind_object():
 		_apply_damage()
-	
+
+
 func _check_behind_object() -> bool:
 	if projectile_raycast.is_colliding():
 		var collider = projectile_raycast.get_collider()
-		return (collider == player)
-	else:
-		return true
-	
+		return collider == player
+	return true
+
+
 func _apply_damage():
 	player.health -= 1
 	GameManager.damage_taken.emit()

@@ -2,17 +2,14 @@ extends Entity
 signal trigger_wave
 
 enum StableState { IDLE, MOVE }
-enum State {
-	IDLE      = 0,
-	MOVE      = 1,
-	T_IM      = 2,  # Transition Idle→Move
-	T_MI      = 3   # Transition Move→Idle
-}
+enum State { IDLE = 0, MOVE = 1, T_IM = 2, T_MI = 3 }
+# Transition Idle→Move  # Transition Move→Idle
+
+const CUTOFF_DURATION := 0.15
 
 @export var speed = 500
 @export var wave_cooldown = 1.0
 
-@onready var anim = $AnimationPlayer
 var current_anim = ""
 
 var current_state = State.IDLE
@@ -22,22 +19,24 @@ var last_direction = Vector2.ZERO
 var last_wave_time: float
 
 var idle_timer := 0.0
-const CUTOFF_DURATION := 0.15
 var move_loop_started := false
 
 var current_interactable = null
 
 @onready var healthbar = $CanvasLayer/HealthBar
+@onready var anim = $AnimationPlayer
+
 
 func _ready() -> void:
 	healthbar.init_health(self.health)
 	GameManager.damage_taken.connect(_set_health)
 
+
 func _physics_process(delta: float) -> void:
 	if GameManager.movement_disabled:
 		return
 
-	var dir = Input.get_vector("left","right","up","down")
+	var dir = Input.get_vector("left", "right", "up", "down")
 	last_direction = dir
 	velocity = dir * speed
 	move_and_slide()
@@ -68,6 +67,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			_play_move_loop(last_direction)
 
+
 func _process(_delta: float) -> void:
 	if GameManager.movement_disabled:
 		return
@@ -77,20 +77,23 @@ func _process(_delta: float) -> void:
 		if current_time - last_wave_time >= wave_cooldown:
 			emit_signal("trigger_wave")
 			last_wave_time = current_time
-			
+
 	if Input.is_action_just_pressed("interact"):
 		if current_interactable != null:
 			current_interactable.interact()
+
 
 func _start_transition_to_move():
 	current_state = State.T_IM
 	anim.play("idle" + str(GameManager.player_stage) + "_move")
 	current_anim = "idle" + str(GameManager.player_stage) + "_move"
 
+
 func _start_transition_to_idle():
 	current_state = State.T_MI
 	anim.play("move" + str(GameManager.player_stage) + "_idle")
 	current_anim = "move" + str(GameManager.player_stage) + "_idle"
+
 
 func _play_move_loop(direction):
 	move_loop_started = true
@@ -106,10 +109,12 @@ func _play_move_loop(direction):
 		move_loop_started = false
 	_ensure_play(anim_name)
 
+
 func _ensure_play(anim_name: String) -> void:
 	if current_anim != anim_name:
 		anim.play(anim_name)
 		current_anim = anim_name
+
 
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	match current_state:
@@ -127,13 +132,16 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	elif requested_state == StableState.IDLE and current_state == State.MOVE:
 		_start_transition_to_idle()
 
+
 func _set_health():
 	print(self.health)
 	healthbar.health = health
-		
+
+
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("interactables"):
 		current_interactable = body
+
 
 func _on_Area2D_body_exited(body):
 	if body == current_interactable:
