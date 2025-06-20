@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Anemoia"
 config/version="1.0.0.0"
-run/main_scene="res://scenes/user_interface/SplashScreen.tscn"
+run/main_scene="res://interface/SplashScreen.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Anemoia"
 config/features=PackedStringArray("4.3", "Forward Plus")
@@ -26,9 +26,9 @@ buses/default_bus_layout="res://scripts/resources/MainAudioLayout.tres"
 
 [autoload]
 
-AudioManager="*res://scenes/AudioManager.tscn"
+AudioManager="*res://globals/AudioManager.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
-GameManager="*res://scenes/GameManager.tscn"
+GameManager="*res://globals/GameManager.tscn"
 Globals="*res://scripts/Globals.gd"
 
 [dialogic]
