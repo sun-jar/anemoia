@@ -11,9 +11,11 @@ var player_body: Node2D = null
 var player_camera: Node2D = null
 @onready var interact_timer: Timer = $InteractTimer
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if GameManager.player_stage == power_source_display_stage and power_source_stage == GameManager.player_stage:
+	var player_stage = GameManager.player_stage
+	if player_stage == power_source_display_stage and power_source_stage == player_stage:
 		play("active_" + str(power_source_display_stage))
 	elif power_source_stage < GameManager.player_stage:
 		play("inactive_" + str(power_source_display_stage))
@@ -22,9 +24,11 @@ func _ready() -> void:
 		play("active_" + str(power_source_display_stage))
 		$NextStageTrigger/CollisionShape2D.disabled = true
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
 
 func _input(event: InputEvent) -> void:
 	if player_body != null and player_body.name == "Player":
@@ -42,7 +46,11 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_next_stage_trigger_body_entered(body: Node2D):
-	if body.name == "Player" and player_body == null and GameManager.player_stage == power_source_stage:
+	if (
+		body.name == "Player"
+		and player_body == null
+		and GameManager.player_stage == power_source_stage
+	):
 		player_body = body
 
 
@@ -54,6 +62,7 @@ func _on_next_stage_trigger_body_exited(body: Node2D):
 			interact_timer.stop()
 			camera.stop_buildup_shake()
 		player_body = null
+
 
 func _on_interact_timer_timeout() -> void:
 	if player_body != null and Input.is_action_pressed("interact"):
