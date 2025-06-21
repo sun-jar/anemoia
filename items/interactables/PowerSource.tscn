@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://b8ycv5h2ewy0j"]
+[gd_scene load_steps=24 format=3 uid="uid://b8ycv5h2ewy0j"]
 
 [ext_resource type="Texture2D" uid="uid://ccfd5ciuseeyv" path="res://assets/power_source.png" id="1_jjp4k"]
 [ext_resource type="Texture2D" uid="uid://v1x4o82lc5pj" path="res://assets/power_source_detailed.png" id="2_1kei1"]
+[ext_resource type="Script" path="res://items/interactables/PowerSource.gd" id="3_psocb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gm2bb"]
 atlas = ExtResource("1_jjp4k")
@@ -162,7 +163,25 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psaw8"]
+size = Vector2(128, 128)
+
 [node name="PowerSource" type="AnimatedSprite2D"]
-position = Vector2(248.56, 1735.03)
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_nsjoh")
 animation = &"active_1"
+frame_progress = 0.342445
+script = ExtResource("3_psocb")
+
+[node name="NextStageTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextStageTrigger"]
+shape = SubResource("RectangleShape2D_psaw8")
+
+[node name="InteractTimer" type="Timer" parent="."]
+wait_time = 3.65
+one_shot = true
+
+[connection signal="body_entered" from="NextStageTrigger" to="." method="_on_next_stage_trigger_body_entered"]
+[connection signal="body_exited" from="NextStageTrigger" to="." method="_on_next_stage_trigger_body_exited"]
+[connection signal="timeout" from="InteractTimer" to="." method="_on_interact_timer_timeout"]

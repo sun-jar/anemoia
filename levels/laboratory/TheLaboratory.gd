@@ -9,7 +9,6 @@ var power_source_scene = preload("res://items/interactables/PowerSource.tscn")
 var map_stage_1_scene_ins
 var map_stage_2_scene_ins
 
-var player_in_power_area = false
 var is_new_game = false
 
 @onready var wave_manager = $MapLayerCopy/WaveManager
@@ -113,18 +112,17 @@ func _ready() -> void:
 
 	player_node.trigger_wave.connect(wave_manager.emit_wave)
 	player_node.trigger_wave.connect(calculate_pitch)
-	for i in range(1, 3):
-		var powers = get_node_or_null("%" + ("Power%d" % i))
-		if powers != null:
-			powers.play("active_%d" % i)
+	var power_nodes = get_tree().get_nodes_in_group("power_sources")
+	for power in power_nodes:
+		power.power_up_complete.connect(next_stage.bind(true))
 
 
 func calculate_pitch():
-	var next_wave_trigger = get_node("%" + ("Power%d" % GameManager.player_stage))
-	var triger_position = Vector2(next_wave_trigger.position.x, next_wave_trigger.position.y)
+	var positions = [Vector2(1408, -1728), Vector2(256, 1728)]
+	var trigger_position = positions[GameManager.player_stage - 1]
 	# to balance out, because the map layers are scaled by 2
 	var player_position = Vector2(player_node.position.x / 2, player_node.position.y / 2)
-	var trigger_distance = triger_position.distance_to(player_position)
+	var trigger_distance = trigger_position.distance_to(player_position)
 
 	var scaled_distance = -(trigger_distance / 200) - 15  # fine tuned constants
 
@@ -134,29 +132,8 @@ func calculate_pitch():
 	pitch_scale.pitch_scale = max(((scaled_distance + 36) / 21) * 0.8, 0.2)
 
 
-func _input(event: InputEvent) -> void:
-	if player_in_power_area:
-		if event.is_action_pressed("interact"):
-			AudioManager.play_shockwave()
-			if not interact_timer.is_stopped():
-				return
-			interact_timer.start()
-			$Player/Camera2D.start_buildup_shake(3.4, 0.2, 4.0)
-		elif event.is_action_released("interact") and not interact_timer.is_stopped():
-			AudioManager.stop_shockwave()
-			interact_timer.stop()
-			$Player/Camera2D.stop_buildup_shake()
-
-
 func next_stage(with_effect: bool):
 	if with_effect:
-		var power_node_path = (
-			"MapLayer/Stage%dMapLayer/Power%d"
-			% [GameManager.player_stage - 1, GameManager.player_stage - 1]
-		)
-		var power_node = get_node_or_null(power_node_path)
-		power_node.play("inactive_" + str(GameManager.player_stage - 1))
-
 		player_node.anim.play("idle" + str(GameManager.player_stage))
 		GameManager.movement_disabled = true
 
@@ -167,11 +144,7 @@ func next_stage(with_effect: bool):
 
 		var fade_tween = next_level_wave.emit_shockwave()
 
-		if GameManager.player_stage == 3:
-			map_stage_1_scene_ins.queue_free()
-
 		await fade_tween.finished
-		power_node.queue_free()
 		next_level_wave.safe_queue_free()
 
 	if GameManager.player_stage == 2:
@@ -187,10 +160,6 @@ func next_stage(with_effect: bool):
 func _init_stage_2():
 	map_stage_1.queue_free()
 	map_stage_1_scene_ins = map_stage_1_scene.instantiate()
-	var power_source_display = power_source_scene.instantiate()
-	power_source_display.play("inactive_1")
-	power_source_display.position = Vector2(1397.65, -1722)
-	map_stage_1_scene_ins.add_child(power_source_display)
 	map_stage_1_scene_ins.modulate = Color(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0)
 	map_stage_1_scene_ins.collision_enabled = false
 	mask_layers.add_child(map_stage_1_scene_ins)
@@ -246,40 +215,6 @@ func _on_dialogue_trigger_1_body_entered(body: Node2D) -> void:
 
 func _save_game():
 	GameManager.save_game(self)
-
-
-func _on_next_stage_trigger_1_body_entered(body: Node2D) -> void:
-	if body.name == "Player" and not player_in_power_area and GameManager.player_stage == 1:
-		player_in_power_area = true
-
-
-func _on_next_stage_trigger_1_body_exited(body: Node2D) -> void:
-	if body.name == "Player" and player_in_power_area:
-		player_in_power_area = false
-		if Input.is_action_pressed("interact"):
-			AudioManager.stop_shockwave()
-			interact_timer.stop()
-			$Player/Camera2D.stop_buildup_shake()
-
-
-func _on_next_stage_trigger_2_body_entered(body: Node2D) -> void:
-	if body.name == "Player" and not player_in_power_area and GameManager.player_stage == 2:
-		player_in_power_area = true
-
-
-func _on_next_stage_trigger_2_body_exited(body: Node2D) -> void:
-	if body.name == "Player" and player_in_power_area:
-		player_in_power_area = false
-		if Input.is_action_pressed("interact"):
-			AudioManager.stop_shockwave()
-			interact_timer.stop()
-			$Player/Camera2D.stop_buildup_shake()
-
-
-func _on_interact_timer_timeout() -> void:
-	if player_in_power_area and Input.is_action_pressed("interact"):
-		GameManager.player_stage += 1
-		next_stage(true)
 
 
 func _respawn():

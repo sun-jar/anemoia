@@ -345,12 +345,19 @@ script = ExtResource("6_6ju24")
 stage = 3
 switches = ["Switch1", "Switch2", "Switch3", "Switch4", "Switch8", "Switch9", "Switch5", "Switch6", "Switch10", "Switch11"]
 
-[node name="PowerSource1" parent="." instance=ExtResource("7_wktv5")]
+[node name="PowerSource1" parent="." groups=["power_sources"] instance=ExtResource("7_wktv5")]
+position = Vector2(1408, -1728)
 animation = &"inactive_3"
+frame_progress = 0.0
+power_source_display_stage = 3
+power_source_stage = 1
 
-[node name="PowerSource2" parent="." instance=ExtResource("7_wktv5")]
-position = Vector2(1397.65, -1722)
+[node name="PowerSource2" parent="." groups=["power_sources"] instance=ExtResource("7_wktv5")]
+position = Vector2(256, 1728)
 animation = &"inactive_3"
+frame_progress = 0.0
+power_source_display_stage = 3
+power_source_stage = 2
 
 [node name="Switch1" parent="." instance=ExtResource("7_711m1")]
 position = Vector2(1201, -2146)

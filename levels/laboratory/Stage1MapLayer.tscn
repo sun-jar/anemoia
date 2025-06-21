@@ -248,7 +248,15 @@ tile_set = SubResource("TileSet_dmteh")
 script = ExtResource("5_tqnvd")
 stage = 1
 
-[node name="PowerSource" parent="." instance=ExtResource("6_5nvbt")]
+[node name="PowerSource1" parent="." groups=["power_sources"] instance=ExtResource("6_5nvbt")]
+position = Vector2(1408, -1728)
+power_source_display_stage = 1
+power_source_stage = 1
+
+[node name="PowerSource2" parent="." groups=["power_sources"] instance=ExtResource("6_5nvbt")]
+position = Vector2(256, 1728)
+power_source_display_stage = 1
+power_source_stage = 2
 
 [node name="Switch1" parent="." instance=ExtResource("7_70cnp")]
 position = Vector2(1201, -2146)

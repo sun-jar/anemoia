@@ -7,11 +7,11 @@ extends TileMapLayer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if stage >= 2:
-		var power = get_node_or_null("PowerSource1")
+		var power = get_node_or_null("Power1")
 		if power != null:
 			power.play("inactive_2")
 	if stage >= 3:
-		var power = get_node_or_null("PowerSource2")
+		var power = get_node_or_null("Power2")
 		if power != null:
 			power.play("inactive_3")
 	if GameManager.player_stage >= stage:
